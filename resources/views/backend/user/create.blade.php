@@ -77,7 +77,7 @@
                     <div class="col-sm-2 d-flex justify-content-start">
                         <select name="status" class="w-100 custom-field">
                             <option value="1"> فعال</option>
-                            <option value="0" selected>غیر فعال</option>
+                            <option value="0">غیر فعال</option>
                         </select>
                     </div>
                 </div>

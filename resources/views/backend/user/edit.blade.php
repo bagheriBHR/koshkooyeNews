@@ -28,72 +28,74 @@
         <!-- end of sidebar -->
 
         <div class="col-12 col-md-10 d-flex flex-column align-items-start">
+            <div class="d-flex flex-column border-bottom w-100">
+                <h3 class="custom-field-title text-right py-2 pr-2 mb-0 font-weight-bold">تغییر مشخصات ({{' '.$user->first_name .' '. $user->last_name.' '}})</h3>
+            </div>
             @include('backend.partials.form-errors')
-            <form class="customform p-3 w-100" method="post" action="{{route('user.store')}}" enctype="multipart/form-data">
-                @method('POST')
-                @csrf
-                <div class="form-group row d-flex align-items-center">
-                    <label for="name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام :</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="custom-field form-control form-control-sm" id="first_name" name="first_name">
-                    </div>
+            <div class="d-flex flex-column flex-md-row bg-white w-100">
+                <div class="col-12 col-md-2 mt-3">
+                    <img src="{{$user->avatar ? '/storage/photos/avatar/'.$user->avatar : 'http://www.placehold.it/400'}}" alt="" class="img-fluid">
                 </div>
-                <div class="form-group row d-flex align-items-center">
-                    <label for="last_name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام خانوادگی:</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="custom-field form-control form-control-sm" id="last_name" name="last_name">
+                <form class="customform p-3 col-12 col-md-10" method="post" action="{{route('user.update',$user->id)}}" enctype="multipart/form-data">
+                    @method('PATCH')
+                    @csrf
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام :</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="custom-field form-control form-control-sm" value="{{$user->first_name}}" id="first_name" name="first_name">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row d-flex align-items-center">
-                    <label for="last_name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام کاربری:</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="custom-field form-control form-control-sm" id="username" name="username">
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="last_name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام خانوادگی:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="custom-field form-control form-control-sm" value="{{$user->last_name}}" id="last_name" name="last_name">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row d-flex align-items-center">
-                    <label for="password" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">رمز عبور :</label>
-                    <div class="col-sm-4">
-                        <input autocomplete="new-password" type="password" class="custom-field form-control form-control-sm" id="password" name="password" >
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="last_name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام کاربری:</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="custom-field form-control form-control-sm" value="{{$user->username}}" id="username" name="username">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row d-flex align-items-center">
-                    <label for="email" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> ایمیل :</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="custom-field form-control form-control-sm" id="email" name="email" >
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="email" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> ایمیل :</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="custom-field form-control form-control-sm" value="{{$user->email}}" id="email" name="email" >
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row d-flex align-items-center ">
-                    <label for="roles" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نقش :</label>
-                    <div class="col-sm-2 d-flex justify-content-start">
-                        <select name="role" class="w-100 custom-field">
-                            <option value="is_author">نویسنده</option>
-                            <option value="is_editor">سردبیر</option>
-                            <option value="is_admin">مدیر</option>
-                        </select>
+                    <div class="form-group row d-flex align-items-center ">
+                        <label for="roles" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نقش :</label>
+                        <div class="col-sm-2 d-flex justify-content-start">
+                            <select name="role" class="w-100 custom-field">
+                                <option value="is_author" {{$user->is_author ? "selected" : ""}}>نویسنده</option>
+                                <option value="is_editor" {{$user->is_editor ? "selected" : ""}}>سردبیر</option>
+                                <option value="is_admin" {{$user->is_admin ? "selected" : ""}}>مدیر</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row d-flex align-items-center ">
-                    <label for="roles" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> وضعیت :</label>
-                    <div class="col-sm-2 d-flex justify-content-start">
-                        <select name="status" class="w-100 custom-field">
-                            <option value="1"> فعال</option>
-                            <option value="0" selected>غیر فعال</option>
-                        </select>
+                    <div class="form-group row d-flex align-items-center ">
+                        <label for="roles" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> وضعیت :</label>
+                        <div class="col-sm-2 d-flex justify-content-start">
+                            <select name="status" class="w-100 custom-field">
+                                <option value="1" @if($user->status==1) selected @endif> فعال</option>
+                                <option value="0" @if($user->status==0) selected @endif>غیر فعال</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row d-flex align-items-center">
-                    <label for="photo_id" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  تصویر :</label>
-                    <input type="hidden" name="avatar" id="avatar">
-                    <div class="col-sm-4">
-                        <div id="photo" class="dropzone form-control form-control-sm" ></div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="photo_id" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  تصویر :</label>
+                        <input type="hidden" name="avatar" id="avatar" value="{{$user->avatar}}">
+                        <div class="col-sm-4">
+                            <div id="photo" class="dropzone form-control form-control-sm" ></div>
+                        </div>
                     </div>
-                </div>
-                <div class="d-flex align-items-end">
-                    <div class="col-sm-6">
-                        <button type="submit" class="btn custombutton custombutton-success py-2 px-4"> ذخیره</button>
+                    <div class="d-flex align-items-end">
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn custombutton custombutton-success py-2 px-4"> به روز رسانی</button>
+                        </div>
                     </div>
-                </div>
             </form>
+            </div>
         </div>
     </div>
 @endsection

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -17,6 +19,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class,'user');
+    }
     public function index()
     {
         $users = User::orderBy('created_at','desc')->paginate(10);
@@ -30,6 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         return view('backend.user.create');
     }
 
@@ -76,7 +83,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::whereId($id)->first();
+        return view('backend.user.edit',compact(['user']));
     }
 
     /**
@@ -86,9 +94,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
+        $role = $request->input('role');
+        $user = User::find($id);
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->username = $request->input('username');
+        $user->email = $request->input('email');
+        $user->avatar = $request->input('avatar');
+        $user->status = $request->input('status');
+        $user->$role = 1;
+        $user->save();
+
+        Session::flash('success', 'مشخصات کاربر با موفقیت ویرایش شد.');
+        return redirect()->route('user.index');
     }
 
     /**
@@ -134,5 +154,14 @@ class UserController extends Controller
         }
              return view('backend.user.list',compact(['users']));
     }
+    public function changePassword(Request $request)
+    {
+        return ($request);
+    }
+    public function changePasswordForm(Request $request)
+    {
+        return view('backend.user.changePassword');
+    }
+
 
 }

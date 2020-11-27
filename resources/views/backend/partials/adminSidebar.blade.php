@@ -14,6 +14,7 @@
                         <a href="#"><i class="fas fa-eye ml-2"></i> مشاهد لیست</a>
                     </td>
                 </tr>
+                @can('viewAny',\Illuminate\Support\Facades\Auth::user())
                 <tr>
                     <td class="py-2 pr-2 font-weight-bold"><i class="fas fa-users  ml-2"></i>کاربران</td>
                     <td class="text-left py-2 font-weight-normal pl-3">
@@ -21,6 +22,7 @@
                         <a href="{{route('user.index')}}"><i class="fas fa-eye ml-2"></i> مشاهده لیست</a>
                     </td>
                 </tr>
+                @endcan
                 <tr>
                     <td class="py-2 pr-2 font-weight-bold"><a href="#"><i class="fa fa-list-ul  ml-2"></i>امور</a></td>
                     <td class="text-left py-2 font-weight-normal pl-3">

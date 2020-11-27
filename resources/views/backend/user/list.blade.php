@@ -65,6 +65,7 @@
                                     <tr>
                                         <th class="text-right">شماره</th>
                                         <th class="text-right">آواتار</th>
+                                        <th class="text-right">نام کاربری</th>
                                         <th class="text-right"> نام و نام خانوادگی</th>
                                         <th class="text-right">ایمیل</th>
                                         <th class="text-right">نقش</th>
@@ -77,7 +78,8 @@
                                     <tr>
                                         <td class="text-right" scope="row">{{ $key+1 }}</td>
                                         <td class="text-center p-0"><img src="{{ $user->avatar ? '/storage/photos/avatar/'.$user->avatar : "http://www.placehold.it/400" }}" alt="" class="my-1" style="width:40px;"></td>
-                                        <td class="text-right"><a href="#">{{ $user->first_name . ' '. $user->last_name}}</a></td>
+                                        <td class="text-right p-0">{{$user->username}}</td>
+                                        <td class="text-right"><a href="{{route('user.edit',$user->id)}}">{{ $user->first_name . ' '. $user->last_name}}</a></td>
                                         <td class="text-right">{{ $user->email }}</td>
                                         <td class="text-right">
                                             <span>{{$user->is_admin==1 ? 'مدیر' : ''}}</span>
