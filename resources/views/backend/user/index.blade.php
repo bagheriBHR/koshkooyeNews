@@ -78,7 +78,8 @@
                                 @elseif($user->status==1)
                                     <td class="text-center p-0"> <span class="badge badge-success p-1"> فعال</span></td>
                                 @endif
-                                <td class="text-right">{{$user->created_at}}</td>
+                                <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($user->created_at)->formatDate() }}</td>
+
                             </tr>
                         @endforeach
                         </tbody>
