@@ -2,48 +2,6 @@
   font-family: Vazir;
   src: url(/fonts/Vazir.eot?91dd41e5f2b05c3c207a81f6f952fbd4);
   src: url(/fonts/Vazir.eot?91dd41e5f2b05c3c207a81f6f952fbd4) format("embedded-opentype"), url(/fonts/Vazir.woff2?413876a3c9370179e34af0da2def3d38) format("woff2"), url(/fonts/Vazir.woff?3707b5efa316620380ef9f5c9d047907) format("woff"), url(/fonts/Vazir.ttf?3bb6491e3a7c084399896a492e5dd618) format("truetype");
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Vazir;
-  src: url(/fonts/Vazir-Bold.eot?b358a632638ddc12101a6dafd633b625);
-  src: url(/fonts/Vazir-Bold.eot?b358a632638ddc12101a6dafd633b625) format("embedded-opentype"), url(/fonts/Vazir-Bold.woff2?5c0560feb2821b1ce47e84dbc1f2e877) format("woff2"), url(/fonts/Vazir-Bold.woff?98b6a3b0644ce527306cefecd0311a11) format("woff"), url(/fonts/Vazir-Bold.ttf?d00f44216fda6aef5873d083017fdd15) format("truetype");
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Vazir;
-  src: url(/fonts/Vazir-Black.eot?d45d679ecbbf3e85f6fe924a3349611e);
-  src: url(/fonts/Vazir-Black.eot?d45d679ecbbf3e85f6fe924a3349611e) format("embedded-opentype"), url(/fonts/Vazir-Black.woff2?9c8601621b8b811cffb4375d255074cd) format("woff2"), url(/fonts/Vazir-Black.woff?4354348970f3bff75d294a1011617152) format("woff"), url(/fonts/Vazir-Black.ttf?dec57885836e1d78b278784703bfc3aa) format("truetype");
-  font-weight: 900;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Vazir;
-  src: url(/fonts/Vazir-Medium.eot?25b78a6e8f255ab89e160c7e4ca30ebb);
-  src: url(/fonts/Vazir-Medium.eot?25b78a6e8f255ab89e160c7e4ca30ebb) format("embedded-opentype"), url(/fonts/Vazir-Medium.woff2?02857cdb103688a9f9026b39a7e4c8d8) format("woff2"), url(/fonts/Vazir-Medium.woff?6134834d89c131f956774f6453ccb75f) format("woff"), url(/fonts/Vazir-Medium.ttf?11ef813ddc4c9ae17d99028f6132427a) format("truetype");
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Vazir;
-  src: url(/fonts/Vazir-Light.eot?81fd1bcee68b84a31baa21aeb277d7e8);
-  src: url(/fonts/Vazir-Light.eot?81fd1bcee68b84a31baa21aeb277d7e8) format("embedded-opentype"), url(/fonts/Vazir-Light.woff2?f92c929f0d7b288b8142477a80589a17) format("woff2"), url(/fonts/Vazir-Light.woff?a5772df426fc2720df4132d658940a78) format("woff"), url(/fonts/Vazir-Light.ttf?11bc0b0762f1ba3f8393eda4a4d96984) format("truetype");
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: Vazir;
-  src: url(/fonts/Vazir-Thin.eot?51d16771c8bf9759531066861015353f);
-  src: url(/fonts/Vazir-Thin.eot?51d16771c8bf9759531066861015353f) format("embedded-opentype"), url(/fonts/Vazir-Thin.woff2?f437d6d275dd7d5c36a5302bc9506e34) format("woff2"), url(/fonts/Vazir-Thin.woff?388980cd8094ad738e8b23d5c470cac1) format("woff"), url(/fonts/Vazir-Thin.ttf?5a7ca35b2f17908beb216ea97cce08a8) format("truetype");
-  font-weight: 100;
-  font-style: normal;
 }
 
 *,
@@ -122,14 +80,22 @@ a {
   color: #bbbbbb;
 }
 
+.search .search-icon {
+  left: 13px !important;
+  top: 6px !important;
+}
+
 .search-icon {
-  left: 13px;
-  top: 6px;
+  left: 5px;
+  top: 0px;
   color: #bdbdbd;
   z-index: 3;
   font-size: 0.9rem;
   transform: scaleX(-1);
   transition: all 0.3s;
+  background-color: transparent;
+  border: none !important;
+  outline: none !important;
 }
 
 .header {
@@ -419,6 +385,12 @@ a {
 .date a:hover {
   color: rgba(95, 43, 43, 0.8);
   border: 1px solid rgba(29, 18, 18, 0.4);
+}
+
+.not-found {
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: bold;
 }
 
 .filter {
@@ -773,7 +745,6 @@ a {
 }
 
 .has-sidebar {
-  margin: 0px 0px 0px 20px;
   display: flex;
 }
 
@@ -787,33 +758,36 @@ a {
 }
 
 .has-sidebar .right-sidebar {
-  border-top: 2px solid #dd3333;
   width: 20%;
-  background-color: #2c2c2c;
-  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+  background-color: #eeeeee;
 }
 
-.has-sidebar .right-sidebar .btntitle[aria-expanded=true] {
-  background-color: #272727 !important;
-  border-right: 2px solid #dd3333;
+.has-sidebar .right-sidebar button {
+  width: 100%;
+  text-align: right;
+  border: none !important;
+  outline: none !important;
+  padding-right: 17px;
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.7);
 }
 
-.has-sidebar .right-sidebar .btntitle[aria-expanded=true] span {
-  color: #fff !important;
+.has-sidebar .right-sidebar button:hover {
+  color: black;
 }
 
 .has-sidebar .right-sidebar .sidebarItem {
-  color: #d6d6d6 !important;
+  color: #262626 !important;
   font-size: 0.8rem;
-  background-color: #2c2c2c;
+  background-color: #eeeeee;
   border-right: 2px solid transparent;
-  padding: 15px 20px;
+  padding: 10px;
 }
 
 .has-sidebar .right-sidebar .sidebarItem:hover,
 .has-sidebar .right-sidebar .sidebarItem:focus {
   border-right: 2px solid #dd3333;
-  background-color: #272727;
+  background-color: #e0e0e0;
   color: #fff !important;
   text-decoration: none;
 }
@@ -826,24 +800,22 @@ a {
 }
 
 .has-sidebar .right-sidebar .btntitle {
-  color: #d6d6d6 !important;
+  color: #262626 !important;
   border-right: 2px solid transparent;
   font-size: 0.8rem;
-  background-color: #2c2c2c;
+  background-color: #eeeeee;
   border-radius: 0;
   padding: 15px 20px;
   transition: all 0.3s;
 }
 
 .has-sidebar .right-sidebar .btntitle:hover {
-  background-color: #272727;
-  border-right: 2px solid #dd3333;
-  color: #fff !important;
+  background-color: #e0e0e0;
   cursor: pointer;
 }
 
 .has-sidebar .right-sidebar table {
-  background-color: #3d3d3d;
+  background-color: #d9d9d9;
 }
 
 .has-sidebar .right-sidebar table tr:hover a {

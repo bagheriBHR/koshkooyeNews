@@ -20,4 +20,6 @@ Auth::routes();
 Route::middleware('auth')->prefix('/admin')->namespace('backend')->group(function (){
     Route::get('/','HomeController@index')->name('admin.home');
     Route::resource('user', 'UserController');
+    Route::post('user/filter', 'UserController@filter')->name('user.filter');
+    Route::post('user/search', 'UserController@search')->name('user.search');
 });

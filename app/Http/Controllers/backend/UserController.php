@@ -5,6 +5,8 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -16,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('created_at','desc')->paginate(10);
-        return view('backend.user.index',compact(['users']));
+        return view('backend.user.list',compact(['users']));
     }
 
     /**
@@ -84,4 +86,38 @@ class UserController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+
+        if($request->search == null){
+            Session::flash('warning', 'نام خانوادگی کاربر را وارد کنید.');
+            return redirect()->route('user.index');
+        }else{
+            $users = User::where('last_name', 'LIKE', '%' . $request->search . '%')->paginate(10);
+            return view('backend.user.list',compact(['users']));
+        }
+    }
+    public function filter(Request $request)
+    {
+        switch($request->input('filter')){
+            case 'admin':
+                $users = User::where('is_admin',1)->paginate(10);
+                break;
+            case 'author':
+                $users = User::where('is_author',1)->paginate(10);
+                break;
+            case 'editor':
+                $users = User::where('is_editor',1)->paginate(10);
+                break;
+            case 'active':
+                $users = User::where('status',1)->paginate(10);
+                break;
+            case 'deactive':
+                $users = User::where('status',0)->paginate(10);
+                break;
+        }
+             return view('backend.user.list',compact(['users']));
+    }
+
 }

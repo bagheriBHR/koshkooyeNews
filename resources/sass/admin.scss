@@ -6,60 +6,58 @@
     url('public/fonts/Vazir.woff2') format('woff2'),
     url('public/fonts/Vazir.woff') format('woff'),
     url('public/fonts/Vazir.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
 }
-
-@font-face {
-    font-family: Vazir;
-    src: url('public/fonts/Vazir-Bold.eot');
-    src: url('public/fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
-    url('public/fonts/Vazir-Bold.woff2') format('woff2'),
-    url('public/fonts/Vazir-Bold.woff') format('woff'),
-    url('public/fonts/Vazir-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: Vazir;
-    src: url('public/fonts/Vazir-Black.eot');
-    src: url('public/fonts/Vazir-Black.eot?#iefix') format('embedded-opentype'),
-    url('public/fonts/Vazir-Black.woff2') format('woff2'),
-    url('public/fonts/Vazir-Black.woff') format('woff'),
-    url('public/fonts/Vazir-Black.ttf') format('truetype');
-    font-weight: 900;
-    font-style: normal;
-}
-@font-face {
-    font-family: Vazir;
-    src: url('public/fonts/Vazir-Medium.eot');
-    src: url('public/fonts/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
-    url('public/fonts/Vazir-Medium.woff2') format('woff2'),
-    url('public/fonts/Vazir-Medium.woff') format('woff'),
-    url('public/fonts/Vazir-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-}
-@font-face {
-    font-family: Vazir;
-    src: url('public/fonts/Vazir-Light.eot');
-    src: url('public/fonts/Vazir-Light.eot?#iefix') format('embedded-opentype'),
-    url('public/fonts/Vazir-Light.woff2') format('woff2'),
-    url('public/fonts/Vazir-Light.woff') format('woff'),
-    url('public/fonts/Vazir-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-}
-@font-face {
-    font-family: Vazir;
-    src: url('public/fonts/Vazir-Thin.eot');
-    src: url('public/fonts/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
-    url('public/fonts/Vazir-Thin.woff2') format('woff2'),
-    url('public/fonts/Vazir-Thin.woff') format('woff'),
-    url('public/fonts/Vazir-Thin.ttf') format('truetype');
-    font-weight: 100;
-    font-style: normal;
-}
+//
+//@font-face {
+//    font-family: Vazir;
+//    src: url('public/fonts/Vazir-Bold.eot');
+//    src: url('public/fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+//    url('public/fonts/Vazir-Bold.woff2') format('woff2'),
+//    url('public/fonts/Vazir-Bold.woff') format('woff'),
+//    url('public/fonts/Vazir-Bold.ttf') format('truetype');
+//    font-weight: bold;
+//    font-style: normal;
+//}
+//@font-face {
+//    font-family: Vazir;
+//    src: url('public/fonts/Vazir-Black.eot');
+//    src: url('public/fonts/Vazir-Black.eot?#iefix') format('embedded-opentype'),
+//    url('public/fonts/Vazir-Black.woff2') format('woff2'),
+//    url('public/fonts/Vazir-Black.woff') format('woff'),
+//    url('public/fonts/Vazir-Black.ttf') format('truetype');
+//    font-weight: 900;
+//    font-style: normal;
+//}
+//@font-face {
+//    font-family: Vazir;
+//    src: url('public/fonts/Vazir-Medium.eot');
+//    src: url('public/fonts/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
+//    url('public/fonts/Vazir-Medium.woff2') format('woff2'),
+//    url('public/fonts/Vazir-Medium.woff') format('woff'),
+//    url('public/fonts/Vazir-Medium.ttf') format('truetype');
+//    font-weight: 500;
+//    font-style: normal;
+//}
+//@font-face {
+//    font-family: Vazir;
+//    src: url('public/fonts/Vazir-Light.eot');
+//    src: url('public/fonts/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+//    url('public/fonts/Vazir-Light.woff2') format('woff2'),
+//    url('public/fonts/Vazir-Light.woff') format('woff'),
+//    url('public/fonts/Vazir-Light.ttf') format('truetype');
+//    font-weight: 300;
+//    font-style: normal;
+//}
+//@font-face {
+//    font-family: Vazir;
+//    src: url('public/fonts/Vazir-Thin.eot');
+//    src: url('public/fonts/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
+//    url('public/fonts/Vazir-Thin.woff2') format('woff2'),
+//    url('public/fonts/Vazir-Thin.woff') format('woff'),
+//    url('public/fonts/Vazir-Thin.ttf') format('truetype');
+//    font-weight: 100;
+//    font-style: normal;
+//}
 *,
 a {
   font-family: "Vazir";
@@ -78,10 +76,10 @@ $buttonColor: #868686;
 
 // left sidebar colors
 
-$sidebarBgColor: #2c2c2c;
-$sidebarHoverBgColor: #272727;
-$sidebarSubMenuBgColor: #3d3d3d;
-$sidebarTextColor: #d6d6d6;
+$sidebarBgColor: #eeeeee;
+$sidebarHoverBgColor: #e0e0e0;
+$sidebarSubMenuBgColor: #d9d9d9;
+$sidebarTextColor: #262626;
 
 @mixin input {
   &:focus,
@@ -107,7 +105,6 @@ $sidebarTextColor: #d6d6d6;
 }
 .main {
   background-color: $mainBackground;
-  overflow: hidden;
   .title {
     font-size: 1.3rem;
     color: #836866;
@@ -140,18 +137,23 @@ $sidebarTextColor: #d6d6d6;
     cursor: pointer;
     color: #bbbbbb;
   }
+    .search-icon {
+        left: 13px !important;
+        top: 6px !important;
+    }
 }
-
 .search-icon {
-  left: 13px;
-  top: 6px;
-  color: #bdbdbd;
-  z-index: 3;
-  font-size: 0.9rem;
-  transform: scaleX(-1);
-  transition: all 0.3s;
+    left: 5px;
+    top: 0px;
+    color: #bdbdbd;
+    z-index: 3;
+    font-size: 0.9rem;
+    transform: scaleX(-1);
+    transition: all 0.3s;
+    background-color: transparent;
+    border: none !important;
+    outline: none !important;
 }
-
 .header {
   background-color: $darkGrayColor;
   box-shadow: 0 2px 3px $headerBoxShadowColor;
@@ -407,7 +409,11 @@ $sidebarTextColor: #d6d6d6;
     border: 1px solid rgba(29, 18, 18, 0.4);
   }
 }
-
+.not-found{
+    font-size: 1.2rem;
+    color: rgba(0,0,0,0.6);
+    font-weight: bold;
+}
 .filter {
   background-color: $bgGray;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -701,7 +707,6 @@ $sidebarTextColor: #d6d6d6;
 
 //sidebar
 .has-sidebar {
-  margin: 0px 0px 0px 20px;
   display: flex;
 
   [data-toggle="collapse"][aria-expanded="true"] > .js-rotate-if-collapsed {
@@ -717,23 +722,26 @@ $sidebarTextColor: #d6d6d6;
   }
 
   .right-sidebar {
-    border-top: 2px solid $darkOrangeColor;
     width: 20%;
     background-color: $sidebarBgColor;
-    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
-    .btntitle[aria-expanded="true"] {
-      background-color: $sidebarHoverBgColor !important;
-      border-right: 2px solid $darkOrangeColor;
-      span {
-        color: #fff !important;
+      button{
+          width: 100%;
+          text-align: right;
+          border: none !important;
+          outline: none !important;
+          padding-right: 17px;
+          background-color: transparent;
+          color: rgba(0,0,0,0.7);
+          &:hover{
+              color: rgba(0,0,0,1);
+          }
       }
-    }
     .sidebarItem {
       color: $sidebarTextColor !important;
       font-size: 0.8rem;
       background-color: $sidebarBgColor;
       border-right: 2px solid transparent;
-      padding: 15px 20px;
+      padding: 10px;
       &:hover,
       &:focus {
         border-right: 2px solid $darkOrangeColor;
@@ -758,8 +766,6 @@ $sidebarTextColor: #d6d6d6;
       transition: all 0.3s;
       &:hover {
         background-color: $sidebarHoverBgColor;
-        border-right: 2px solid $darkOrangeColor;
-        color: #fff !important;
         cursor: pointer;
       }
     }
