@@ -456,7 +456,7 @@ $sidebarTextColor: #262626;
 
 .form-title {
   color: #fff !important;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   background-color: $orangeColor;
   border-radius: 0;
   transition: all 0.3s;
@@ -468,12 +468,12 @@ $sidebarTextColor: #262626;
   border-bottom: 1px solid #eeeeee;
 }
 .custom-field-title {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: rgb(71, 71, 71);
 }
 .custom-field {
   @include input();
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: rgba(0, 0, 0, 0.7);
 }
 .custom-field:focus::placeholder {

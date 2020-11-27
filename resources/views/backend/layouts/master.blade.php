@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin.css')}}">
 
+    @yield('style')
     <title>خانه خبر کشکوییه</title>
 </head>
 <body>

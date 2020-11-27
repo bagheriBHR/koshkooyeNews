@@ -21,7 +21,6 @@ a {
 
 .main {
   background-color: #fff;
-  overflow: hidden;
 }
 
 .main .title {
@@ -439,7 +438,7 @@ a {
 
 .form-title {
   color: #fff !important;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   background-color: #dd3333;
   border-radius: 0;
   transition: all 0.3s;
@@ -454,12 +453,12 @@ a {
 }
 
 .custom-field-title {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #474747;
 }
 
 .custom-field {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: rgba(0, 0, 0, 0.7);
 }
 

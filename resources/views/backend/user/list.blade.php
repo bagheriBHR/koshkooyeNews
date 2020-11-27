@@ -29,7 +29,7 @@
 
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center w-100 px-3">
                     <h2 class="title2 mb-0 pt-3 py-md-3 font-weight-normal">کاربر را برای تغییر انتخاب کنید</h2>
-                    <button class="btn custombutton my-3 my-md-0 d-flex align-items-center"><i class="fa fa-plus ml-3 green"></i>افزودن کاربر</button>
+                    <a href="{{route('user.create')}}" class="btn custombutton my-3 my-md-0 d-flex align-items-center"><i class="fa fa-plus ml-3 green"></i>افزودن کاربر</a>
                 </div>
 
                 <!-- tables -->
@@ -76,7 +76,7 @@
                                     @foreach($users as $key=>$user)
                                     <tr>
                                         <td class="text-right" scope="row">{{ $key+1 }}</td>
-                                        <td class="text-center p-0"><img src="{{ $user->avatar ? $user->avatar : "http://www.placehold.it/400" }}" alt="" class="my-1" style="width:40px;"></td>
+                                        <td class="text-center p-0"><img src="{{ $user->avatar ? '/storage/photos/avatar/'.$user->avatar : "http://www.placehold.it/400" }}" alt="" class="my-1" style="width:40px;"></td>
                                         <td class="text-right"><a href="#">{{ $user->first_name . ' '. $user->last_name}}</a></td>
                                         <td class="text-right">{{ $user->email }}</td>
                                         <td class="text-right">
