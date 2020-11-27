@@ -17,7 +17,9 @@ class UserPolicy
      * @return mixed
      */
     public function before($user, $ability) {
-        return $user->is_admin==1;
+        if($user->is_admin==1) {
+            return true;
+        }
     }
     public function viewAny(User $user)
     {

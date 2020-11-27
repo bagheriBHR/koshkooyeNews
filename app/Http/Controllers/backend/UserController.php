@@ -19,12 +19,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->authorizeResource(User::class,'user');
-    }
+//    public function __construct()
+//    {
+//        $this->authorizeResource(User::class,'user');
+//    }
     public function index()
     {
+        $this->authorize('viewAny',Auth::user());
         $users = User::orderBy('created_at','desc')->paginate(10);
         return view('backend.user.list',compact(['users']));
     }
@@ -36,6 +37,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('viewAny',Auth::user());
         $user = Auth::user();
         return view('backend.user.create');
     }
@@ -48,6 +50,7 @@ class UserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
+        $this->authorize('viewAny',Auth::user());
         $role = $request->input('role');
         $user = new User();
         $user->first_name = $request->input('first_name');
@@ -83,6 +86,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('viewAny',Auth::user());
         $user = User::whereId($id)->first();
         return view('backend.user.edit',compact(['user']));
     }
@@ -96,6 +100,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
+        $this->authorize('viewAny',Auth::user());
         $role = $request->input('role');
         $user = User::find($id);
         $user->first_name = $request->input('first_name');
@@ -119,12 +124,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('viewAny',Auth::user());
+        $user = User::find($id);
+//        if (count($user->courses) || count($user->posts)){
+//            Session::flash('delete', 'کاربر دارای مطلب یا دوره می باشد و قابل حذف نیست.');
+//            return redirect()->route('user.index');
+//        }
+        $user->delete();
+        Session::flash('danger', 'کاربر با موفقیت حذف گردید.');
+        return redirect()->route('user.index');
     }
 
     public function search(Request $request)
     {
-
+        $this->authorize('viewAny',Auth::user());
         if($request->search == null){
             Session::flash('warning', 'نام خانوادگی کاربر را وارد کنید.');
             return redirect()->route('user.index');
@@ -135,6 +148,7 @@ class UserController extends Controller
     }
     public function filter(Request $request)
     {
+        $this->authorize('viewAny',Auth::user());
         switch($request->input('filter')){
             case 'admin':
                 $users = User::where('is_admin',1)->paginate(10);
@@ -154,14 +168,5 @@ class UserController extends Controller
         }
              return view('backend.user.list',compact(['users']));
     }
-    public function changePassword(Request $request)
-    {
-        return ($request);
-    }
-    public function changePasswordForm(Request $request)
-    {
-        return view('backend.user.changePassword');
-    }
-
 
 }

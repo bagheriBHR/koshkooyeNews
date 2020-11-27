@@ -22,7 +22,7 @@ Route::middleware('auth')->prefix('/admin')->namespace('backend')->group(functio
     Route::resource('user', 'UserController');
     Route::post('user/filter', 'UserController@filter')->name('user.filter');
     Route::post('user/search', 'UserController@search')->name('user.search');
-    Route::post('user/changePasswordForm', 'UserController@changePasswordForm')->name('user.changePassword.show');
-    Route::post('user/changePassword', 'UserController@changePassword')->name('user.changePassword');
+    Route::get('resetForm','ResetPasswordController@showResetForm')->name('user.password.index');
+    Route::post('resetPassword','ResetPasswordController@reset')->name('user.password.update');
     Route::post('upload', 'PhotoController@upload')->name('photo.upload');
 });

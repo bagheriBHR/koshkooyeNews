@@ -92,6 +92,11 @@
                     <div class="d-flex align-items-end">
                         <div class="col-sm-6">
                             <button type="submit" class="btn custombutton custombutton-success py-2 px-4"> به روز رسانی</button>
+                            <form action="{{route('user.destroy',$user->id)}}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn custombutton custombutton-danger py-2 px-4">حذف </button>
+                            </form>
                         </div>
                     </div>
             </form>

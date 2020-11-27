@@ -38,7 +38,9 @@
 
                     @else
                         <li class=" py-0"><a href=""> نمایش وبگاه</a><span class="text-white mx-1">/</span></li>
-                        <li class=" py-0"><a href="{{route('user.changePassword.show')}}">تغییر گذرواژه</a><span class="text-white mx-1">/</span></li>
+                        <li class=" py-0">
+                            <a href="{{route('user.password.index')}}">تغییر گذرواژه</a><span class="text-white mx-1">/</span>
+                        </li>
                         <li class="py-0">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
