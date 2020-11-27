@@ -1,0 +1,973 @@
+
+@font-face {
+    font-family: Vazir;
+    src: url('public/fonts/Vazir.eot');
+    src: url('public/fonts/Vazir.eot?#iefix') format('embedded-opentype'),
+    url('public/fonts/Vazir.woff2') format('woff2'),
+    url('public/fonts/Vazir.woff') format('woff'),
+    url('public/fonts/Vazir.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Vazir;
+    src: url('public/fonts/Vazir-Bold.eot');
+    src: url('public/fonts/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+    url('public/fonts/Vazir-Bold.woff2') format('woff2'),
+    url('public/fonts/Vazir-Bold.woff') format('woff'),
+    url('public/fonts/Vazir-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('public/fonts/Vazir-Black.eot');
+    src: url('public/fonts/Vazir-Black.eot?#iefix') format('embedded-opentype'),
+    url('public/fonts/Vazir-Black.woff2') format('woff2'),
+    url('public/fonts/Vazir-Black.woff') format('woff'),
+    url('public/fonts/Vazir-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('public/fonts/Vazir-Medium.eot');
+    src: url('public/fonts/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
+    url('public/fonts/Vazir-Medium.woff2') format('woff2'),
+    url('public/fonts/Vazir-Medium.woff') format('woff'),
+    url('public/fonts/Vazir-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('public/fonts/Vazir-Light.eot');
+    src: url('public/fonts/Vazir-Light.eot?#iefix') format('embedded-opentype'),
+    url('public/fonts/Vazir-Light.woff2') format('woff2'),
+    url('public/fonts/Vazir-Light.woff') format('woff'),
+    url('public/fonts/Vazir-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: Vazir;
+    src: url('public/fonts/Vazir-Thin.eot');
+    src: url('public/fonts/Vazir-Thin.eot?#iefix') format('embedded-opentype'),
+    url('public/fonts/Vazir-Thin.woff2') format('woff2'),
+    url('public/fonts/Vazir-Thin.woff') format('woff'),
+    url('public/fonts/Vazir-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+*,
+a {
+  font-family: "Vazir";
+}
+
+$mainBackground: #fff;
+
+$bgGray: rgba(0, 0, 0, 0.04);
+$lightGrayColor: rgb(134, 134, 134);
+$darkGrayColor: rgb(57, 57, 57);
+$orangeColor:  #dd3333;
+$darkOrangeColor: #dd3333;
+$headerBoxShadowColor: rgba(0, 0, 0, 0.2);
+$navbarBackGroundColor: rgba(56, 56, 56, 0.5);
+$buttonColor: #868686;
+
+// left sidebar colors
+
+$sidebarBgColor: #2c2c2c;
+$sidebarHoverBgColor: #272727;
+$sidebarSubMenuBgColor: #3d3d3d;
+$sidebarTextColor: #d6d6d6;
+
+@mixin input {
+  &:focus,
+  &:active,
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    transition: background-color 5000s ease-in-out 0s !important;
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset !important;
+    -webkit-text-fill-color: rgb(61, 61, 61) !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (min-width: 767px) {
+  .search {
+    width: 40% !important;
+  }
+  .table-search form {
+    width: 40% !important;
+  }
+}
+.main {
+  background-color: $mainBackground;
+  overflow: hidden;
+  .title {
+    font-size: 1.3rem;
+    color: #836866;
+  }
+  .title2 {
+    font-size: 1rem;
+    color: #836866;
+  }
+}
+
+.search {
+  width: 90%;
+  input {
+    background-color: $lightGrayColor;
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.8rem !important;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 10px;
+
+    @include input();
+
+    &::placeholder {
+      font-size: 0.8rem !important;
+      color: #bdbdbd;
+    }
+  }
+
+  &:hover .serch-icon {
+    cursor: pointer;
+    color: #bbbbbb;
+  }
+}
+
+.search-icon {
+  left: 13px;
+  top: 6px;
+  color: #bdbdbd;
+  z-index: 3;
+  font-size: 0.9rem;
+  transform: scaleX(-1);
+  transition: all 0.3s;
+}
+
+.header {
+  background-color: $darkGrayColor;
+  box-shadow: 0 2px 3px $headerBoxShadowColor;
+  h1 a {
+    color: #f5dd5d;
+    font-size: 1.5rem;
+    text-decoration: none;
+  }
+  h3 {
+    color: #ffffcc;
+    font-size: 0.8rem;
+  }
+  ul li img {
+    width: 13px;
+  }
+  ul li a {
+    color: #fff;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s;
+    &:hover {
+      color: $orangeColor;
+      border-bottom: 1px solid $orangeColor;
+      text-decoration: none;
+    }
+  }
+  .navbar {
+    border-top: 1px solid $orangeColor;
+    background-color: $navbarBackGroundColor;
+    .nav-item {
+      // padding: 0px 10px;
+
+      .nav-link {
+        padding: 15px 30px;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+        position: relative;
+        color: rgba(255, 255, 255, 0.9);
+        border-bottom: none !important;
+        &:hover {
+          background-color: $orangeColor;
+        }
+        &::after {
+          width: 1px;
+          height: 15px;
+          content: "";
+          background-color: #424141;
+          position: absolute;
+          top: 18px;
+          left: -1px;
+        }
+      }
+      &:last-child .nav-link::after {
+        background-color: transparent !important;
+      }
+    }
+  }
+}
+
+.sidebar {
+  .btntitle {
+    color: #fff !important;
+    font-size: 0.8rem;
+    background-color: $orangeColor;
+    border-radius: 0;
+    &:hover {
+      color: #fff;
+      cursor: pointer;
+      text-decoration: underline !important;
+    }
+  }
+  table {
+    tr {
+      border-bottom: 1px solid #eeeeee;
+      &:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.03);
+      }
+      a {
+        font-size: 0.8rem;
+        color: #447e9b !important;
+        transition: all 0.3s;
+        &:hover {
+          color: #0f3244 !important;
+          text-decoration: none;
+        }
+      }
+      img {
+        width: 15px;
+      }
+    }
+  }
+}
+
+.activity {
+  background-color: $bgGray;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  h2 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    color: #6b7174;
+  }
+  h3 {
+    font-size: 0.9rem;
+    color: #6b7174;
+  }
+  img {
+    width: 12px;
+    height: 12px;
+  }
+  a {
+    color: #447e9b;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+    &:hover {
+      color: #0f3244;
+      text-decoration: none;
+    }
+  }
+  span {
+    color: #9c9a99;
+    font-size: 0.7rem;
+  }
+}
+
+.statistics {
+  background-color: $bgGray;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  h2 {
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    color: #6b7174;
+    font-weight: bold;
+    i {
+      color: $orangeColor;
+    }
+  }
+  h6 {
+    font-size: 0.9rem;
+    color: #6b7174;
+    font-weight: bold;
+    i {
+      color: green;
+    }
+  }
+  span {
+    color: #8a8989;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  .down {
+    h6,
+    span {
+      font-size: 0.7rem !important;
+    }
+    i {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  img {
+    width: 12px;
+    height: 12px;
+  }
+  a {
+    color: #447e9b;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+  }
+  a:hover {
+    color: #0f3244;
+    text-decoration: none;
+  }
+}
+
+.table-search {
+  background-color: $bgGray;
+  form {
+    width: 100%;
+  }
+  input {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    width: 100%;
+    padding-left: 40px;
+    background-color: transparent;
+    font-size: 0.8rem;
+
+    @include input();
+  }
+
+  &:hover .serch-icon {
+    cursor: pointer;
+    color: #bbbbbb;
+  }
+}
+
+.rotated-header {
+  th {
+    border-top: 0;
+    padding: 20px 0;
+    height: 180px;
+    vertical-align: top !important;
+    font-size: 0.8rem;
+    text-align: center;
+
+    span {
+      display: inline-block;
+      bottom: 0;
+      margin: 0 0 0 10px;
+      padding: 0;
+      width: 20px;
+      height: 20px;
+      font-size: 0.8rem;
+      text-align: left;
+      white-space: nowrap;
+      margin-bottom: 20px;
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
+  }
+}
+.customtable {
+  thead {
+    background-color: $bgGray;
+    color: rgba(0, 0, 0, 0.7) !important;
+    font-size: 0.8rem;
+  }
+  tr td {
+    vertical-align: middle !important;
+    font-size: 0.8rem;
+    color: rgb(129, 129, 129);
+
+    a:hover {
+      color: rgb(18, 20, 110);
+      text-decoration: none;
+    }
+  }
+  tbody tr:nth-child(even) {
+    background-color: $bgGray;
+  }
+}
+
+.date a {
+  color: rgba(95, 43, 43, 0.6);
+  text-decoration: none;
+  font-size: 0.7rem;
+  border: 1px solid rgba(29, 18, 18, 0.2);
+  padding: 2px 10px;
+  transition: all 0.3s;
+
+  &:hover {
+    color: rgba(95, 43, 43, 0.8);
+    border: 1px solid rgba(29, 18, 18, 0.4);
+  }
+}
+
+.filter {
+  background-color: $bgGray;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  i {
+    font-size: 0.7rem !important;
+  }
+  .title {
+    background-color: $orangeColor;
+    color: #fff;
+    text-align: right;
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+  ul {
+    list-style-type: none;
+    text-align: right;
+    padding: 10px 15px;
+
+    li {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 8px;
+      transition: all 0.3s;
+      &:last-child {
+        border-bottom: none;
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+      a {
+        font-size: 0.8rem;
+        padding: 5px 0px;
+        color: rgba(0, 0, 0, 0.7);
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// form--------------------------------------------------------------------------------------------
+
+.form-title {
+  color: #fff !important;
+  font-size: 0.8rem;
+  background-color: $orangeColor;
+  border-radius: 0;
+  transition: all 0.3s;
+  &:hover {
+    color: #fff;
+  }
+}
+.customform {
+  border-bottom: 1px solid #eeeeee;
+}
+.custom-field-title {
+  font-size: 0.8rem;
+  color: rgb(71, 71, 71);
+}
+.custom-field {
+  @include input();
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+.custom-field:focus::placeholder {
+  color: transparent;
+}
+.custombutton {
+  background-color: $buttonColor;
+  font-size: 0.8rem;
+  color: rgb(231, 231, 231);
+  transition: all 0.3s;
+  border-radius: 2px;
+  padding: 5px 20px !important;
+  outline: none !important;
+  box-shadow: none !important;
+  transition: all 0.3s;
+  &-danger {
+    background-color: #9b2e2e;
+    border-color: #9b2e2e;
+    &:hover {
+      background-color: #912a2a;
+      border-color: #912a2a;
+    }
+  }
+  &-success {
+    background-color: #2e9b46;
+    border-color: #2e9b46;
+    &:hover {
+      background-color: #217e35;
+      border-color: #217e35;
+    }
+  }
+  &-primary {
+    background-color: $orangeColor;
+    border-color: $orangeColor;
+    &:hover {
+      background-color: $darkOrangeColor;
+      border-color: $darkOrangeColor;
+    }
+  }
+
+  i {
+    transition: all 0.3s;
+    color: #575757;
+    line-height: 0px;
+    font-size: 1rem !important;
+  }
+
+  &:hover {
+    color: #fff;
+    i {
+      color: $orangeColor;
+    }
+    .green {
+      color: green !important;
+    }
+  }
+}
+
+.personalCard {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-top: 2px solid $orangeColor;
+  .custom-field-title {
+    color: rgba(0, 0, 0, 0.6) !important;
+  }
+  .position-absolute {
+    top: -16px;
+    right: 15px;
+    background-color: #fff;
+    padding: 3px 10px;
+
+    span {
+      font-size: 0.8rem;
+      color: rgba(0, 0, 0, 0.6);
+      font-weight: bold;
+    }
+  }
+}
+
+.formTab {
+  a.active {
+    border-top: 2px solid $orangeColor !important;
+
+    i {
+      color: $orangeColor;
+    }
+  }
+  a {
+    border-top-width: 2px !important;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: bold;
+
+    &:hover,
+    &:focus {
+      border-top: 2px solid $orangeColor !important;
+    }
+  }
+}
+
+.tab-content {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 0px !important;
+}
+
+.file_upload {
+  i {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  #selected_filename {
+    font-size: 0.7rem;
+    font-weight: bold !important;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .file_upload_button {
+    background-color: $orangeColor;
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 5px 15px;
+    outline: none !important;
+    border: none !important;
+    border-radius: 2px;
+  }
+}
+
+//login page----------------------------------------------
+
+.loginContainer {
+  .login-card {
+    background-color: $darkGrayColor;
+    border-radius: 0px !important;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    border-top: 4px solid $orangeColor;
+
+    h4 {
+      font-size: 1.3rem;
+      color: #fff;
+    }
+  }
+
+  .custom-form-group {
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+    i {
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 1rem;
+    }
+    .form-icon {
+      right: 10px;
+      top: 12px;
+      color: rgba(0, 0, 0, 0.4) !important;
+      z-index: 3;
+      font-size: 1rem;
+      position: absolute;
+    }
+  }
+
+  .custom-input {
+    background-color: #fff;
+    color: rgb(65, 65, 65) !important;
+    font-size: 0.8rem !important;
+    border: none;
+    border: none !important;
+    border-radius: 2px;
+    padding-right: 35px;
+    height: 40px;
+
+    @include input();
+
+    &::placeholder {
+      font-size: 0.8rem !important;
+      color: rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .forget {
+    color: rgba(255, 255, 255, 1) !important;
+    transition: all 0.3s;
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+  a.forget:hover {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .form-button {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 1rem;
+    background-color: $orangeColor;
+    box-shadow: 0 0 3px $darkOrangeColor;
+    transition: all 0.3s;
+    width: 100%;
+    padding: 5px 40px;
+    margin-right: auto;
+    border-radius: 3px;
+    margin-top: 10px;
+    /* margin-top: 10px; */
+    height: 40px;
+    &:hover {
+      background-color: $darkOrangeColor;
+    }
+  }
+}
+
+.forget-password {
+  h4 {
+    font-size: 1.1rem !important ;
+  }
+  .desc {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    i {
+      color: gray;
+      font-size: 1rem;
+    }
+    p {
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 0.8rem;
+    }
+  }
+  label {
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    font-size: 0.8rem;
+  }
+}
+
+//sidebar
+.has-sidebar {
+  margin: 0px 0px 0px 20px;
+  display: flex;
+
+  [data-toggle="collapse"][aria-expanded="true"] > .js-rotate-if-collapsed {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    transition: all 0.3s;
+  }
+  .js-rotate-if-collapsed {
+    transition: all 0.3s;
+  }
+
+  .right-sidebar {
+    border-top: 2px solid $darkOrangeColor;
+    width: 20%;
+    background-color: $sidebarBgColor;
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+    .btntitle[aria-expanded="true"] {
+      background-color: $sidebarHoverBgColor !important;
+      border-right: 2px solid $darkOrangeColor;
+      span {
+        color: #fff !important;
+      }
+    }
+    .sidebarItem {
+      color: $sidebarTextColor !important;
+      font-size: 0.8rem;
+      background-color: $sidebarBgColor;
+      border-right: 2px solid transparent;
+      padding: 15px 20px;
+      &:hover,
+      &:focus {
+        border-right: 2px solid $darkOrangeColor;
+        background-color: $sidebarHoverBgColor;
+        color: #fff !important;
+        text-decoration: none;
+      }
+    }
+    .sidebarTitle {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 15px 20px;
+    }
+    .btntitle {
+      color: $sidebarTextColor !important;
+      border-right: 2px solid transparent;
+      font-size: 0.8rem;
+      background-color: $sidebarBgColor;
+      border-radius: 0;
+      padding: 15px 20px;
+      transition: all 0.3s;
+      &:hover {
+        background-color: $sidebarHoverBgColor;
+        border-right: 2px solid $darkOrangeColor;
+        color: #fff !important;
+        cursor: pointer;
+      }
+    }
+    table {
+      background-color: $sidebarSubMenuBgColor;
+      tr {
+        &:hover a {
+          color: #fff !important;
+          text-decoration: none;
+        }
+        a {
+          padding: 0.2rem 1rem 0.2rem 0rem;
+          font-size: 0.8rem;
+          color: #c2c2c2 !important;
+          transition: all 0.3s;
+        }
+      }
+    }
+  }
+
+  .left-sidebar {
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 80%;
+  }
+}
+
+// checkbox1-----------------------------------------------------------------------------------------
+
+.checkbox {
+  --background: #fff;
+  --border: #fff;
+  --border-hover: #dadada;
+  --border-active: #dd3333;
+  --tick: #fff;
+  position: relative;
+}
+
+.checkbox input,
+.checkbox svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.checkbox input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  outline: none;
+  background: var(--background);
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 2px;
+  -webkit-transition: -webkit-box-shadow 0.3s;
+  transition: -webkit-box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+  -webkit-box-shadow: inset 0 0 0 var(--s, 1px) var(--b, var(--border));
+  box-shadow: inset 0 0 0 var(--s, 1px) var(--b, var(--border));
+}
+
+.checkbox input:hover {
+  --s: 2px;
+  --b: var(--border-hover);
+}
+
+.checkbox input:checked {
+  --b: var(--border-active);
+}
+
+.checkbox svg {
+  pointer-events: none;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: var(--stroke, var(--border-active));
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  -webkit-transform: scale(var(--scale, 1)) translateZ(0);
+  transform: scale(var(--scale, 1)) translateZ(0);
+}
+
+.checkbox.path input:checked {
+  --s: 2px;
+  -webkit-transition-delay: 0.4s;
+  transition-delay: 0.4s;
+}
+
+.checkbox.path input:checked + svg {
+  --a: 16.1 86.12;
+  --o: 102.22;
+}
+
+.checkbox.path svg {
+  stroke-dasharray: var(--a, 86.12);
+  stroke-dashoffset: var(--o, 86.12);
+  -webkit-transition: stroke-dasharray 0.6s, stroke-dashoffset 0.6s;
+  transition: stroke-dasharray 0.6s, stroke-dashoffset 0.6s;
+}
+
+.checkbox.bounce {
+  --stroke: var(--tick);
+}
+
+.checkbox.bounce input:checked {
+  --s: 11px;
+}
+
+.checkbox.bounce input:checked + svg {
+  -webkit-animation: bounce 0.4s linear forwards 0.2s;
+  animation: bounce 0.4s linear forwards 0.2s;
+}
+
+.checkbox.bounce svg {
+  --scale: 0;
+}
+
+@-webkit-keyframes bounce {
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+/* checkbox 2--------------------------------------------------------------*/
+.boxes {
+  margin: auto;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-radius: 3px;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"] + label {
+    display: block;
+    position: relative;
+    padding-right: 35px;
+    margin-bottom: 20px;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    font-size: 0.9rem;
+  }
+
+  input[type="checkbox"] + label:last-child {
+    margin-bottom: 0;
+  }
+
+  input[type="checkbox"] + label:after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0.6;
+    -webkit-transition: all 0.12s, border-color 0.08s;
+    transition: all 0.12s, border-color 0.08s;
+  }
+
+  input[type="checkbox"]:checked + label:after {
+    width: 10px;
+    top: -5px;
+    left: 5px;
+    border-radius: 0;
+    opacity: 1;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
