@@ -106,7 +106,7 @@
 @endsection
 @section('script')
 
-    <script type="text/javascript" src="{{asset('/js/dropzone.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/js/dropzone.js')}}"></script>
     <script>
         var drop = new Dropzone('#photo', {
             addRemoveLinks: true,
