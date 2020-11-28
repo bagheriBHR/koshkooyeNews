@@ -25,4 +25,5 @@ Route::middleware('auth')->prefix('/admin')->namespace('backend')->group(functio
     Route::get('resetForm','ResetPasswordController@showResetForm')->name('user.password.index');
     Route::post('resetPassword','ResetPasswordController@reset')->name('user.password.update');
     Route::post('upload', 'PhotoController@upload')->name('photo.upload');
+    Route::resource('category', 'CategoryController');
 });

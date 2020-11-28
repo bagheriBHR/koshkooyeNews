@@ -50,6 +50,7 @@ class UserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
+        return $request;
         $this->authorize('viewAny',Auth::user());
         $role = $request->input('role');
         $user = new User();

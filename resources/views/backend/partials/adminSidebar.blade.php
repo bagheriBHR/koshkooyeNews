@@ -38,8 +38,8 @@
                 <tr>
                     <td class="py-2 pr-2 font-weight-bold"><i class="fas fa-th ml-2"></i> دسته بندی ها </td>
                     <td class="text-left py-2 font-weight-normal pl-3">
-                        <a href="#" class="pl-3"><i class="fa fa-plus ml-2"></i> اضافه کردن </a>
-                        <a href="#"><i class="fas fa-eye ml-2"></i> مشاهده</a>
+                        <a href="{{route('category.create')}}" class="pl-3"><i class="fa fa-plus ml-2"></i> اضافه کردن </a>
+                        <a href="{{route('category.index')}}"><i class="fas fa-eye ml-2"></i> مشاهده</a>
                     </td>
                 </tr>
                 <tr>

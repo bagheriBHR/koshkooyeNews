@@ -71,6 +71,7 @@
                                         <th class="text-right">نقش</th>
                                         <th class="text-right">وضعیت</th>
                                         <th class="text-right">تاریخ ایجاد</th>
+                                        <th class="text-right"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,7 +93,13 @@
                                             <td class="text-center p-0"> <span class="badge badge-success p-1"> فعال</span></td>
                                         @endif
                                         <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($user->created_at)->formatDate() }}</td>
-
+                                        <td>
+                                            <form action="{{route('user.destroy',$user->id)}}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button onclick="return confirm('آیا از حذف کاربر مطمئن هستید؟');" class=" btn custombutton custombutton-danger py-2 px-4">حذف </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -175,3 +182,4 @@
             </div>
     </div>
 @endsection
+
