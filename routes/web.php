@@ -25,5 +25,12 @@ Route::middleware('auth')->prefix('/admin')->namespace('backend')->group(functio
     Route::get('resetForm','ResetPasswordController@showResetForm')->name('user.password.index');
     Route::post('resetPassword','ResetPasswordController@reset')->name('user.password.update');
     Route::post('upload', 'PhotoController@upload')->name('photo.upload');
+    Route::post('uploadThumbnail', 'PhotoController@uploadThumbnail')->name('thumbnail.upload');
+    Route::post('uploadGallery', 'PhotoController@uploadGallery')->name('gallery.upload');
+    Route::post('uploadVideo', 'VideoController@upload')->name('video.upload');
+    Route::post('ck_upload', 'PhotoController@ck_upload')->name('photo.ck_upload');
     Route::resource('category', 'CategoryController');
+    Route::resource('article', 'ArticleController');
+    Route::post('article/filter', 'ArticleController@filter')->name('article.filter');
+    Route::post('article/search', 'ArticleController@search')->name('article.search');
 });

@@ -43,19 +43,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="py-2 pr-2 font-weight-bold"><a href="#"><i class="fas fa-utensils  ml-2"></i>برنامه غذایی کاربران</a></td>
+                    <td class="py-2 pr-2 font-weight-bold"><i class="fas fa-newspaper ml-2"></i>مقالات </td>
                     <td class="text-left py-2 font-weight-normal pl-3">
-                        <a href="#" class="pl-3"><img src="image/add.png" alt="" class="pl-1"> اضافه کردن </a>
-                        <a href="#"><img src="image/edit.png" alt="" class="pl-1"> تغییر</a>
+                        <a href="{{route('article.create')}}" class="pl-3"><i class="fa fa-plus ml-2"></i> اضافه کردن </a>
+                        <a href="{{route('article.index')}}"><i class="fas fa-eye ml-2"></i> مشاهده</a>
                     </td>
                 </tr>
-                <tr>
-                    <td class="py-2 pr-2 font-weight-bold"><a href="#"><i class="fas fa-dumbbell  ml-2"></i>برنامه ورزشی کاربران</a></td>
-                    <td class="text-left py-2 font-weight-normal pl-3">
-                        <a href="#" class="pl-3"><img src="image/add.png" alt="" class="pl-1"> اضافه کردن </a>
-                        <a href="#"><img src="image/edit.png" alt="" class="pl-1"> تغییر</a>
-                    </td>
-                </tr>
+
             </table>
         </div>
     </div>
