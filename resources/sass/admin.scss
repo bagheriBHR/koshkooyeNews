@@ -1,13 +1,13 @@
 
 @font-face {
     font-family: Vazir;
-    src: url('public/fonts/Vazir.eot');
+    src: url('/public/fonts/Vazir.eot');
     src: url('public/fonts/Vazir.eot?#iefix') format('embedded-opentype'),
     url('public/fonts/Vazir.woff2') format('woff2'),
     url('public/fonts/Vazir.woff') format('woff'),
     url('public/fonts/Vazir.ttf') format('truetype');
 }
-//
+
 //@font-face {
 //    font-family: Vazir;
 //    src: url('public/fonts/Vazir-Bold.eot');
@@ -114,7 +114,10 @@ $sidebarTextColor: #262626;
     color: #836866;
   }
 }
-
+.badge{
+    font-size:0.9rem !important;
+    font-weight: normal !important;
+}
 .search {
   width: 90%;
   input {

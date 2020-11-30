@@ -1,8 +1,4 @@
-@font-face {
-  font-family: Vazir;
-  src: url(/fonts/Vazir.eot?91dd41e5f2b05c3c207a81f6f952fbd4);
-  src: url(/fonts/Vazir.eot?91dd41e5f2b05c3c207a81f6f952fbd4) format("embedded-opentype"), url(/fonts/Vazir.woff2?413876a3c9370179e34af0da2def3d38) format("woff2"), url(/fonts/Vazir.woff?3707b5efa316620380ef9f5c9d047907) format("woff"), url(/fonts/Vazir.ttf?3bb6491e3a7c084399896a492e5dd618) format("truetype");
-}
+@import url("../fonts/font-face.css");
 
 *,
 a {
@@ -19,6 +15,11 @@ a {
   }
 }
 
+ .required:after {
+     content:" * ";
+     color: red;
+ }
+
 .main {
   background-color: #fff;
 }
@@ -31,6 +32,11 @@ a {
 .main .title2 {
   font-size: 1rem;
   color: #836866;
+}
+
+.badge {
+  font-size: 0.7rem !important;
+    font-weight: bold !important;
 }
 
 .search {
@@ -460,6 +466,7 @@ a {
 .custom-field {
   font-size: 0.9rem;
   color: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0,0,0,0.4);
 }
 
 .custom-field:focus,
@@ -473,6 +480,7 @@ a {
   -webkit-text-fill-color: #3d3d3d !important;
   outline: none !important;
   box-shadow: none !important;
+    border: 1px solid rgba(0,0,0,0.4);
 }
 
 .custom-field:focus::-moz-placeholder {
@@ -520,13 +528,13 @@ a {
 }
 
 .custombutton-primary {
-  background-color: #dd3333;
-  border-color: #dd3333;
+  background-color: #2b48cb;
+  border-color: #203492;
 }
 
 .custombutton-primary:hover {
-  background-color: #dd3333;
-  border-color: #dd3333;
+  background-color: #203492;
+  border-color: #203492;
 }
 
 .custombutton i {

@@ -7,6 +7,8 @@ use \Spatie\Tags\HasTags;
 
 class Article extends Model
 {
+    use HasTags;
+    protected $fillable = ['tags'];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -14,6 +16,11 @@ class Article extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(category::class);
+        return $this->belongsToMany(Category::class);
     }
+    public function photos(){
+        return $this->belongsToMany(Photo::class);
+    }
+
+
 }

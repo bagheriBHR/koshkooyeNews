@@ -31,6 +31,6 @@ Route::middleware('auth')->prefix('/admin')->namespace('backend')->group(functio
     Route::post('ck_upload', 'PhotoController@ck_upload')->name('photo.ck_upload');
     Route::resource('category', 'CategoryController');
     Route::resource('article', 'ArticleController');
-    Route::post('article/filter', 'ArticleController@filter')->name('article.filter');
     Route::post('article/search', 'ArticleController@search')->name('article.search');
+    Route::get('article/action/{id}', 'ArticleController@action')->name('article.action');
 });

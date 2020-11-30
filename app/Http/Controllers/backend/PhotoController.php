@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -46,7 +47,11 @@ class PhotoController extends Controller
         $photo = $request->file('file');
         $name = time() . $photo->getClientOriginalName();
         Storage::disk('public')->putFileAs('photos/gallery', $photo, $name);
-        return response()->json(['url' => $name]);
+
+        $photo = new Photo();
+        $photo->path = $name;
+        $photo->save();
+        return response()->json(['url' => $photo->id]);
     }
     public function ck_upload(Request $request)
     {

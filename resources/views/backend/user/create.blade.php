@@ -33,27 +33,27 @@
                 @method('POST')
                 @csrf
                 <div class="form-group row d-flex align-items-center">
-                    <label for="name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام :</label>
+                    <label for="name" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام :</label>
                     <div class="col-sm-4">
-                        <input type="text" class="custom-field form-control form-control-sm" id="first_name" name="first_name">
+                        <input required type="text" class="custom-field form-control form-control-sm" id="first_name" name="first_name">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
-                    <label for="last_name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام خانوادگی:</label>
+                    <label for="last_name" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام خانوادگی:</label>
                     <div class="col-sm-4">
-                        <input type="text" class="custom-field form-control form-control-sm" id="last_name" name="last_name">
+                        <input required type="text" class="custom-field form-control form-control-sm" id="last_name" name="last_name">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
-                    <label for="last_name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام کاربری:</label>
+                    <label for="last_name" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام کاربری:</label>
                     <div class="col-sm-4">
-                        <input type="text" class="custom-field form-control form-control-sm" id="username" name="username">
+                        <input required type="text" class="custom-field form-control form-control-sm" id="username" name="username">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
-                    <label for="password" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">رمز عبور :</label>
+                    <label for="password" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">رمز عبور :</label>
                     <div class="col-sm-4">
-                        <input autocomplete="new-password" type="password" class="custom-field form-control form-control-sm" id="password" name="password" >
+                        <input required autocomplete="new-password" type="password" class="custom-field form-control form-control-sm" id="password" name="password" >
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">

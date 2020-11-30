@@ -35,7 +35,7 @@
             <!-- tables -->
             <div class="d-flex flex-column-reverse flex-md-row w-100">
 
-                <div class="col-12 col-md-10 mb-3 mb-md-0">
+                <div class="col-12 mb-3 mb-md-0">
                     @if(Session::has('danger'))
                         <div class="alert alert-danger text-right w-100">
                             <div>{{Session('danger')}}</div>
@@ -54,7 +54,7 @@
                     <div class="table-search d-flex justify-content-between w-100 mb-3 py-2 px-2">
                         <form action="{{route('article.search')}}" class="position-relative" method="post">
                             @csrf
-                            <input type="text" name="search" placeholder="جستجو بر اساس عنوان مقاله ...">
+                            <input type="text" name="search" placeholder="جستجو بر اساس عنوان و متن مقاله ...">
                             <button  type="submit" class="position-absolute search-icon"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
@@ -65,14 +65,14 @@
                             <tr>
                                 <th class="text-right">شماره</th>
                                 <th class="text-right">تصویر</th>
-                                <th class="text-right">روتیتر</th>
                                 <th class="text-right">تیتر</th>
-                                <th class="text-right">متن</th>
+                                <th class="text-right">تگ ها</th>
                                 <th class="text-right">تعداد بازدید</th>
                                 <th class="text-right">نمایش در کروسل</th>
+                                <th class="text-right">وضعیت نشر</th>
                                 <th class="text-right">تاریخ نشر</th>
                                 <th class="text-right">تاریخ ایجاد</th>
-                                <th class="text-right">وضعیت نشر</th>
+                                <th class="text-right">عملیات</th>
                                 <th class="text-right"></th>
                             </tr>
                             </thead>
@@ -80,31 +80,48 @@
                             @foreach($articles as $key=>$article)
                                 <tr>
                                     <td class="text-right" scope="row">{{ $key+1 }}</td>
-                                    <td class="text-center p-0"><img src="{{ '/storage/photos/avatar/'.$article->thumbnail }}" alt="" class="my-1" style="width:40px;"></td>
-                                    <td class="text-right p-0">{{$article->roo_titr}}</td>
-                                    <td class="text-right"><a href="{{route('article.edit',$article->id)}}">{{ $article->title}}</a></td>
-                                    <td class="text-right p-0">{{\Illuminate\Support\Str::limit($article->body,20)}}</td>
+                                    <td class="text-center p-0"><img src="{{ '/storage/photos/articles/'.$article->thumbnail }}" alt="" class="my-1" style="width:40px;"></td>
+                                    <td class="text-right"><a href="{{route('article.edit',$article->id)}}">{{ \Illuminate\Support\Str::limit($article->title,40)}}</a></td>
+                                    <td class="text-right">
+                                        @foreach($article->tags as $tag)
+                                            <li class="list-unstyled p-0">{{ $tag->name }}</li>
+                                        @endforeach
+                                    </td>
                                     <td class="text-right">{{ $article->view_count }}</td>
                                     @if($article->is_carousel==0)
                                         <td class="text-center p-0"><span class="badge badge-danger p-1">غیر فعال</span></td>
                                     @elseif($article->is_carousel==1)
                                         <td class="text-center p-0"> <span class="badge badge-success p-1"> فعال</span></td>
                                     @endif
-                                    <td class="text-right">{{$article->publish_date ? \Hekmatinasser\Verta\Verta::instance($article->publish_date)->formatDate()  : '-' }}</td>
-                                    <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($article->created_at)->formatDate() }}</td>
-
                                     @if($article->publish_status==0)
                                         <td class="text-center p-0"><span class="badge badge-danger p-1">پیش نویس</span></td>
                                     @elseif($article->publish_status==1)
                                         <td class="text-center p-0"> <span class="badge badge-success p-1">انتشار یافته</span></td>
                                     @elseif($article->publish_status==2)
-                                        <td class="text-center p-0"> <span class="badge badge-success p-1">آرشیو</span></td>
+                                        <td class="text-center p-0"> <span class="badge badge-primary p-1">آرشیو</span></td>
                                     @endif
-                                    <td>
+                                    <td class="text-right">{{$article->publish_date ? \Hekmatinasser\Verta\Verta::instance($article->publish_date)->formatDate()  : '-' }}</td>
+                                    <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($article->created_at)->formatDate() }}</td>
+                                    <td class="d-flex">
+                                    @if($article->publish_status==0 || $article->publish_status==2)
+                                        <form action="{{route('article.action',$article->id)}}" method="post">
+                                            @method('GET')
+                                            @csrf
+                                            <input type="hidden" name="action" value="publish">
+                                            <button type="submit" class="btn btn custombutton custombutton-success py-2 px-4">نشر دهید</button>
+                                        </form>
+                                    @else
+                                        <form action="{{route('article.action',$article->id)}}" method="post">
+                                            @method('GET')
+                                            @csrf
+                                            <input type="hidden" name="action" value="archive">
+                                            <button type="submit" class="btn btn custombutton custombutton-primary py-2 px-4" >آرشیو کنید</button>
+                                        </form>
+                                    @endif
                                         <form action="{{route('article.destroy',$article->id)}}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button onclick="return confirm('آیا از حذف مقاله مطمئن هستید؟');" class=" btn custombutton custombutton-danger py-2 px-4">حذف </button>
+                                            <button onclick="return confirm('آیا از حذف مقاله مطمئن هستید؟');" class="mr-2 btn custombutton custombutton-danger py-2 px-4">حذف </button>
                                         </form>
                                     </td>
                                 </tr>
@@ -117,72 +134,6 @@
                         </div>
                     @endif
                 </div>
-
-                <div class="col-12 col-md-2 mb-3">
-                    <div class="filter">
-                        <h3 class="title mb-0"><i class="fa fa-filter ml-2"></i>فیلتر</h3>
-                        <form action="{{route('article.filter')}}" method="post">
-                            @method('POST')
-                            @csrf
-                            <div class="has-sidebar">
-                                <div class="right-sidebar w-100">
-                                    <div class="menu text-right h-100">
-                                        <p class="mb-0">
-                                            <a class="btn btntitle w-100 d-flex justify-content-between align-items-center"  data-toggle="collapse" data-target="#collapseExample10" aria-expanded="false" aria-controls="collapseExample">
-                                                <span class="d-flex align-items-center"><i class="fa fa-user ml-3"></i>نقش کاربر</span>
-                                                <span class="fa fa-angle-right js-rotate-if-collapsed"></span>
-                                            </a>
-                                        </p>
-                                        <div class="collapse" id="collapseExample10">
-                                            <div class="border-0 p-0">
-                                                <table class="w-100 text-right">
-                                                    <tr>
-                                                        <td class="py-2 pr-2">
-                                                            <button type="submit" name="filter" value="admin"> مدیر</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="py-2 pr-2">
-                                                            <button type="submit" name="filter" value="editor">سردبیر</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="py-2 pr-2">
-                                                            <button type="submit" name="filter" value="author">نویسنده</button>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <p class="mb-0">
-                                            <a class="btn btntitle w-100 d-flex justify-content-between align-items-center"  data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
-                                                <span class="d-flex align-items-center"><i class="fas fa-toggle-off ml-3"></i>وضعیت</span>
-                                                <span class="fa fa-angle-right js-rotate-if-collapsed"></span>
-                                            </a>
-                                        </p>
-                                        <div class="collapse" id="collapseExample2">
-                                            <div class="border-0 p-0">
-                                                <table class="w-100 text-right">
-                                                    <tr>
-                                                        <td class="py-2 pr-2">
-                                                            <button type="submit" name="filter" value="active"> فعال</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="py-2 pr-2">
-                                                            <button type="submit" name="filter" value="deactive">غیر فعال</button>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
             </div>
             <!-- end of tables -->
             <div class="col-md-12 mt-3 d-flex justify-content-center">{{$articles->links()}}</div>
