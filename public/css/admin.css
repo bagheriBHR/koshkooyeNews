@@ -13,6 +13,19 @@ a {
   .table-search form {
     width: 40% !important;
   }
+  .over{
+      position: fixed;
+      width: 100%;
+      bottom: 0px;
+      top: 0px;
+  }
+  .main{
+      height: 100vh !important;
+      overflow-y: auto;
+  }
+  .scroll{
+      overflow-y: auto;
+  }
 }
 
  .required:after {
@@ -508,17 +521,17 @@ a {
 }
 
 .custombutton-danger {
-  background-color: #9b2e2e;
-  border-color: #9b2e2e;
+  background-color: #e24949;
+  border-color: #e24949;
 }
 
 .custombutton-danger:hover {
-  background-color: #912a2a;
-  border-color: #912a2a;
+  background-color: #de1717;
+  border-color: #de1717;
 }
 
 .custombutton-success {
-  background-color: #2e9b46;
+  background-color: #389a4d;
   border-color: #2e9b46;
 }
 
@@ -528,13 +541,13 @@ a {
 }
 
 .custombutton-primary {
-  background-color: #2b48cb;
-  border-color: #203492;
+  background-color: #4880e0;
+  border-color: #4880e0;
 }
 
 .custombutton-primary:hover {
-  background-color: #203492;
-  border-color: #203492;
+  background-color: #054dc9;
+  border-color: #054dc9;
 }
 
 .custombutton i {
@@ -750,26 +763,117 @@ a {
   font-weight: bold;
   font-size: 0.8rem;
 }
-
 .has-sidebar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.has-sidebar [data-toggle="collapse"][aria-expanded="true"] > .js-rotate-if-collapsed {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.has-sidebar .js-rotate-if-collapsed {
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.has-sidebar .right-sidebar {
+    border-top: 2px solid #dd3333;
+    width: 20%;
+    background-color: #2c2c2c;
+    -webkit-box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.has-sidebar .right-sidebar .btntitle[aria-expanded="true"] {
+    background-color: #272727 !important;
+    border-right: 2px solid #dd3333;
+}
+
+.has-sidebar .right-sidebar .btntitle[aria-expanded="true"] span {
+    color: #fff !important;
+}
+
+.has-sidebar .right-sidebar .sidebarItem {
+    color: #d6d6d6 !important;
+    font-size: 0.8rem;
+    background-color: #2c2c2c;
+    border-right: 2px solid transparent;
+    padding: 15px 20px;
+}
+
+.has-sidebar .right-sidebar .sidebarItem:hover, .has-sidebar .right-sidebar .sidebarItem:focus {
+    border-right: 2px solid #dd3333;
+    background-color: #272727;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.has-sidebar .right-sidebar .sidebarTitle {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 15px 20px;
+}
+
+.has-sidebar .right-sidebar .btntitle {
+    color: #d6d6d6 !important;
+    border-right: 2px solid transparent;
+    font-size: 0.8rem;
+    background-color: #2c2c2c;
+    border-radius: 0;
+    padding: 15px 20px;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.has-sidebar .right-sidebar .btntitle:hover {
+    background-color: #272727;
+    border-right: 2px solid #dd3333;
+    color: #fff !important;
+    cursor: pointer;
+}
+
+.has-sidebar .right-sidebar table {
+    background-color: #3d3d3d;
+}
+
+.has-sidebar .right-sidebar table tr:hover a {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.has-sidebar .right-sidebar table tr a {
+    padding: 0.2rem 1rem 0.2rem 0rem;
+    font-size: 0.8rem;
+    color: #c2c2c2 !important;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.filter-sidebar {
   display: flex;
 }
 
-.has-sidebar [data-toggle=collapse][aria-expanded=true] > .js-rotate-if-collapsed {
+.filter-sidebar [data-toggle=collapse][aria-expanded=true] > .js-rotate-if-collapsed {
   transform: rotate(90deg);
   transition: all 0.3s;
 }
 
-.has-sidebar .js-rotate-if-collapsed {
+.filter-sidebar .js-rotate-if-collapsed {
   transition: all 0.3s;
 }
 
-.has-sidebar .right-sidebar {
+.filter-sidebar .right-sidebar {
   width: 20%;
   background-color: #eeeeee;
 }
 
-.has-sidebar .right-sidebar button {
+.filter-sidebar .right-sidebar button {
   width: 100%;
   text-align: right;
   border: none !important;
@@ -779,11 +883,11 @@ a {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.has-sidebar .right-sidebar button:hover {
+.filter-sidebar .right-sidebar button:hover {
   color: black;
 }
 
-.has-sidebar .right-sidebar .sidebarItem {
+.filter-sidebar .right-sidebar .sidebarItem {
   color: #262626 !important;
   font-size: 0.8rem;
   background-color: #eeeeee;
@@ -791,22 +895,22 @@ a {
   padding: 10px;
 }
 
-.has-sidebar .right-sidebar .sidebarItem:hover,
-.has-sidebar .right-sidebar .sidebarItem:focus {
+.filter-sidebar .right-sidebar .sidebarItem:hover,
+.filter-sidebar .right-sidebar .sidebarItem:focus {
   border-right: 2px solid #dd3333;
   background-color: #e0e0e0;
   color: #fff !important;
   text-decoration: none;
 }
 
-.has-sidebar .right-sidebar .sidebarTitle {
+.filter-sidebar .right-sidebar .sidebarTitle {
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.5);
   background-color: rgba(0, 0, 0, 0.3);
   padding: 15px 20px;
 }
 
-.has-sidebar .right-sidebar .btntitle {
+.filter-sidebar .right-sidebar .btntitle {
   color: #262626 !important;
   border-right: 2px solid transparent;
   font-size: 0.8rem;
@@ -816,28 +920,28 @@ a {
   transition: all 0.3s;
 }
 
-.has-sidebar .right-sidebar .btntitle:hover {
+.filter-sidebar .right-sidebar .btntitle:hover {
   background-color: #e0e0e0;
   cursor: pointer;
 }
 
-.has-sidebar .right-sidebar table {
+.filter-sidebar .right-sidebar table {
   background-color: #d9d9d9;
 }
 
-.has-sidebar .right-sidebar table tr:hover a {
+.filter-sidebar .right-sidebar table tr:hover a {
   color: #fff !important;
   text-decoration: none;
 }
 
-.has-sidebar .right-sidebar table tr a {
+.filter-sidebar .right-sidebar table tr a {
   padding: 0.2rem 1rem 0.2rem 0rem;
   font-size: 0.8rem;
   color: #c2c2c2 !important;
   transition: all 0.3s;
 }
 
-.has-sidebar .left-sidebar {
+.filter-sidebar .left-sidebar {
   margin-top: 20px;
   margin-right: 20px;
   width: 80%;
@@ -1014,5 +1118,31 @@ a {
   border-top-color: transparent;
   border-left-color: transparent;
   transform: rotate(45deg);
+}
+
+/* scroll bar */
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(223, 223, 223);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(168, 168, 168);
+}
+
+/* profile-mobile */
+.profile-mobile button:focus{
+    box-shadow: none;
 }
 

@@ -16,11 +16,6 @@ class CategoryPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function before($user, $ability) {
-        if($user->is_admin==1 || $user->is_editor==1) {
-            return true;
-        }
-    }
     public function viewAny(User $user)
     {
         return true;
@@ -58,7 +53,11 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category)
     {
-        return false;
+        if(($user->is_admin==1) || ($user->is_editor==1)) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -70,7 +69,11 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category)
     {
-        return false;
+        if($user->is_admin==1 || $user->is_editor==1) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**

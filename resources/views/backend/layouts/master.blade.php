@@ -13,12 +13,12 @@
     <title>خانه خبر کشکوییه</title>
 </head>
 <body>
-
-<div class="main d-flex flex-column h-100">
+<div class="over">
+    <div class="main d-flex flex-column h-100">
 
     <!-- header -->
     <div class="header pb-3 pb-md-0">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mx-2 mx-md-5">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mx-2 mx-md-4">
             @if(Auth::check())
                 <h1 class="font-weight-normal py-2"><a href="{{route('admin.home')}}">پنل مدیریت</a></h1>
                 <form class="search position-relative my-2 my-md-0" >
@@ -58,10 +58,11 @@
     </div>
     <!-- end of header -->
 
-    <div class="d-flex flex-column align-items-start mx-4 mb-4">
+    <div class="d-flex flex-column align-items-start h-100">
         @yield('content')
     </div>
 
+</div>
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>

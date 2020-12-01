@@ -72,9 +72,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update',Auth::user());
-
         $category = Category::find($id);
+        $this->authorize('update',$category);
         return view('backend.category.edit',compact(['category']));
     }
 
@@ -87,8 +86,8 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
-        $this->authorize('update',Auth::user());
         $category= Category::find($id);
+        $this->authorize('update',$category);
         $category->name=$request->name;
         if($request->slug){
             $category->slug =make_slug($request->slug);
@@ -108,12 +107,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('delete',Auth::user());
         $category = Category::find($id);
-//        if(count($category->posts)>0 || count($category->courses)>0){
-//            Session::flash('error','دسته ' .$category->name.' دارای زیر مجموعه است و قابل حذف نیست. ');
-//            return redirect()->route('category.index');
-//        }
+        $this->authorize('delete',$category);
+        if(count($category->articles)>0){
+            Session::flash('danger','دسته ' .$category->name.' دارای زیر مجموعه است و قابل حذف نیست. ');
+            return redirect()->route('category.index');
+        }
         $category->delete();
         Session::flash('danger','دسته بندی ' .$category->name.' '.'با موفقیت حذف گردید. ');
         return redirect()->route('category.index');

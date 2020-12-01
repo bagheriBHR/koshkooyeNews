@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Article;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -37,7 +38,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('viewAny',Auth::user());
+        $this->authorize('create',Auth::user());
         $user = Auth::user();
         return view('backend.user.create');
     }
@@ -50,9 +51,8 @@ class UserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
-        return $request;
-        $this->authorize('viewAny',Auth::user());
-        $role = $request->input('role');
+        $this->authorize('create',Auth::user());
+        $roles = $request->input('role');
         $user = new User();
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
@@ -61,7 +61,9 @@ class UserController extends Controller
         $user->password =Hash::make($request->input('password')) ;
         $user->avatar = $request->input('avatar');
         $user->status = $request->input('status');
-        $user->$role = 1;
+        foreach ($roles as $role){
+            $user->$role = 1;
+        }
         $user->save();
 
         Session::flash('success', 'ثبت نام کاربر با موفقیت انجام شد.');
@@ -87,7 +89,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('viewAny',Auth::user());
+        $this->authorize('create',Auth::user());
         $user = User::whereId($id)->first();
         return view('backend.user.edit',compact(['user']));
     }
@@ -101,8 +103,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $this->authorize('viewAny',Auth::user());
-        $role = $request->input('role');
+        $this->authorize('create',Auth::user());
+        $roles = $request->input('role');
         $user = User::find($id);
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
@@ -110,7 +112,9 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->avatar = $request->input('avatar');
         $user->status = $request->input('status');
-        $user->$role = 1;
+        foreach ($roles as $role){
+            $user->$role = 1;
+        }
         $user->save();
 
         Session::flash('success', 'مشخصات کاربر با موفقیت ویرایش شد.');
@@ -125,12 +129,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('viewAny',Auth::user());
+        $this->authorize('create',Auth::user());
         $user = User::find($id);
-//        if (count($user->courses) || count($user->posts)){
-//            Session::flash('delete', 'کاربر دارای مطلب یا دوره می باشد و قابل حذف نیست.');
-//            return redirect()->route('user.index');
-//        }
+        if (count($user->articles)>0){
+            Session::flash('danger', 'کاربر دارای مطلب می باشد و قابل حذف نیست.');
+            return redirect()->route('user.index');
+        }
         $user->delete();
         Session::flash('danger', 'کاربر با موفقیت حذف گردید.');
         return redirect()->route('user.index');

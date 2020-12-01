@@ -3,93 +3,88 @@
     <link rel="stylesheet" href="{{asset('/css/dropzone.min.css')}}">
 @endsection
 @section('content')
-    <div class="d-flex flex-column flex-md-row w-100 mt-3">
+    <div class="d-flex flex-column flex-md-row w-100 h-100">
 
         <!-- sidebar -->
-        <div class="sidebar col-12 col-md-2 pr-md-0">
-            <p>
-                <a class="btn btntitle w-100 text-right"  data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
-                    <i class="fa fa-users ml-2"></i>مدیریت کاربران
-                </a>
-            </p>
-            <div class="collapse show" id="collapseExample2">
-                <div class="card card-body mb-4 border-0 p-0">
-                    <table class="w-100 text-right">
-                        <tr>
-                            <td class="py-2 pr-2 font-weight-bold"><a href="{{route('user.index')}}"><i class="fa fa-list ml-2"></i>مشاهده لیست کاربران</a></td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 pr-2 font-weight-bold"><a href="{{route('user.create')}}"><i class="fa fa-user-plus ml-2"></i>افزودن کاربر</a></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+        <div class="col-12 col-md-2 px-0 pl-md-2 h-100">
+            @include('backend.partials.rightSidebar')
         </div>
         <!-- end of sidebar -->
 
-        <div class="col-12 col-md-10 d-flex flex-column align-items-start">
+        <div class="scroll col-12 col-md-10 px-0 px-md-4 mt-3 d-flex flex-column align-items-start pb-3">
+            <div class="d-flex flex-column border-bottom w-100">
+                <h3 class="custom-field-title text-right py-2 pr-2 mb-0 font-weight-bold">فرم ایجاد کاربر</h3>
+            </div>
             @include('backend.partials.form-errors')
             <form class="customform p-3 w-100" method="post" action="{{route('user.store')}}" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
                 <div class="form-group row d-flex align-items-center">
                     <label for="name" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام :</label>
-                    <div class="col-sm-4">
-                        <input required type="text" class="custom-field form-control form-control-sm" id="first_name" name="first_name">
+                    <div class="col-sm-6">
+                        <input type="text" class="custom-field form-control form-control-sm" id="first_name" name="first_name">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
                     <label for="last_name" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام خانوادگی:</label>
-                    <div class="col-sm-4">
-                        <input required type="text" class="custom-field form-control form-control-sm" id="last_name" name="last_name">
+                    <div class="col-sm-6">
+                        <input type="text" class="custom-field form-control form-control-sm" id="last_name" name="last_name">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
                     <label for="last_name" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام کاربری:</label>
-                    <div class="col-sm-4">
-                        <input required type="text" class="custom-field form-control form-control-sm" id="username" name="username">
+                    <div class="col-sm-6">
+                        <input type="text" class="custom-field form-control form-control-sm" id="username" name="username">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
                     <label for="password" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">رمز عبور :</label>
-                    <div class="col-sm-4">
-                        <input required autocomplete="new-password" type="password" class="custom-field form-control form-control-sm" id="password" name="password" >
+                    <div class="col-sm-6">
+                        <input autocomplete="new-password" type="password" class="custom-field form-control form-control-sm" id="password" name="password" >
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
-                    <label for="email" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> ایمیل :</label>
-                    <div class="col-sm-4">
+                    <label for="email" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> ایمیل :</label>
+                    <div class="col-sm-6">
                         <input type="text" class="custom-field form-control form-control-sm" id="email" name="email" >
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center ">
                     <label for="roles" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نقش :</label>
-                    <div class="col-sm-2 d-flex justify-content-start">
-                        <select name="role" class="w-100 custom-field">
-                            <option value="is_author">نویسنده</option>
-                            <option value="is_editor">سردبیر</option>
-                            <option value="is_admin">مدیر</option>
-                        </select>
+                    <div class="col-sm-8 d-flex justify-content-start">
+                        <div class="col-sm-8 text-right pr-md-0">
+                            <input class="form-check-input" checked type="checkbox" id="checkbox1" value="is_author" name="role[]">
+                            <label for="checkbox1" class="custom-field-title form-check-label mr-3 ml-3">نویسنده</label>
+
+                            <input class="form-check-input" type="checkbox" id="checkbox2" value="is_editor" name="role[]">
+                            <label for="checkbox2" class="custom-field-title form-check-label mr-3 ml-3">سردبیر</label>
+
+                            <input class="form-check-input" type="checkbox" id="checkbox3" value="is_admin" name="role[]">
+                            <label for="checkbox3" class="custom-field-title form-check-label mr-3">مدیر</label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center ">
                     <label for="roles" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> وضعیت :</label>
-                    <div class="col-sm-2 d-flex justify-content-start">
-                        <select name="status" class="w-100 custom-field">
-                            <option value="1"> فعال</option>
-                            <option value="0">غیر فعال</option>
-                        </select>
+                    <div class="col-sm-6 d-flex justify-content-start">
+                        <div class="col-sm-8 text-right pr-md-0">
+                            <input class="form-check-input" checked type="radio" value="1" name="status" id="radio1">
+                            <label class="custom-field-title form-check-label mr-3 ml-3">فعال</label>
+
+                            <input class="form-check-input" checked type="radio" value="0" name="status" id="radio2">
+                            <label class="custom-field-title form-check-label mr-3">غیرفعال</label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
                     <label for="photo_id" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  تصویر :</label>
                     <input type="hidden" name="avatar" id="avatar">
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                         <div id="photo" class="dropzone form-control form-control-sm" ></div>
                     </div>
                 </div>
                 <div class="d-flex align-items-end">
-                    <div class="col-sm-6">
+                    <div class="col-sm-8">
                         <button type="submit" class="btn custombutton custombutton-success py-2 px-4"> ذخیره</button>
                     </div>
                 </div>

@@ -4,11 +4,13 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Tags\Tag;
 
-class HomeController extends Controller
+class TagController extends Controller
 {
     public function index()
     {
-        return view('backend.dashboard.list');
+        $tags = Tag::paginate(20);
+        return view('backend.tag.list',compact(['tags']));
     }
 }

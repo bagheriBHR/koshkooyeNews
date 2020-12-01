@@ -25,6 +25,7 @@ class ArticleController extends Controller
         $articles = Article::with(['categories','user','tags'])
             ->orderBy('created_at', 'desc')
             ->paginate(20);
+
         return view('backend.article.list',compact(['articles']));
     }
 
@@ -70,7 +71,7 @@ class ArticleController extends Controller
         $article->save();
         $article->categories()->sync($request->category_id);
 
-        if($request->image_url) {
+        if($request->image_url[0]!=null) {
             $images = explode(',', $request->image_url[0]);
             $article->photos()->sync($images);
         }
@@ -105,7 +106,8 @@ class ArticleController extends Controller
         $categories = Category::all();
         $authors = User::where('is_author',1)->get();
         $article = Article::where('id',$id)->with(['categories','user','tags','photos'])->first();
-        return view('backend.article.update',compact(['article','categories','authors']));
+        $tags = $article->tags->pluck('name');
+        return view('backend.article.update',compact(['article','categories','authors','tags']));
     }
 
     /**
@@ -139,7 +141,7 @@ class ArticleController extends Controller
         $article->save();
         $article->categories()->sync($request->category_id);
 
-        if($request->image_url){
+        if($request->image_url[0]!=null){
             $images = explode(',',$request->image_url[0]);
             $article->photos()->sync($images);
         }
@@ -162,6 +164,7 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $article = Article::find($id);
+        $this->authorize('delete',$article);
         $article->delete();
 
         Session::flash('success', 'خبر با موفقیت حذف شد.');
@@ -191,5 +194,27 @@ class ArticleController extends Controller
         }
         $article->save();
         return back();
+    }
+    public function articleList(Request $request,$id)
+    {
+        switch($request->input('filter')) {
+            case 'user':
+                $articles = Article::with(['categories','user','tags'])
+                    ->where('author_id',$id)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(20);
+                break;
+            case 'category' :
+                $articles = Article::whereHas('categories',function($q) use($id){
+                    $q->where('category_id',$id);
+                })->paginate(20);
+                break;
+            case 'tag':
+                $articles = Article::whereHas('tags',function($q) use($id){
+                    $q->where('tag_id',$id);
+                })->paginate(20);
+                break;
+        }
+        return view('backend.article.list',compact(['articles']));
     }
 }

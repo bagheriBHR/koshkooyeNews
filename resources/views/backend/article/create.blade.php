@@ -9,31 +9,18 @@
     </style>
 @endsection
 @section('content')
-    <div class="d-flex flex-column flex-md-row w-100 mt-3">
+    <div class="d-flex flex-column flex-md-row w-100 h-100">
 
         <!-- sidebar -->
-        <div class="sidebar col-12 col-md-2 pr-md-0">
-            <p>
-                <a class="btn btntitle w-100 text-right"  data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
-                    <i class="fa fa-users ml-2"></i>مدیریت مقاله
-                </a>
-            </p>
-            <div class="collapse show" id="collapseExample2">
-                <div class="card card-body mb-4 border-0 p-0">
-                    <table class="w-100 text-right">
-                        <tr>
-                            <td class="py-2 pr-2 font-weight-bold"><a href="{{route('article.index')}}"><i class="fa fa-list ml-2"></i>مشاهده مقالات</a></td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 pr-2 font-weight-bold"><a href="{{route('article.create')}}"><i class="fa fa-user-plus ml-2"></i>افزودن مقاله</a></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+        <div class="col-12 col-md-2 px-0 pl-md-2 h-100">
+            @include('backend.partials.rightSidebar')
         </div>
         <!-- end of sidebar -->
 
-        <div class="col-12 col-md-10 d-flex flex-column align-items-start">
+        <div class="scroll col-12 col-md-10 px-0 px-md-4 mt-3 d-flex flex-column align-items-start pb-3">
+            <div class="d-flex flex-column border-bottom w-100">
+                <h3 class="custom-field-title text-right py-2 pr-2 mb-0 font-weight-bold">فرم ایجاد مقاله</h3>
+            </div>
             @include('backend.partials.form-errors')
             <form class="customform p-3 w-100" method="post" action="{{route('article.store')}}" enctype="multipart/form-data">
                 @method('POST')
@@ -41,7 +28,7 @@
                 <div class="form-group row d-flex align-items-center">
                     <label for="title" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تیتر :</label>
                     <div class="col-sm-6">
-                        <input required type="text" class="custom-field form-control form-control-sm" id="title" name="title">
+                        <input type="text" class="custom-field form-control form-control-sm" id="title" name="title">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
@@ -59,7 +46,7 @@
                 <div class="form-group row d-flex align-items-center">
                     <label for="body" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> متن خبر:</label>
                     <div class="col-sm-6">
-                        <textarea required type="text" class="custom-field form-control form-control-sm ckeditor" id="textareaDescription" rows="10" id="body" name="body" ></textarea>
+                        <textarea type="text" class="custom-field form-control form-control-sm ckeditor" id="textareaDescription" rows="10" id="body" name="body" ></textarea>
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
@@ -71,23 +58,24 @@
                 <div class="form-group row d-flex align-items-center">
                     <label for="body" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> دسته بندی خبر:</label>
                     <div class="col-sm-6">
-                        <select required name="category_id[]" class="w-100 custom-field" multiple>
+                        <select name="category_id[]" class="w-100 custom-field" multiple>
                             <option value="">با نگه داشتن کلید Cntrl چندین دسته بندی را انتخاب کنید...</option>
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}" >{{$category->name}}</option>
                             @endforeach
-                        </select>                    </div>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
                     <label for="tag" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تگ ها :</label>
                     <div class="col-sm-6">
-                        <input required type="text" placeholder="تگها را با علامت کاما(،) از هم جدا کنید." class="custom-field form-control form-control-sm" id="tag" name="tag">
+                        <input type="text" placeholder="تگها را با علامت کاما(،) از هم جدا کنید." class="custom-field form-control form-control-sm" id="tag" name="tag">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center ">
                     <label for="author" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نویسنده :</label>
                     <div class="col-sm-4 d-flex justify-content-start">
-                        <select required name="author_id" class="w-100 custom-field">
+                        <select name="author_id" class="w-100 custom-field">
                             <option value="">انتخاب کنید...</option>
                             @foreach($authors as $author)
                                 <option value="{{$author->id}}" >{{$author->first_name.' '.$author->last_name}}</option>
@@ -119,7 +107,7 @@
                 </div>
                 <div class="form-group row d-flex align-items-center">
                     <label for="photo_id" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  تصویر اصلی :</label>
-                    <input required type="hidden" name="thumbnail" id="thumbnail">
+                    <input type="hidden" name="thumbnail" id="thumbnail">
                     <div class="col-sm-6">
                         <div id="photo" class="dropzone" ></div>
                     </div>
@@ -138,8 +126,8 @@
                         <div id="video" class="dropzone" ></div>
                     </div>
                 </div>
-                <div class="d-flex">
-                    <div class="col-sm-9">
+                <div class="d-flex mt-3">
+                    <div class="col-sm-8 px-0">
                         <button onclick="articleGallery()" type="submit" class="btn custombutton custombutton-success py-2 px-4"> ذخیره</button>
                     </div>
                 </div>

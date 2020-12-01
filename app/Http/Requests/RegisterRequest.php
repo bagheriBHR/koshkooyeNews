@@ -29,6 +29,14 @@ class RegisterRequest extends FormRequest
             'username'=>'required|unique:users',
             'password'=>'required|min:8',
             'email'=>'required |email',
+            'role'=>'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'role.required'=>'نقش کاربر را مشخص کنید.'
         ];
     }
 }

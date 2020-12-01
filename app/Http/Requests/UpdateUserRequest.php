@@ -30,6 +30,13 @@ class UpdateUserRequest extends FormRequest
             'username'=>'required|unique:users',
             'username'=> Rule::unique('users')->ignore(request()->user),
             'email'=>'required |email',
+            'role'=>'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'role.required'=>'نقش کاربر را مشخص کنید.'
         ];
     }
 }
