@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny',Auth::user());
-        $users = User::orderBy('created_at','desc')->paginate(10);
+        $users = User::with(['articles'])->orderBy('created_at','desc')->paginate(10);
         return view('backend.user.list',compact(['users']));
     }
 

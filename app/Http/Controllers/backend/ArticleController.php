@@ -12,6 +12,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 class ArticleController extends Controller
 {
@@ -23,6 +24,8 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::with(['categories','user','tags'])
+            ->where('publish_status',0)
+            ->orWhere('publish_status',1)
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
@@ -151,6 +154,10 @@ class ArticleController extends Controller
             $article->attachTags($tags);
         }
 
+        if($request->removedTags){
+            $article->detachTags($request->removedTags);
+        }
+
         Session::flash('success', 'خبر با موفقیت ویرایش شد.');
         return redirect()->route('article.index');
     }
@@ -216,5 +223,27 @@ class ArticleController extends Controller
                 break;
         }
         return view('backend.article.list',compact(['articles']));
+    }
+    public function filter(Request $request)
+    {
+        $this->authorize('create', Auth::user());
+        switch ($request->input('filter')) {
+            case 'active':
+                $articles =Article::where('publish_status', 1)->paginate(10);
+                break;
+            case 'deactive':
+                $articles =Article::where('publish_status', 0)->paginate(10);
+                break;
+            case 'archive':
+                $articles =Article::where('publish_status', 2)->paginate(10);
+                break;
+            case 'is_carousel':
+                $articles =Article::where('is_carousel', 1)->paginate(10);
+                break;
+            case 'isnot_carousel':
+                $articles =Article::where('is_carousel', 0)->paginate(10);
+                break;
+        }
+        return view('backend.article.list', compact(['articles']));
     }
 }

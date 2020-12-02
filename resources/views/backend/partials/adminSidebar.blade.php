@@ -82,13 +82,14 @@
         <div class="card card-body mb-4 border-0 p-0">
             <table class="w-100 text-right">
                 <tr>
-                    <td class="py-2 pr-2 font-weight-bold"><i class="fas fa-newspaper ml-2"></i>تبلیغات </td>
+                    <td class="py-2 pr-2 font-weight-bold"><i class="fas fa-ad ml-2"></i>تبلیغات </td>
                     <td class="d-flex justify-content-end py-2 font-weight-normal pl-3">
-                        <a class="d-flex align-items-center ml-4" href="{{route('ads.create')}}" class="pl-3"><i class="fa fa-plus ml-2"></i> اضافه کردن </a>
-                        <a class="d-flex align-items-center" href="{{route('ads.index')}}"><i class="fas fa-eye ml-2"></i> مشاهده</a>
+                        <a class="d-flex align-items-center ml-4" href="{{route('commercial.create')}}" class="pl-3"><i class="fa fa-plus ml-2"></i> اضافه کردن </a>
+                        <a class="d-flex align-items-center" href="{{route('commercial.index')}}"><i class="fas fa-eye ml-2"></i> مشاهده</a>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
+    @endcan
 </div>

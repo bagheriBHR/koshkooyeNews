@@ -47,11 +47,15 @@ class SettingController extends Controller
             'logo_url' => 'required',
             'about_us' => 'required',
             'contact_us' => 'required',
+            'meta_keyword' => 'required',
+            'meta_description' => 'required',
         ],[
             'website_name.required' => 'فیلد نام وب سایت الزامی است.',
             'logo_url.required' => 'لوگو وب سایت را انتخاب کنید.',
             'about_us.required' => 'فیلد درباره ما الزامی است.',
             'contact_us.required' => 'فیلد تماس با ما الزامی است.',
+            'meta_keyword.required' => 'فیلد کلمات متا الزامی است.',
+            'meta_description.required' => 'فیلد توضیحات متا الزامی است.',
         ]);
         $setting = new Setting();
         $setting->website_name = $request->website_name;
@@ -64,6 +68,8 @@ class SettingController extends Controller
         $setting->facebook = $request->facebook;
         $setting->twitter = $request->twitter;
         $setting->instagram = $request->instagram;
+        $setting->meta_keyword = $request->meta_keyword;
+        $setting->meta_description = $request->meta_description;
         $setting->save();
 
         Session::flash('success', 'ثبت تنظیمات با موفقیت انجام شد.');
@@ -106,10 +112,14 @@ class SettingController extends Controller
             'website_name' => 'required',
             'about_us' => 'required',
             'contact_us' => 'required',
+            'meta_keyword' => 'required',
+            'meta_description' => 'required',
         ],[
             'website_name.required' => 'فیلد نام وب سایت الزامی است.',
             'about_us.required' => 'فیلد درباره ما الزامی است.',
             'contact_us.required' => 'فیلد تماس با ما الزامی است.',
+            'meta_keyword.required' => 'فیلد کلمات متا الزامی است.',
+            'meta_description.required' => 'فیلد توضیحات متا الزامی است.',
         ]);
         $setting = Setting::all()->first();
         $setting->website_name = $request->website_name;
@@ -122,6 +132,8 @@ class SettingController extends Controller
         $setting->facebook = $request->facebook;
         $setting->twitter = $request->twitter;
         $setting->instagram = $request->instagram;
+        $setting->meta_keyword = $request->meta_keyword;
+        $setting->meta_description = $request->meta_description;
         $setting->save();
 
         Session::flash('success', 'ویرایش تنظیمات با موفقیت انجام شد.');

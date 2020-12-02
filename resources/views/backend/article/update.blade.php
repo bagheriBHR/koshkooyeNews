@@ -78,10 +78,18 @@
                 <div class="form-group row d-flex align-items-center">
                     <label for="tag" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تگ ها :</label>
                     <div class="col-sm-6 text-right">
-                        <input type="text" value="{{$tags}}" placeholder="تگها را با علامت کاما(،) از هم جدا کنید." class="mb-2 custom-field form-control form-control-sm" name="tag">
-                        @foreach($article->tags as $tag)
-                            <span class="px-2 py-0 mx-1 bg-primary text-white"> {{ $tag->name }}</span>
-                        @endforeach
+                        <input type="text" placeholder="تگها را با علامت کاما(،) از هم جدا کنید." class="mb-2 custom-field form-control form-control-sm" name="tag">
+                        <div class="row">
+                            @foreach($article->tags as $tag)
+                                <div class=" ml-4 d-flex position-relative mb-4"  id="updated_tag_{{$tag->id}}">
+                                    <span id="output" class="px-2 py-0 bg-primary text-white"> {{ $tag->name }}</span>
+                                    <div class="remove px-1 text-right">
+                                        <input class="form-check-input" type="checkbox" id="checkbox_tag_{{$tag->id}}" name="removedTags[]" value="{{$tag->name}}">
+                                        <label for="checkbox_tag_{{$tag->id}}" class="custom-field-title form-check-label mr-3">حذف</label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center ">
@@ -213,6 +221,7 @@
         });
         articleGallery = function(){
             document.getElementById('image_url').value = photosGallery.concat(photos);
+            document.getElementById('removed_tags').value = removedTags;
         }
 
 
@@ -230,5 +239,6 @@
             photos.splice(index, 1);
             document.getElementById('updated_photo_' + id).remove();
         }
+
     </script>
 @endsection

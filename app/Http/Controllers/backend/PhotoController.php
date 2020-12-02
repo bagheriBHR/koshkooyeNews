@@ -42,6 +42,13 @@ class PhotoController extends Controller
         Storage::disk('public')->putFileAs('photos/avatar', $photo, $name);
         return response()->json(['url' => $name]);
     }
+    public function uploadBanner(Request $request)
+    {
+        $photo = $request->file('file');
+        $name = time() . $photo->getClientOriginalName();
+        Storage::disk('public')->putFileAs('photos/commercials', $photo, $name);
+        return response()->json(['url' => $name]);
+    }
     public function uploadGallery(Request $request)
     {
         $photo = $request->file('file');

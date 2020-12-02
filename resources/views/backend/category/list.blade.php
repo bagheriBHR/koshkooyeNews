@@ -93,7 +93,7 @@
                 </div>
             </div>
             <!-- end of tables -->
-            <div class="col-md-12 mt-3 d-flex justify-content-center">{{$categories->links()}}</div>
+            <div class="w-100 mt-3 d-flex justify-content-center">{{$categories->links()}}</div>
         </div>
     </div>
 @endsection

@@ -46,12 +46,12 @@
                             <h2 class="p-3 w-100 text-right"><i class="fas fa-user-tie ml-3"></i>تعداد کاربران سامانه</h2>
                             <div class="p-3 d-flex flex-column justify-content-center align-items-start w-100">
                                 <div class="top d-flex justify-content-between w-100">
-                                    <h6><i class="fa fa-user ml-3"></i>پرسنل</h6>
-                                    <span>3000 نفر</span>
+                                    <h6><i class="fa fa-users text-success ml-3"></i>فعال</h6>
+                                    <span>{{$activeUsers}} نفر</span>
                                 </div>
                                 <div class="down d-flex justify-content-between w-100 mt-3">
-                                    <h6><i class="fa fa-users ml-3"></i>افراد تحت تکفل</h6>
-                                    <span>1000 نفر</span>
+                                    <h6><i class="fa fa-users text-danger ml-3"></i>غیر فعال</h6>
+                                    <span>{{$deactiveUsers}} نفر</span>
                                 </div>
                             </div>
                         </div>
@@ -59,15 +59,15 @@
 
                     <div class="col-12 mt-3">
                         <div class="statistics d-flex flex-column justify-content-center align-items-start ">
-                            <h2 class="p-3 w-100 text-right"><i class="fas fa-dumbbell ml-3"></i>تعداد برنامه ورزشی</h2>
+                            <h2 class="p-3 w-100 text-right"><i class="fas fa-newspaper ml-3"></i>تعداد مقالات</h2>
                             <div class="p-3 d-flex flex-column justify-content-center align-items-start w-100">
                                 <div class="top d-flex justify-content-between w-100">
-                                    <h6><i class="fas fa-dumbbell ml-3"></i>فعال</h6>
-                                    <span>200 </span>
+                                    <h6><i class="fas fa-newspaper ml-3"></i>فعال</h6>
+                                    <span>{{$activeArticles}} </span>
                                 </div>
                                 <div class="down d-flex justify-content-between w-100 mt-3">
                                     <h6><i class="fa fa-plus ml-3"></i>کل</h6>
-                                    <span>450 </span>
+                                    <span>{{$totalArticles}} </span>
                                 </div>
                             </div>
                         </div>
@@ -75,15 +75,15 @@
 
                     <div class="col-12 mt-3">
                         <div class="statistics d-flex flex-column justify-content-center align-items-start ">
-                            <h2 class="p-3 w-100 text-right"><i class="fas fa-concierge-bell ml-3"></i>تعداد برنامه غذایی</h2>
+                            <h2 class="p-3 w-100 text-right"><i class="fas fa-ad ml-3"></i>تعداد تبلیغات</h2>
                             <div class="p-3 d-flex flex-column justify-content-center align-items-start w-100">
                                 <div class="top d-flex justify-content-between w-100">
-                                    <h6><i class="fas fa-utensils ml-3"></i>فعال</h6>
-                                    <span>20 </span>
+                                    <h6><i class="fas fa-ad ml-3"></i>فعال</h6>
+                                    <span>{{$activeCommercials}} </span>
                                 </div>
                                 <div class="down d-flex justify-content-between w-100 mt-3">
                                     <h6><i class="fa fa-plus ml-3"></i>کل</h6>
-                                    <span>50 </span>
+                                    <span>{{$totalCommercials}} </span>
                                 </div>
                             </div>
                         </div>

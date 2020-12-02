@@ -96,7 +96,7 @@
                                                   <button onclick="return confirm('آیا از حذف کاربر مطمئن هستید؟');" class="ml-2 btn custombutton custombutton-danger py-2 px-4">حذف </button>
                                               </form>
                                           @endcan
-                                          @if($user->is_author==1)
+                                          @if(count($user->articles)>0)
                                               <form action="/admin/user/{{$user->id}}/articleList" method="post">
                                                   @method('POST')
                                                   @csrf
@@ -127,12 +127,12 @@
                                 <div class="right-sidebar w-100">
                                     <div class="menu text-right h-100">
                                         <p class="mb-0">
-                                            <a class="btn btntitle w-100 d-flex justify-content-between align-items-center"  data-toggle="collapse" data-target="#collapseExample10" aria-expanded="false" aria-controls="collapseExample">
+                                            <a class="btn btntitle w-100 d-flex justify-content-between align-items-center"  data-toggle="collapse" data-target="#collapseExample30" aria-expanded="false" aria-controls="collapseExample">
                                                 <span class="d-flex align-items-center"><i class="fa fa-user ml-3"></i>نقش کاربر</span>
                                                 <span class="fa fa-angle-right js-rotate-if-collapsed"></span>
                                             </a>
                                         </p>
-                                        <div class="collapse" id="collapseExample10">
+                                        <div class="collapse" id="collapseExample30">
                                             <div class="border-0 p-0">
                                                 <table class="w-100 text-right">
                                                     <tr>

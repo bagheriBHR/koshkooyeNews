@@ -519,7 +519,22 @@ a {
   box-shadow: none !important;
   transition: all 0.3s;
 }
-
+.remove{
+    bottom: -18px;
+    background-color: #f65050;
+    font-size: 0.6rem;
+    color: white;
+    padding: 0px;
+    border-radius: 0px;
+    box-shadow: none !important;
+    position: absolute;
+    color: #fff;
+}
+.remove label{
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #fff;
+}
 .custombutton-danger {
   background-color: #e24949;
   border-color: #e24949;

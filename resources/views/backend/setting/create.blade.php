@@ -97,6 +97,18 @@
                             <input type="text" value="{{$setting->instagram}}" class="custom-field form-control form-control-sm" id="instagram" name="instagram">
                         </div>
                     </div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="meta_keyword" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> کلمات کلیدی متا :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="custom-field form-control form-control-sm" rows="2" id="meta_keyword" name="meta_keyword" >{{$setting->meta_keyword}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="meta_description" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> توضیحات متا :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="custom-field form-control form-control-sm" rows="10" id="meta_description" name="meta_description" >{{$setting->meta_description}}</textarea>
+                        </div>
+                    </div>
                     <div class="d-flex">
                         <div class="col-sm-11 p-0">
                             <button type="submit" class="btn custombutton custombutton-success py-2 px-4"> ذخیره</button>
@@ -179,6 +191,18 @@
                         <label for="instagram" class="custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> اینستاگرام :</label>
                         <div class="col-sm-8">
                             <input type="text" class="custom-field form-control form-control-sm" id="instagram" name="instagram">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="meta_keyword" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> کلمات کلیدی متا :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="custom-field form-control form-control-sm " rows="2" id="meta_keyword" name="meta_keyword" ></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="meta_description" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> توضیحات متا :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="custom-field form-control form-control-sm " rows="10" id="meta_description" name="meta_description" ></textarea>
                         </div>
                     </div>
                     <div class="d-flex">

@@ -19,9 +19,9 @@ class CreateCommercialsTable extends Migration
             $table->string('url');
             $table->smallInteger('status')->default(0);
             $table->smallInteger('type');
-            $table->integer('click_count')->default();
-            $table->dateTime('start_at')->nullable();
-            $table->dateTime('finish_at')->nullable();
+            $table->integer('click_count')->nullable();
+            $table->date('start_at')->nullable();
+            $table->date('finish_at')->nullable();
             $table->timestamps();
         });
     }
