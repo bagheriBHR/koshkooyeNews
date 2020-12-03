@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::namespace('frontend')->group(function (){
+    Route::get('/','HomeController@index')->name('home');
+    Route::get('/news/{id}/{slug}','NewsController@show')->name('news.show');
+    Route::get('/tag/{slug}','NewsController@tagNews')->name('news.tag');
+});
 
 Route::middleware('auth')->prefix('/admin')->namespace('backend')->group(function (){
     Route::get('/','HomeController@index')->name('admin.home');

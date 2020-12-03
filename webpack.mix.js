@@ -14,4 +14,13 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 
-mix.sass('resources/sass/admin.scss','public/css');
+// mix.js('resources/js/app.js', 'public/admin/js');
+//
+// mix.styles(['resources/admin/css/dropzone.min.css'], 'public/admin/css/dropzone.min.css')
+//     .scripts(['resources/admin/js/dropzone.js'], 'public/admin/js/dropzone.js')
+//
+// mix.styles(['resources/admin/css/persianDatepicker-default.css'], 'public/admin/css/persianDatepicker-default.css')
+//     .scripts(['resources/admin/js/persianDatepicker.min.js'], 'public/admin/js/persianDatepicker.min.js')
+//
+// mix.styles(['resources/admin/css/admin.css'], 'public/admin/css/admin.css')
+

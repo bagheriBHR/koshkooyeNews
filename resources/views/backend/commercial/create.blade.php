@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('style')
-    <link rel="stylesheet" href="{{asset('/css/dropzone.min.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/persianDatepicker-default.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/css/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/css/persianDatepicker-default.css')}}">
 @endsection
 @section('content')
     <div class="d-flex flex-column flex-md-row w-100 h-100">
@@ -95,9 +95,9 @@
 @endsection
 @section('script')
 
-    <script type="text/javascript" src="{{asset('/js/dropzone.js')}}"></script>
+    <script type="text/javascript" src="{{asset('backend/js/dropzone.js')}}"></script>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="{{asset('/js/persianDatepicker.min.js')}}"></script>
+    <script src="{{asset('backend/js/persianDatepicker.min.js')}}"></script>
     <script>
 
         $(document).ready(function() {

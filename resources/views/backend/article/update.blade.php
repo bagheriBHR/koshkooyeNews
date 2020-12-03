@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('style')
-    <link rel="stylesheet" href="{{asset('/css/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/css/dropzone.min.css')}}">
 @endsection
 @section('content')
     <div class="d-flex flex-column flex-md-row w-100 h-100">
@@ -170,8 +170,8 @@
 @endsection
 @section('script')
 
-    <script type="text/javascript" src="{{asset('/js/dropzone.js')}}"></script>
-    <script src="{{asset('/js/ckeditor/ckeditor.js')}}"></script>
+    <script type="text/javascript" src="{{asset('backend/js/dropzone.js')}}"></script>
+    <script src="{{asset('backend/js/ckeditor/ckeditor.js')}}"></script>
     <script>
         var drop = new Dropzone('#photo', {
             addRemoveLinks: true,

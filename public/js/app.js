@@ -49868,17 +49868,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/admin.scss":
-/*!***********************************!*\
-  !*** ./resources/sass/admin.scss ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleNotFoundError: Module not found: Error: Can't resolve './public/fonts/Vazir.eot' in 'E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\resources\\sass'\n    at factory.create (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\webpack\\lib\\Compilation.js:925:10)\n    at factory (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\webpack\\lib\\NormalModuleFactory.js:401:22)\n    at resolver (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\webpack\\lib\\NormalModuleFactory.js:130:21)\n    at asyncLib.parallel (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\webpack\\lib\\NormalModuleFactory.js:224:22)\n    at E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\neo-async\\async.js:2830:7\n    at E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\neo-async\\async.js:6877:13\n    at normalResolver.resolve (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\webpack\\lib\\NormalModuleFactory.js:214:25)\n    at doResolve (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\Resolver.js:213:14)\n    at hook.callAsync (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\Resolver.js:285:5)\n    at _fn0 (eval at create (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:15:1)\n    at resolver.doResolve (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\UnsafeCachePlugin.js:44:7)\n    at hook.callAsync (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\Resolver.js:285:5)\n    at _fn0 (eval at create (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:15:1)\n    at hook.callAsync (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\Resolver.js:285:5)\n    at _fn0 (eval at create (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:27:1)\n    at resolver.doResolve (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\DescriptionFilePlugin.js:67:43)\n    at hook.callAsync (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\Resolver.js:285:5)\n    at _fn43 (eval at create (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:16:1)\n    at hook.callAsync (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\Resolver.js:285:5)\n    at _fn0 (eval at create (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:27:1)\n    at resolver.doResolve (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\DescriptionFilePlugin.js:67:43)\n    at hook.callAsync (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\Resolver.js:285:5)\n    at _fn1 (eval at create (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:16:1)\n    at hook.callAsync (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\Resolver.js:285:5)\n    at _fn0 (eval at create (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\tapable\\lib\\HookCodeFactory.js:33:10), <anonymous>:15:1)\n    at fs.stat (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\DirectoryExistsPlugin.js:27:15)\n    at process.nextTick (E:\\mr_pourzare\\laravel\\koshkoo-news\\backend\\node_modules\\enhanced-resolve\\lib\\CachedInputFileSystem.js:85:15)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
-
-/***/ }),
-
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -49891,15 +49880,14 @@ throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/admin.scss ***!
-  \*****************************************************************************************/
+/*!*************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! E:\mr_pourzare\laravel\koshkoo-news\backend\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! E:\mr_pourzare\laravel\koshkoo-news\backend\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! E:\mr_pourzare\laravel\koshkoo-news\backend\resources\sass\admin.scss */"./resources/sass/admin.scss");
+module.exports = __webpack_require__(/*! E:\mr_pourzare\laravel\koshkoo-news\backend\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

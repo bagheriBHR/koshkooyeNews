@@ -7,10 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/css/admin.css')}}">
 
     @yield('style')
-    <title>خانه خبر کشکوییه</title>
+    <title>پنل مدیریت </title>
 </head>
 <body>
 <div class="over">
