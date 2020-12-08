@@ -22,5 +22,13 @@ class Article extends Model
         return $this->belongsToMany(Photo::class);
     }
 
+    public function photo()
+    {
+        return $this->belongsTo(Photo::class,'thumbnail');
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
 }

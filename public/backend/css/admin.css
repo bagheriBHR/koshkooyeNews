@@ -1,4 +1,10 @@
 @import url("../../fonts/font-face.css");
+/*@font-face {*/
+/*    font-family: Vazir;*/
+/*    src: url('../../fonts/Vazir.eot');*/
+/*    src: url('../../fonts/Vazir.eot?#iefix') format('embedded-opentype'), url('../../fonts/Vazir.woff') format('woff'), url('../../fonts/Vazir.ttf') format('truetype');*/
+/*    font-weight: normal;*/
+/*}*/
 
 *,
 a {
@@ -138,7 +144,7 @@ a {
 
 .header ul li a {
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.8rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s;
 }
@@ -196,6 +202,7 @@ a {
 
 .sidebar table tr {
   border-bottom: 1px solid #eeeeee;
+    color: #6c747b;
 }
 
 .sidebar table tr:nth-child(even) {
@@ -478,7 +485,7 @@ a {
 
 .custom-field {
   font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.9);
     border: 1px solid rgba(0,0,0,0.4);
 }
 
@@ -514,7 +521,7 @@ a {
   color: #e7e7e7;
   transition: all 0.3s;
   border-radius: 2px;
-  padding: 5px 20px !important;
+  padding: 5px 20px ;
   outline: none !important;
   box-shadow: none !important;
   transition: all 0.3s;

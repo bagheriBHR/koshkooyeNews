@@ -27,25 +27,10 @@
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
-                    <label for="url" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  بنر تبلیغاتی :</label>
-                    <input type="hidden" name="url" id="url">
+                    <label for="banner" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  بنر تبلیغاتی :</label>
+                    <input type="hidden" name="banner" id="banner">
                     <div class="col-sm-6">
-                        <div id="photo" class="dropzone form-control form-control-sm" ></div>
-                    </div>
-                </div>
-                <div class="form-group row d-flex align-items-center ">
-                    <label for="roles" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> وضعیت :</label>
-                    <div class="col-sm-6 d-flex justify-content-start">
-                        <div class="col-sm-8 text-right pr-md-0">
-                            <input class="form-check-input" type="radio" value="1" name="status" id="radio1">
-                            <label class="custom-field-title form-check-label mx-3">فعال</label>
-
-                            <input class="form-check-input" checked type="radio" value="0" name="status" id="radio2">
-                            <label class="custom-field-title form-check-label mx-3">غیرفعال</label>
-
-                            <input class="form-check-input" type="radio" value="2" name="status" id="radio3">
-                            <label class="custom-field-title form-check-label mr-3">آرشیو</label>
-                        </div>
+                        <div id="photo" class="dropzone" ></div>
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center ">
@@ -62,9 +47,22 @@
                 </div>
                 <div id="type0" class="desc">
                     <div class="form-group row d-flex align-items-center">
+                        <label for="start_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ شروع :</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="custom-field form-control form-control-sm" id="input3" name="start_date_click" />
+                            <span id="span3"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center">
                         <label for="click_count" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تعداد کلیک :</label>
                         <div class="col-sm-6">
-                            <input type="number" class="custom-field form-control form-control-sm" id="click_count" name="click_count">
+                            <input type="number" class="custom-field form-control form-control-sm" id="" name="total_click">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="url" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">آدرس :</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="custom-field form-control form-control-sm" id="url" name="url">
                         </div>
                     </div>
                 </div>
@@ -72,14 +70,14 @@
                     <div class="form-group row d-flex align-items-center">
                         <label for="start_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ شروع :</label>
                         <div class="col-sm-6">
-                            <input type="text" class="custom-field form-control form-control-sm" id="input2" name="start_at" />
+                            <input type="text" class="custom-field form-control form-control-sm" id="input2" name="start_date" />
                             <span id="span2"></span>
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="finish_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ پایان :</label>
                         <div class="col-sm-6">
-                            <input type="text" class="custom-field form-control form-control-sm" id="input1" name="finish_at" />
+                            <input type="text" class="custom-field form-control form-control-sm" id="input1" name="finish_date" />
                             <span id="span1"></span>
                         </div>
                     </div>
@@ -110,15 +108,17 @@
             });
         });
 
+        //datepicker
         $(function() {
             $("#input1, #span1").persianDatepicker();
             $("#input2, #span2").persianDatepicker();
+            $("#input3, #span3").persianDatepicker();
         });
 
         var drop = new Dropzone('#photo', {
             addRemoveLinks: true,
             maxFiles: 1,
-            acceptedFiles: '.jpg, .jpeg,.gif,.png',
+            acceptedFiles: '.jpg, .jpeg,.gif,.png,.webm',
             maxFilesize: 1000, // MB
             contentsCss: "style.css",
             url: "{{ route('banner.upload') }}",
@@ -126,7 +126,7 @@
                 formData.append("_token","{{csrf_token()}}")
             },
             success: function(file, response){
-                document.getElementById('url').value = response.url
+                document.getElementById('banner').value = response.url
             }
         });
 

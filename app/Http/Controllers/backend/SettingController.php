@@ -60,6 +60,7 @@ class SettingController extends Controller
         $setting = new Setting();
         $setting->website_name = $request->website_name;
         $setting->logo_url = $request->logo_url;
+        $setting->banner = $request->banner;
         $setting->is_active = $request->is_active;
         $setting->about_us = $request->about_us;
         $setting->contact_us = $request->contact_us;
@@ -124,6 +125,7 @@ class SettingController extends Controller
         $setting = Setting::all()->first();
         $setting->website_name = $request->website_name;
         $setting->logo_url = $request->logo_url;
+        $setting->banner = $request->banner;
         $setting->is_active = $request->is_active;
         $setting->about_us = $request->about_us;
         $setting->contact_us = $request->contact_us;

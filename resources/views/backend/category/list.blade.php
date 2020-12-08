@@ -38,17 +38,16 @@
                             <div>{{Session('warning')}}</div>
                         </div>
                     @endif
-
-                    @if(count($categories))
+                        @if(count($categories))
                         <table class="customtable table mb-0 pb-0">
                             <thead>
-                            <tr>
-                                <th class="text-right">شماره</th>
-                                <th class="text-right">عنوان</th>
-                                <th class="text-right">تاریخ ایجاد</th>
-                                <th class="text-right"></th>
-                            </tr>
-                            </thead>
+                                <tr>
+                                    <th class="text-right">شماره</th>
+                                    <th class="text-right">عنوان</th>
+                                    <th class="text-right">تاریخ ایجاد</th>
+                                    <th class="text-right"></th>
+                                </tr>
+                                </thead>
                             <tbody>
                             @foreach($categories as $key=>$category)
                                 <tr>
@@ -82,6 +81,9 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @if(count($category->childrenRecursive) > 0)
+                                    @include('backend.partials.category',['categories'=>$category->childrenRecursive,'level'=>1])
+                                @endif
                             @endforeach
                             </tbody>
                         </table>

@@ -18,9 +18,11 @@
                 </div>
                 @include('backend.partials.form-errors')
                 <div class="d-flex flex-column flex-md-row bg-white w-100">
-                <div class="col-12 col-md-2 mt-3">
-                    <img src="{{ '/storage/photos/avatar/'.$setting->logo_url}}" alt="" class="img-fluid">
-                </div>
+                    <div class="d-flex flex-column col-12 col-md-2">
+                        <div class="mt-3">
+                            <img src="{{ '/storage/photos/avatar/'.$setting->logo_url}}" alt="" class="img-fluid">
+                        </div>
+                    </div>
                 <form class="customform p-3 col-12 col-md-10" method="post" action="{{route('setting.update',$setting->id)}}" enctype="multipart/form-data">
                     @method('PATCH')
                     @csrf
@@ -35,6 +37,21 @@
                         <input type="hidden" name="logo_url" id="logo_url" value="{{$setting->logo_url}}">
                         <div class="col-sm-8">
                             <div id="photo" class="dropzone" ></div>
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="logo_url" class="custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> بنر وب سایت :</label>
+                        <input type="hidden" name="banner" id="banner" value="{{$setting->banner}}">
+                        <div class="col-sm-8">
+                            <div id="banner-photo" class="dropzone" ></div>
+                            @if($setting->banner)
+                                <div class="w-100 d-flex justify-content-start align-items-center">
+                                    <div class="mt-3">
+                                        <img src="{{ '/storage/photos/avatar/'.$setting->banner}}" alt="" id="imgSrc" class="img-fluid">
+                                    </div>
+                                    <button id="bannerBtn" type="button" class="btn btn-danger mr-3" onclick="deleteBanner()">حذف بنر</button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center ">
@@ -133,6 +150,13 @@
                             <div id="photo" class="dropzone" ></div>
                         </div>
                     </div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="logo_url" class="custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> بنر وب سایت :</label>
+                        <input type="hidden" name="banner" id="banner">
+                        <div class="col-sm-8">
+                            <div id="banner-photo" class="dropzone" ></div>
+                        </div>
+                    </div>
                     <div class="form-group row d-flex align-items-center ">
                         <label for="is_active" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> وضعیت وب سایت :</label>
                         <div class="col-sm-4 d-flex justify-content-start">
@@ -227,6 +251,19 @@
                 document.getElementById('logo_url').value = response.url
             }
         });
+        var drop1 = new Dropzone('#banner-photo', {
+            addRemoveLinks: true,
+            maxFiles: 1,
+            maxFilesize: 100, // MB
+            contentsCss: "style.css",
+            url: "{{ route('photo.upload') }}",
+            sending: function(file, xhr, formData){
+                formData.append("_token","{{csrf_token()}}")
+            },
+            success: function(file, response){
+                document.getElementById('banner').value = response.url
+            }
+        });
 
         CKEDITOR.replace('textareaDescription',{
             customConfig: 'config.js',
@@ -244,5 +281,11 @@
             filebrowserUploadUrl: "{{route('photo.ck_upload', ['_token' => csrf_token() ])}}",
             filebrowserUploadMethod: 'form',
         })
+
+        deleteBanner = function(){
+            document.getElementById('banner').value = '';
+            document.getElementById('imgSrc').src = "";
+            document.getElementById('bannerBtn').style.display = "none";
+        }
     </script>
 @endsection

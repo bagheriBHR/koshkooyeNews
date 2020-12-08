@@ -81,11 +81,13 @@
                         </table>
                     </div>
                 </div>
+                    <a class="sidebarItem text-right d-flex align-items-center" href="{{route('comment.index')}}"><i class="fas fa-comment ml-2"></i> مدیریت دیدگا ها</a>
                 @endcan
                 <a class="sidebarItem text-right d-flex align-items-center" href="{{route('tag.index')}}"><i class="fas fa-tags ml-2"></i>تگ ها</a>
             </div>
 
             @can('update',\Illuminate\Support\Facades\Auth::user())
+                <a class="sidebarItem text-right d-flex align-items-center" href="{{route('contact.index')}}"><i class="fas fa-envelope  ml-2"></i> تماس ها</a>
                 <a class="sidebarItem text-right d-flex align-items-center" href="{{route('setting.index')}}"><i class="fas fa-cog ml-2"></i>تنظیمات اولیه</a>
             @endcan
         </div>

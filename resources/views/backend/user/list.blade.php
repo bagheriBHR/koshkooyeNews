@@ -60,7 +60,7 @@
                                     <th class="text-right">نقش</th>
                                     <th class="text-right">وضعیت</th>
                                     <th class="text-right">تاریخ ایجاد</th>
-                                    <th class="text-right">عملیات</th>
+                                    <th class="text-right"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,23 +87,23 @@
                                         <td class="text-center p-0"> <span class="badge badge-success p-1"> فعال</span></td>
                                     @endif
                                     <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($user->created_at)->formatDate() }}</td>
-                                    <td>
-                                      <div class="d-flex">
-                                          @can('delete',\Illuminate\Support\Facades\Auth::user())
-                                              <form action="{{route('user.destroy',$user->id)}}" method="POST">
-                                                  @method('DELETE')
-                                                  @csrf
-                                                  <button onclick="return confirm('آیا از حذف کاربر مطمئن هستید؟');" class="ml-2 btn custombutton custombutton-danger py-2 px-4">حذف </button>
-                                              </form>
-                                          @endcan
+                                    <td class="p-0">
+                                      <div class="d-flex justify-content-end">
                                           @if(count($user->articles)>0)
                                               <form action="/admin/user/{{$user->id}}/articleList" method="post">
                                                   @method('POST')
                                                   @csrf
                                                   <input type="hidden" name="filter" value="user">
-                                                  <button type="submit" class="btn custombutton custombutton-primary py-2 px-4">لیست مقالات </button>
+                                                  <button type="submit" class="ml-2 btn custombutton p-0 custombutton-primary p-1">مقالات </button>
                                               </form>
                                           @endif
+                                          @can('delete',\Illuminate\Support\Facades\Auth::user())
+                                              <form action="{{route('user.destroy',$user->id)}}" method="POST">
+                                                  @method('DELETE')
+                                                  @csrf
+                                                  <button onclick="return confirm('آیا از حذف کاربر مطمئن هستید؟');" class=" btn custombutton custombutton-danger p-1">حذف </button>
+                                              </form>
+                                          @endcan
                                       </div>
                                     </td>
                                 </tr>

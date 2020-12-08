@@ -37,7 +37,6 @@ class UpdateArticleRequest extends FormRequest
             'slug' => Rule::unique('articles')->ignore(request()->article),
             'body' => 'required',
             'thumbnail' => 'required',
-            'author_id' => 'required',
             'category_id'=>'required',
         ];
     }
@@ -48,7 +47,6 @@ class UpdateArticleRequest extends FormRequest
             'slug.unique' => 'لطفا نام مستعار دیگری انتخاب کنید.',
             'body.required' => 'لطفا متن خبر را وارد نمایید.',
             'thumbnail.required' => 'لطفا تصویر اصلی خبر را انتخاب کنید.',
-            'author_id.required'=>'لطفا نویسنده خبر را انتخاب کنید.',
             'category_id.required'=>'لطفا دسته بندی خبر را انتخاب کنید.',
         ];
     }

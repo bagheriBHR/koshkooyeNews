@@ -17,6 +17,7 @@ class CreateSettingsTable extends Migration
             $table->id();
             $table->string("website_name");
             $table->string("logo_url");
+            $table->string("banner")->nullable();
             $table->boolean("is_active");
             $table->text("about_us");
             $table->text("contact_us");

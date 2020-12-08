@@ -19,7 +19,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('created_at', 'desc')->paginate(20);
+        $categories = Category::with(['childrenRecursive'])
+            ->where('parent_id','=',null)
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
         return view('backend.category.list',compact(['categories']));
     }
 
@@ -30,7 +33,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.category.create');
+        $categories=Category::with(['childrenRecursive'])
+            ->where('parent_id',null)
+            ->get();
+        return view('backend.category.create',compact(['categories']));
     }
 
     /**
@@ -49,6 +55,7 @@ class CategoryController extends Controller
         }else{
             $category->slug =make_slug($request->name);
         }
+        $category->parent_id = $request->parent_id;
         $category->save();
         Session::flash('success','دسته بندی با موفقیت ثبت گردید.');
         return redirect()->route('category.index');
@@ -72,9 +79,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $categories=Category::with(['childrenRecursive'])
+            ->where('parent_id',null)
+            ->get();
         $category = Category::find($id);
         $this->authorize('update',$category);
-        return view('backend.category.edit',compact(['category']));
+        return view('backend.category.edit',compact(['category','categories']));
     }
 
     /**
@@ -94,6 +104,7 @@ class CategoryController extends Controller
         }else{
             $category->slug =make_slug($request->name);
         }
+        $category->parent_id = $request->parent_id;
         $category->save();
         Session::flash('success','دسته بندی با موفقیت بروزرسانی گردید.');
         return redirect()->route('category.index');
@@ -107,8 +118,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $category=Category::with('childrenRecursive')->where('id',$id)->first();
         $this->authorize('delete',$category);
+        if(count($category->childrenRecursive)>0){
+            Session::flash('danger','دسته ' .$category->name.' دارای زیر دسته است و قابل حذف نیست. ');
+            return redirect()->route('category.index');
+        }
         if(count($category->articles)>0){
             Session::flash('danger','دسته ' .$category->name.' دارای زیر مجموعه است و قابل حذف نیست. ');
             return redirect()->route('category.index');

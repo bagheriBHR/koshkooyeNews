@@ -18,7 +18,7 @@ class CommercialController extends Controller
     public function index()
     {
         $this->authorize('create', Auth::user());
-        $commercials = Commercial::where('status',0)->orWhere('status',1)->paginate(20);
+        $commercials = Commercial::where('status',0)->orWhere('status',1)->orderBy('created_at','desc')->paginate(20);
         return view('backend.commercial.list', compact(['commercials']));
     }
 
@@ -43,24 +43,32 @@ class CommercialController extends Controller
         $this->authorize('create', Auth::user());
         $request->validate([
             'title' => 'required',
-            'url' => 'required',
-            'status' => 'required',
+            'banner' => 'required',
             'type' => 'required',
         ], [
             'title.required' => 'فیلد عنوان تبلیغ الزامی است.',
             'url.required' => 'فیلد بنر تبلیغاتی الزامی است.',
-            'status.required' => 'فیلد وضعیت الزامی است.',
             'type.required' => 'فیلد نوع سرویس دهی الزامی است.',
         ]);
-
+        $activeCommercials = Commercial::where('status',1)->count();
+        if($activeCommercials>10){
+            Session::flash('success', '10 تبلیغ فعال وجود دارد.امکان درج تبلیغ وجود ندارد.');
+            return redirect()->route('commercial.index');
+        }
         $commercial = new Commercial();
         $commercial->title = $request->title;
         $commercial->url = $request->url;
+        $commercial->banner = $request->banner;
         $commercial->status = $request->status;
         $commercial->type = $request->type;
-        $commercial->click_count = $request->click_count;
-        $commercial->start_at = $request->start_at;
-        $commercial->finish_at = $request->finish_at;
+        $commercial->total_click = $request->total_click;
+        if($request->type == 0){
+            $commercial->start_date = $request->start_date_click;
+        }else{
+            $commercial->start_date = $request->start_date;
+        }
+        $commercial->finish_date = $request->finish_date;
+        $commercial->status = 0;
         $commercial->save();
 
         Session::flash('success', 'درج تبلیغ با موفقیت انجام شد.');
@@ -102,22 +110,26 @@ class CommercialController extends Controller
         $this->authorize('create', Auth::user());
         $request->validate([
             'title' => 'required',
-            'status' => 'required',
             'type' => 'required',
         ], [
             'title.required' => 'فیلد عنوان تبلیغ الزامی است.',
-            'status.required' => 'فیلد وضعیت الزامی است.',
             'type.required' => 'فیلد نوع سرویس دهی الزامی است.',
         ]);
 
         $commercial = Commercial::find($id);
         $commercial->title = $request->title;
         $commercial->url = $request->url;
+        $commercial->banner = $request->banner;
         $commercial->status = $request->status;
         $commercial->type = $request->type;
-        $commercial->click_count = $request->click_count;
-        $commercial->start_at = $request->start_at;
-        $commercial->finish_at = $request->finish_at;
+        $commercial->total_click = $request->total_click;
+        if($request->type == 0){
+            $commercial->start_date = $request->start_date_click;
+        }else{
+            $commercial->start_date = $request->start_date;
+        }
+        $commercial->finish_date = $request->finish_date;
+        $commercial->status = 0;
         $commercial->save();
 
         Session::flash('success', 'ویرایش تبلیغ با موفقیت انجام شد.');
@@ -174,12 +186,4 @@ class CommercialController extends Controller
         return view('backend.commercial.list', compact(['commercials']));
     }
 
-    public function action(Request $request, $id)
-    {
-        $commercial = Commercial::find($id);
-        if ($request->action == 'activate') {
-            $commercial->status = 1;
-            $commercial->save();
-        }
-    }
 }

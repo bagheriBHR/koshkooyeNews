@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,7 +13,12 @@ class VideoController extends Controller
     {
         $video = $request->file('file');
         $name = time() . $video->getClientOriginalName();
-        Storage::disk('public')->putFileAs('videos', $video, $name);
-        return response()->json(['url' => $name]);
+
+        $year = Carbon::now()->year;
+        $month = Carbon::now()->month;
+        $videoPath = "/videos/{$year}/{$month}/";
+
+        Storage::disk('public')->putFileAs($videoPath, $video, $name);
+        return response()->json(['url' => $videoPath.$name]);
     }
 }

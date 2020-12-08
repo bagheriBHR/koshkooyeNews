@@ -20,17 +20,18 @@ class CreateArticlesTable extends Migration
             $table->string('roo_titr')->nullable();
             $table->text('body');
             $table->string('summery')->nullable();
-            $table->string('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('view_count')->default(0);
             $table->boolean('is_carousel')->default(0);
+            $table->smallInteger('type')->default(0);
             $table->smallInteger('publish_status')->default(0);
+            $table->string('reporter')->nullable();
+            $table->string('photographer')->nullable();
+            $table->string('media_source')->nullable();
 
-            $table->string('thumbnail');
             $table->string('video_url')->nullable();
             $table->string('image_url')->nullable();
-
-            $table->unsignedBigInteger('author_id');
-            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->dateTime('publish_date')->nullable();
             $table->timestamps();

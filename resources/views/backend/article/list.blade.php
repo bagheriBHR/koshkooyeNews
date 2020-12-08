@@ -56,7 +56,6 @@
                                 <th class="text-right">نمایش در کروسل</th>
                                 <th class="text-right">وضعیت نشر</th>
                                 <th class="text-right">تاریخ نشر</th>
-                                <th class="text-right">تاریخ ایجاد</th>
                                 <th class="text-right"></th>
                             </tr>
                             </thead>
@@ -65,7 +64,7 @@
                                 @can('view',$article)
                                 <tr>
                                     <td class="text-right" scope="row">{{ $key+1 }}</td>
-                                    <td class="text-center p-0"><img src="{{ '/storage/photos/articles/'.$article->thumbnail }}" alt="" class="my-1" style="width:40px;"></td>
+                                    <td class="text-center p-0"><img src="{{ '/storage'.$article->photo->path.'small_'.$article->photo->originalName }}" alt="" class="my-1" style="width:40px;"></td>
                                     <td class="text-right"><a href="{{route('article.edit',$article->id)}}">{{ \Illuminate\Support\Str::limit($article->title,40)}}</a></td>
                                     <td class="text-right">
                                         @foreach($article->tags as $tag)
@@ -86,29 +85,28 @@
                                         <td class="text-center p-0"> <span class="badge badge-primary p-1">آرشیو</span></td>
                                     @endif
                                     <td class="text-right">{{$article->publish_date ? \Hekmatinasser\Verta\Verta::instance($article->publish_date)->formatDate()  : '-' }}</td>
-                                    <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($article->created_at)->formatDate() }}</td>
-                                    <td class="">
+                                    <td class="p-0">
                                         <div class="d-flex justify-content-end">
                                             @if($article->publish_status==0 || $article->publish_status==2)
                                                 <form action="{{route('article.action',$article->id)}}" method="post">
                                                     @method('GET')
                                                     @csrf
                                                     <input type="hidden" name="action" value="publish">
-                                                    <button type="submit" class="btn btn custombutton custombutton-success py-2 px-4">نشر دهید</button>
+                                                    <button type="submit" class="btn btn custombutton custombutton-success p-1">انتشار</button>
                                                 </form>
                                             @else
                                                 <form action="{{route('article.action',$article->id)}}" method="post">
                                                     @method('GET')
                                                     @csrf
                                                     <input type="hidden" name="action" value="archive">
-                                                    <button type="submit" class="btn btn custombutton custombutton-primary py-2 px-4" >آرشیو کنید</button>
+                                                    <button type="submit" class="btn btn custombutton custombutton-primary p-1" >آرشیو </button>
                                                 </form>
                                             @endif
                                             @can('update',\Illuminate\Support\Facades\Auth::user(),$article)
                                                 <form action="{{route('article.destroy',$article->id)}}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <button onclick="return confirm('آیا از حذف مقاله مطمئن هستید؟');" class="mr-2 btn custombutton custombutton-danger py-2 px-4">حذف </button>
+                                                    <button onclick="return confirm('آیا از حذف مقاله مطمئن هستید؟');" class="mr-2 btn custombutton custombutton-danger p-1">حذف </button>
                                                 </form>
                                             @endcan
                                         </div>

@@ -29,6 +29,20 @@
                         <input type="text" class="custom-field form-control form-control-sm" id="slug" name="slug">
                     </div>
                 </div>
+                <div class="form-group row d-flex align-items-center">
+                    <label for="slug" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> دسته والد :</label>
+                    <div class="col-sm-4">
+                        <select name="parent_id" class="custom-field form-control form-control-sm">
+                            <option value="">بدون والد</option>
+                            @foreach($categories as $category_list)
+                                <option value="{{$category_list->id}}">{{$category_list->name}}</option>
+                                @if(count($category_list->childrenRecursive)>0)
+                                    @include('backend.partials.categoryList',['categories'=>$category_list->childrenRecursive,'level'=>1])
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="d-flex align-items-end">
                     <div class="col-sm-6">
                         <button type="submit" class="btn custombutton custombutton-success py-2 px-4"> ذخیره</button>

@@ -6,7 +6,10 @@ use App\Article;
 use App\Commercial;
 use App\Http\Controllers\Controller;
 use App\User;
+use Carbon\Carbon;
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class HomeController extends Controller
 {

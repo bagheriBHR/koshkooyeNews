@@ -16,6 +16,11 @@
                 <h3 class="custom-field-title text-right py-2 pr-2 mb-0 font-weight-bold">فرم ایجاد مقاله</h3>
             </div>
             @include('backend.partials.form-errors')
+            @if(Session::has('danger'))
+                <div class="alert alert-danger text-right w-100">
+                    <div>{{Session('danger')}}</div>
+                </div>
+            @endif
             <form class="customform p-3 w-100" method="post" action="{{route('article.store')}}" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
@@ -49,54 +54,39 @@
                         <textarea type="text" class="custom-field form-control form-control-sm" rows="10" id="summery" name="summery" ></textarea>
                     </div>
                 </div>
+{{--                <div class="form-group row d-flex align-items-center">--}}
+{{--                    <label for="body" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> دسته بندی خبر:</label>--}}
+{{--                    <div class="col-sm-6">--}}
+{{--                        <select name="category_id[]" multiple class="custom-field form-control form-control-sm">--}}
+{{--                            @foreach($categories as $category_list)--}}
+{{--                                <option value="{{$category_list->id}}">{{$category_list->name}}</option>--}}
+{{--                                @if(count($category_list->childrenRecursive)>0)--}}
+{{--                                    @include('backend.partials.categoryList',['categories'=>$category_list->childrenRecursive,'level'=>1])--}}
+{{--                                @endif--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="form-group row d-flex align-items-center">
                     <label for="body" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> دسته بندی خبر:</label>
                     <div class="col-sm-6">
-                        <select name="category_id[]" class="w-100 custom-field" multiple>
-                            <option value="">با نگه داشتن کلید Cntrl چندین دسته بندی را انتخاب کنید...</option>
-                            @foreach($categories as $category)
-                                <option value="{{$category->id}}" >{{$category->name}}</option>
+                        <select id="categoryList" name="category_id" class="custom-field form-control form-control-sm">
+                            <option value="">انتخاب کنید...</option>
+                        @foreach($categories as $category_list)
+                                <option value="{{$category_list->id}}">{{$category_list->name}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
-                    <label for="tag" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تگ ها :</label>
+                    <label for="body" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> زیر دسته بندی خبر:</label>
                     <div class="col-sm-6">
-                        <input type="text" placeholder="تگها را با علامت کاما(،) از هم جدا کنید." class="custom-field form-control form-control-sm" id="tag" name="tag">
-                    </div>
-                </div>
-                <div class="form-group row d-flex align-items-center ">
-                    <label for="author" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نویسنده :</label>
-                    <div class="col-sm-4 d-flex justify-content-start">
-                        <select name="author_id" class="w-100 custom-field">
+                        <select id="subcategoryList" class="custom-field form-control form-control-sm" name="subcategory_id" disabled>
                             <option value="">انتخاب کنید...</option>
-                            @foreach($authors as $author)
-                                <option value="{{$author->id}}" >{{$author->first_name.' '.$author->last_name}}</option>
+                        @foreach ($subcategories as $subcategory)
+                                <option value="{{ $subcategory->id }}" class='parent-{{ $subcategory->parent_id }} subcategory'>{{ $subcategory->name }}</option>
                             @endforeach
                         </select>
-                    </div>
-                </div>
-                <div class="form-group row d-flex align-items-center ">
-                    <label for="publish_status" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> وضعیت نشر :</label>
-                    <div class="col-sm-4 d-flex justify-content-start">
-                        <select name="publish_status" class="w-100 custom-field">
-                            <option value="0" selected> پیشنویس</option>
-                            <option value="1">انتشار یافته</option>
-                            <option value="2">آرشیو</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row d-flex align-items-center ">
-                    <label for="publish_status" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نمایش در کروسل :</label>
-                    <div class="col-sm-4 d-flex justify-content-start">
-                        <div class="col-sm-8 text-right pr-md-0">
-                            <input class="form-check-input" checked type="radio" value="1" name="is_carousel" id="radio1">
-                            <label class="custom-field-title form-check-label mr-3 ml-3">فعال</label>
-
-                            <input class="form-check-input" checked type="radio" value="0" name="is_carousel" id="radio2">
-                            <label class="custom-field-title form-check-label mr-3">غیرفعال</label>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
@@ -106,18 +96,88 @@
                         <div id="photo" class="dropzone" ></div>
                     </div>
                 </div>
-                <div class="form-group row d-flex align-items-center">
-                    <label for="photo" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">گالری تصاویر</label>
-                    <input type="hidden" name="image_url[]" id="image_url">
-                    <div class="col-sm-6">
-                        <div id="articlePhoto" class="dropzone"></div>
+                <div class="form-group row d-flex align-items-center ">
+                    <label for="roles" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نوع خبر:</label>
+                    <div class="col-sm-6 d-flex justify-content-start">
+                        <div class="col-sm-8 text-right pr-md-0">
+                            <input class="form-check-input" checked type="radio" value="0" name="type" id="radio1">
+                            <label class="custom-field-title form-check-label mx-3">متن</label>
+
+                            <input class="form-check-input" type="radio" value="1" name="type" id="radio2">
+                            <label class="custom-field-title form-check-label mx-3">عکس</label>
+
+                            <input class="form-check-input" type="radio" value="2" name="type" id="radio3">
+                            <label class="custom-field-title form-check-label mx-3">فیلم</label>
+
+                            <input class="form-check-input" type="radio" value="3" name="type" id="radio4">
+                            <label class="custom-field-title form-check-label mx-3">صوت</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="type1" class="desc">
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="photo" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> گالری تصاویر :</label>
+                        <input type="hidden" name="image_url[]" id="image_url">
+                        <div class="col-sm-6">
+                            <div id="articlePhoto" class="dropzone"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="type2" class="desc media2 media3">
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="video" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  آپلود فایل :</label>
+                        <input type="hidden" name="video_url" id="article_video">
+                        <div class="col-sm-6">
+                            <div id="video" class="dropzone" ></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="desc media1 media2">
+                    <div class="form-group row d-flex align-items-center ">
+                        <label for="reporter" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تصویربردار یا صدابردار:</label>
+                        <div class="col-sm-6 d-flex justify-content-start">
+                            <input type="text" class="custom-field form-control form-control-sm" id="photographer" name="photographer">
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center ">
+                        <label for="reporter" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> منبع فایل :</label>
+                        <div class="col-sm-6 d-flex justify-content-start">
+                            <input type="text" placeholder="www.youtobe.com" class="custom-field form-control form-control-sm" id="media_source" name="media_source">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center ">
+                    <label for="reporter" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> خبرنگار :</label>
+                    <div class="col-sm-6 d-flex justify-content-start">
+                        <input type="text" class="custom-field form-control form-control-sm" id="reporter" name="reporter">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
-                    <label for="video" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  ویدیو :</label>
-                    <input type="hidden" name="video_url" id="article_video">
+                    <label for="tag" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تگ ها :</label>
                     <div class="col-sm-6">
-                        <div id="video" class="dropzone" ></div>
+                        <input type="text" placeholder="تگها را با علامت کاما(،) از هم جدا کنید." class="custom-field form-control form-control-sm" id="tag" name="tag">
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center ">
+                    <label for="publish_status" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> وضعیت نشر :</label>
+                    <div class="col-sm-6 d-flex justify-content-start">
+                        <select name="publish_status" class="w-100 custom-field">
+                            <option value="0" selected> پیشنویس</option>
+                            <option value="1">انتشار یافته</option>
+                            <option value="2">آرشیو</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row d-flex align-items-center ">
+                    <label for="publish_status" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نمایش در کروسل :</label>
+                    <div class="col-sm-6 d-flex justify-content-start">
+                        <div class="col-sm-8 text-right pr-md-0">
+                            <input class="form-check-input" checked type="radio" value="1" name="is_carousel" id="radio1">
+                            <label class="custom-field-title form-check-label mr-3 ml-3">فعال</label>
+
+                            <input class="form-check-input" checked type="radio" value="0" name="is_carousel" id="radio2">
+                            <label class="custom-field-title form-check-label mr-3">غیرفعال</label>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex mt-3">
@@ -134,6 +194,26 @@
     <script type="text/javascript" src="{{asset('backend/js/dropzone.js')}}"></script>
     <script src="{{asset('backend/js/ckeditor/ckeditor.js')}}"></script>
     <script>
+        $(document).ready(function() {
+            $("div.desc").hide();
+            $("input[name$='type']").click(function() {
+                var test = $(this).val();
+
+                $("div.desc").hide();
+                $("#type" + test).show();
+                $("div.media"+test).show();
+            });
+        });
+
+        $('#categoryList').on('change', function () {
+            $("#subcategoryList").attr('disabled', false); //enable subcategory select
+            $("#subcategoryList").val("");
+            $(".subcategory").attr('disabled', true); //disable all category option
+            $(".subcategory").hide(); //hide all subcategory option
+            $(".parent-" + $(this).val()).attr('disabled', false); //enable subcategory of selected category/parent
+            $(".parent-" + $(this).val()).show();
+        });
+
         var drop = new Dropzone('#photo', {
             addRemoveLinks: true,
             maxFiles: 1,
@@ -151,8 +231,8 @@
 
         var drop1 = new Dropzone('#video', {
             addRemoveLinks: true,
-            acceptedFiles: '.mp4',
-            maxFilesize: 100, // MB
+            acceptedFiles: '.mp4,.mp3,.wav',
+            maxFilesize: 1000, // MB
             timeout: 0,
             maxFiles: 1,
             url: "{{ route('video.upload') }}",

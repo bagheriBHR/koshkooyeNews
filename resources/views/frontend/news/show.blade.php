@@ -2,41 +2,85 @@
 
 @section('content')
     <!-- body -->
-    <div class="d-flex flex-column flex-md-row px-2 px-md-5 main mt-3">
+    <div class="d-flex flex-column flex-md-row px-2 px-md-5 main my-3">
         <div class="single col-12 col-md-7 d-flex flex-column px-0 pl-md-2 ">
             <div class="bg-white p-3 border">
                 <div class="mt-3">
                     <div class="col-12 d-flex p-0 mb-3 line position-relative d-flex justify-content-between">
-                        <h2 class="title d-flex pb-2 m-0 text-right position-relative pl-5"><a href="#">اقتصادی</a><span class="mr-2 d-flex align-items-center"><i class="fas fa-angle-left ml-2"></i><a href="#">نفت</a></span></h2>
+                        <h2 class="title d-flex pb-2 m-0 text-right position-relative pl-5">
+                            @foreach($article->categories as $category)
+                                @if($category->parent_id == null)
+                                    <a href="{{route('news.category',$category->slug)}}">{{$category->name}}</a>
+                                @endif
+                                @if($category->parent_id!=null)
+                                    <span class="mr-2 d-flex align-items-center"><i class="fas fa-angle-left ml-2"></i><a href="{{route('news.category',$category->slug)}}">{{$category->name}}</a></span>
+                                @endif
+                            @endforeach
+                        </h2>
                         <div class="d-flex share">
                             <a class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-share-alt ml-2"></i>اشتراک گذاری
                                 </a>
                                 <div class="dropdown-menu py-0" aria-labelledby="navbarDropdown">
-                                    <a href="#" class="dropdown-item text-right"><i class="fab fa-instagram ml-2"></i>اینستاگرام</a>
-                                    <a href="#" class="dropdown-item text-right"><i class="fab fa-whatsapp ml-2"></i>واتس آپ</a>
-                                    <a href="#" class="dropdown-item text-right"><i class="fab fa-telegram ml-2"></i>تلگرام</a>
-                                    <a href="#" class="dropdown-item text-right"><i class="fab fa-twitter ml-2"></i>توییتر</a>
-                                    <a href="#" class="dropdown-item text-right"><i class="fab fa-facebook ml-2"></i>فیس بوک</a>
+                                    <a href="https://web.whatsapp.com/send?text={{url()->current()}}" class="dropdown-item text-right"><i class="fab fa-whatsapp ml-2"></i>واتس آپ</a>
+                                    <a href="https://telegram.me/share/url?url={{url()->current()}}" class="dropdown-item text-right"><i class="fab fa-telegram ml-2"></i>تلگرام</a>
+                                    <a href="https://twitter.com/home?status={{url()->current()}}" class="dropdown-item text-right"><i class="fab fa-twitter ml-2"></i>توییتر</a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" class="dropdown-item text-right"><i class="fab fa-facebook ml-2"></i>فیس بوک</a>
                                 </div>
                             </a>
-                            <a href="#" class="d-flex align-items-center"><i class="fas fa-print ml-2"></i>چاپ خبر</a>
+                            <a href="{{route('printNews',$article->id)}}" class="d-flex align-items-center"><i class="fas fa-print"></i></a>
                         </div>
                         <div class="time position-absolute mr-auto">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</div>
                     </div>
                 </div>
-
                 <!-- single -->
                 <div class="news-info mt-4 d-flex flex-column align-items-start">
                     <h3 class="roo-titr">{{$article->roo_titr ? $article->roo_titr.' '.':' : ''}}</h3>
                     <h2 class="mb-3">{{$article->title}}</h2>
-                    <p class="summery">{{$article->summery ? $article->summery : \Illuminate\Support\Str::limit($article->body,200)}}</p>
-                    <img src="./assets/img3.jpg" class="w-100" alt="">
-                    <p class="mt-3">{!! $article->body !!}</p>
-                    <span class="end">توسط : {{$article->user->first_name .' '.$article->user->last_name}}</span>
-                     <span class="end mt-2">انتها پیام /</span>
-                    <div class="tagCard d-flex flex-wrap mt-3">
+                    @if($article->summery)
+                        <p class="summery">{{$article->summery}}</p>
+                    @endif
+                    @if($article->type==0)
+                        <img src="{{'/storage'.$article->photo->path.'medium_'.$article->photo->originalName }}" class="w-100" alt="">
+                    @endif
+                    <p>{!! $article->body !!}</p>
+                    @if($article->type==1)
+                        <div class="w-100 d-flex flex-wrap">
+                            @foreach($article->photos as $photo)
+                                <div class="col-12 col-md-6 mb-3 px-2">
+                                    <img src="{{'/storage'.$photo->path.$photo->originalName}}" class="w-100">
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                    @if($article->type==2)
+                        <video width="100%" controls>
+                            <source src="{{ '/storage'. $article->video_url }}" type="video/mp4">
+                            مرورگر شمااین ویدیورا پشتیبانی نمی کند.
+                        </video>
+                    @endif
+                    @if($article->type==3)
+                        <audio controls style="width: 100%">
+                            <source src="{{ '/storage'. $article->video_url }}">
+                            <source src="horse.ogg" type="audio/ogg">
+                            <source src="horse.mp3" type="audio/mpeg">
+                            مرورگر شمااین ویدیورا پشتیبانی نمی کند.
+                        </audio>
+                    @endif
+                    <div class="d-flex justify-content-start mt-2 border-top w-100 pt-2">
+                        @if($article->reporter)
+                            <span class="end ml-4">خبرنگار : {{$article->reporter}}</span>
+                        @endif
+                        @if($article->photographer)
+                                <span class="end d-flex align-items-center"><i class="ml-2 {{$article->type==1 ? 'fa fa-camera' : 'fa fa-film'}}"></i> {{$article->photographer}}</span>
+                            @endif
+                    </div>
+                    @if($article->media_source)
+                        <span class="end mt-2">منبع خبر : {{$article->media_source}}</span>
+                    @endif
+                    <span class="end mt-3">انتها پیام /</span>
+                    <div class="tagCard d-flex flex-wrap mt-3 d-flex align-items-center">
                         @foreach($article->tags as $tag)
                          <div class="px-2 py-1 tagItem"><a href="{{route('news.tag',make_slug($tag->name))}}">{{$tag->name}}</a></div>
                         @endforeach
@@ -46,20 +90,30 @@
             </div>
 
             <!-- comment form -->
-            <div class="comment d-flex flex-column mt-3 p-3 border bg-white">
+            <div id="commentHash" class="comment d-flex flex-column mt-3 p-3 border bg-white">
+                @if(Session::has('success'))
+                    <div class="alert alert-success text-right">
+                        <div>{{Session('success')}}</div>
+                    </div>
+                @endif
                 <h2 class="section-title">ارسال نظر</h2>
-                <form>
+                <form method="post" action="{{route('frontend.comment.store',$article->id)}}">
+                    @method('POST')
+                    @csrf
                     <div class="form-row form-group">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="نام و نام خانوادگی">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="نام و نام خانوادگی">
+                            <small class="text-danger">{{ $errors->first('name') }}</small>
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="پست الکترونیکی">
+                            <input type="text" class="form-control" name="email" id="email" placeholder="پست الکترونیکی">
+                            <small class="text-danger">{{ $errors->first('email') }}</small>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col form-group">
-                            <textarea type="text" rows="5" class="form-control" placeholder="نظر خود را وارد کنید..."></textarea>
+                            <textarea type="text" rows="5" class="form-control" name="body" id="body" placeholder="نظر خود را وارد کنید..."></textarea>
+                            <small class="text-danger">{{ $errors->first('body') }}</small>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-blue">ارسال</button>
@@ -68,123 +122,63 @@
             <!-- end of comment form -->
 
             <!-- comments -->
-            <div class="comment d-flex flex-column mt-3 p-3 border bg-white">
-                <h2 class="section-title">نظرات شما</h2>
-                <div class="comment-card d-flex flex-column p-3 border">
-                    <div class="d-flex align-items-end justify-content-between mb-2">
-                        <h6>نام و نام خانوادگی :</h6>
-                        <button>پاسخ</button>
-                    </div>
-                    <p>لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک</p>
-                    <div class="subComment pr-5 border-top pt-3 mt-3">
-                        <div class="d-flex align-items-end justify-content-between mb-2">
-                            <h6>نام و نام خانوادگی :</h6>
-                            <button>پاسخ</button>
-                        </div>
-                        <p>لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک</p>
-                        <div class="subComment pr-5 border-top pt-3 mt-3">
+            @if(count($article->comments))
+                <div class="comment d-flex flex-column mt-3 p-3 border bg-white no-print">
+                    <h2 class="section-title">نظرات شما</h2>
+                    @foreach($article->comments as $comment)
+                        <div class="comment-card d-flex flex-column p-3 border">
                             <div class="d-flex align-items-end justify-content-between mb-2">
-                                <h6>نام و نام خانوادگی :</h6>
-                                <button>پاسخ</button>
+                                <h6>{{$comment->name}} :</h6>
+                                <button class="btn-open" id="div-comment-{{$comment->id}}">پاسخ</button>
                             </div>
-                            <p>لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک</p>
+                            <p class="pr-3">{!! nl2br(e($comment->body)) !!}</p>
+                            <div class="form-reply col-md-12" id="f-div-comment-{{$comment->id}}" style="display: none">
+                                <form class=" " method="post" action="{{route('frontend.comment.reply')}}">
+                                    @method('POST')
+                                    @csrf
+                                    <div class="d-flex">
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control form-control-sm" name="name" placeholder="نام و نام خانوادگی"/>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="email" class="form-control form-control-sm" name="email" placeholder="پست الکترونیکی"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <textarea type="text" rows="10" class="custom-field form-control form-control-sm"  name="body" placeholder="توضیحات را وارد کنید..."></textarea>
+                                    </div>
+                                    <input type="hidden" name="parent_id" value="{{$comment->id}}">
+                                    <input type="hidden" name="article_id" value="{{$article->id}}">
+                                    <div class="form-group col-md-12">
+                                        <button type="submit" class="btn btn-form">ارسال</button>
+                                    </div>
+                                </form>
+                            </div>
+                            @if(count($comment->childrenRecursive) > 0)
+                                @include('frontend.partials.comments', ['comments' => $comment->childrenRecursive,'article'=>$article])
+                            @endif
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-                <div class="comment-card d-flex flex-column p-3 border">
-                    <div class="d-flex align-items-end justify-content-between mb-2">
-                        <h6>نام و نام خانوادگی :</h6>
-                        <button>پاسخ</button>
-                    </div>
-                    <p>لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک</p>
-                </div>
-                <div class="comment-card d-flex flex-column p-3 border">
-                    <div class="d-flex align-items-end justify-content-between mb-2">
-                        <h6>نام و نام خانوادگی :</h6>
-                        <button>پاسخ</button>
-                    </div>
-                    <p>لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک</p>
-                </div>
-            </div>
+            @endif
             <!-- end of comments -->
+
         </div>
 
-        @include('frontend.partials.sidaber')
+        @include('frontend.partials.sidaber' , ['activeCommercials' => $activeCommercials])
 
     </div>
     <!-- end of body -->
 
-    <!-- photos -->
-    <div class="image-card d-flex flex-column py-3 px-2 px-md-5 bg-dark mt-3">
-        <div class="d-flex flex-column flex-md-row">
-            <div class="col-12 col-md-6 px-0 pl-md-5">
-                <h2 class="section-title">خبرهای تصویری</h2>
-                <div class="d-flex flex-column flex-md-row">
-                    <div class="col-12 col-md-6 px-md-0">
-                        <div class="d-flex flex-column">
-                            <div class="col-12 mt-2 px-0 pr-md-2">
-                                <div class="col p-0">
-                                    <div class="topitem2 d-flex flex-column align-items-center mt-md-0 position-relative h-100">
-                                        <img src="./assets/img3.jpg" class="w-100 h-100">
-                                        <div class="title position-absolute w-100 py-1 px-3">
-                                            <a href="#" class="text-justify">لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 mt-2 px-0 pr-md-2">
-                                <div class="col p-0">
-                                    <div class="topitem2 d-flex flex-column align-items-center mt-md-0 position-relative h-100">
-                                        <img src="./assets/img2.jpg" class="w-100 h-100">
-                                        <div class="title position-absolute w-100 py-1 px-3">
-                                            <a href="#" class="text-justify">لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 d-flex flex-column px-md-0">
-                        <div class="d-flex flex-column">
-                            <div class="col-12 mt-2 px-0 pr-md-2">
-                                <div class="col p-0">
-                                    <div class="topitem2 d-flex flex-column align-items-center mt-md-0 position-relative h-100">
-                                        <img src="./assets/img4.jpg" class="w-100 h-100">
-                                        <div class="title position-absolute w-100 py-1 px-3">
-                                            <a href="#" class="text-justify">لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 mt-2 px-0 pr-md-2">
-                                <div class="col p-0">
-                                    <div class="topitem2 d-flex flex-column align-items-center mt-md-0 position-relative h-100">
-                                        <img src="./assets/img1.jpg" class="w-100 h-100">
-                                        <div class="title position-absolute w-100 py-1 px-3">
-                                            <a href="#" class="text-justify">لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-12 col-md-6 pr-md-5 custom-border-right mt-3 mt-md-0">
-                <h2 class="section-title">خبرهای ویدیویی</h2>
-                <section class="center slider w-100 pt-4 mt-0" dir="ltr">
-                    <div class="position-relative">
-                        <img src="./assets/video2.jpg" alt="" class="w-100 h-100">
-                        <div class="h-100 w-100 video-hover position-absolute d-flex align-items-center justify-content-center">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div><img src="./assets/video2.jpg" alt="" class="w-100"></div>
-                    <div><img src="./assets/video2.jpg" alt="" class="w-100"></div>
-                </section>
-            </div>
-        </div>
-    </div>
-    <!-- end of photos -->
+@endsection
+@section('script')
+    <script>
+        //comment form
+        $(".btn-open").click(function(){
+            $('.form-reply').css('display', 'none');
+            var service = this.id;
+            var service_id = '#f-' + service;
+            $(service_id).show('slow');
+        })
+    </script>
 @endsection

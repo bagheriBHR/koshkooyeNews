@@ -23,12 +23,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with(['categories','user','tags'])
+        $articles = Article::with(['categories','user','tags','photo'])
             ->where('publish_status',0)
             ->orWhere('publish_status',1)
             ->orderBy('created_at', 'desc')
             ->paginate(20);
-
         return view('backend.article.list',compact(['articles']));
     }
 
@@ -39,9 +38,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $categories = category::all();
-        $authors = User::where('is_author',1)->get();
-        return view('backend.article.create',compact(['categories','authors']));
+        $categories = Category::where('parent_id',null)->get();
+        $subcategories = Category::whereNotNull('parent_id')->get();
+        return view('backend.article.create',compact(['categories','subcategories']));
     }
 
     /**
@@ -52,39 +51,51 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        $article = new Article();
-        $article->title = $request->title;
-        if($request->slug){
-            $article->slug= make_slug($request->slug);
+        if($request->type==1 && $request->image_url[0]==null){
+            Session::flash('danger', 'فیلد گالری تصاویر برای نوع خبر عکس الزامی است.');
+            return back();
+        }elseif(($request->type==2 || $request->type==3) && $request->video_url==null){
+            Session::flash('danger', 'فیلد آپلود فایل برای نوع خبر ویدیویی یا صوتی الزامی است.');
+            return back();
         }else{
-            $article->slug= make_slug($request->title);
+            $article = new Article();
+            $article->title = $request->title;
+            if($request->slug){
+                $article->slug= make_slug($request->slug);
+            }else{
+                $article->slug= make_slug($request->title);
+            }
+            $article->roo_titr = $request->roo_titr;
+            $article->body = $request->body;
+            $article->summery = $request->summery;
+            $article->type = $request->type;
+            $article->user_id = Auth::id();
+            $article->reporter = $request->reporter;
+            $article->is_carousel = $request->is_carousel;
+            $article->publish_status = $request->publish_status;
+            $article->photographer = $request->photographer;
+            $article->media_source = $request->media_source;
+            if($request->publish_status==1){
+                $article->publish_date = new \DateTime();
+            }
+            $article->thumbnail = $request->thumbnail;
+            $article->video_url = $request->video_url;
+            $article->save();
+            $article->categories()->attach($request->category_id);
+            $article->categories()->attach($request->subcategory_id);
+
+            if($request->image_url[0]!=null) {
+                $images = explode(',', $request->image_url[0]);
+                $article->photos()->sync($images);
+            }
+
+            $tags = explode('،',$request->tag);
+            $article->attachTags($tags);
+
+            Session::flash('success', 'خبر با موفقیت اضافه شد.');
+            return redirect()->route('article.index');
+
         }
-        $article->roo_titr = $request->roo_titr;
-        $article->body = $request->body;
-        $article->summery = $request->summery;
-        $article->user_id = Auth::id();
-        $article->author_id = $request->author_id;
-        $article->is_carousel = $request->is_carousel;
-        $article->publish_status = $request->publish_status;
-        if($request->publish_status==1){
-            $article->publish_date = new \DateTime();
-        }
-        $article->thumbnail = $request->thumbnail;
-        $article->video_url = $request->video_url;
-        $article->save();
-        $article->categories()->sync($request->category_id);
-
-        if($request->image_url[0]!=null) {
-            $images = explode(',', $request->image_url[0]);
-            $article->photos()->sync($images);
-        }
-
-        $tags = explode('،',$request->tag);
-        $article->attachTags($tags);
-
-        Session::flash('success', 'خبر با موفقیت اضافه شد.');
-        return redirect()->route('article.index');
-
     }
 
     /**
@@ -106,11 +117,11 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::all();
-        $authors = User::where('is_author',1)->get();
+        $categories=Category::where('parent_id',null)->get();
         $article = Article::where('id',$id)->with(['categories','user','tags','photos'])->first();
         $tags = $article->tags->pluck('name');
-        return view('backend.article.update',compact(['article','categories','authors','tags']));
+        $subcategories = Category::whereNotNull('parent_id')->get();
+        return view('backend.article.update',compact(['article','categories','tags','subcategories']));
     }
 
     /**
@@ -122,44 +133,57 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, $id)
     {
-        $article = Article::find($id);
-        $article->title = $request->title;
-        if($request->slug){
-            $article->slug= make_slug($request->slug);
-        }else{
-            $article->slug= make_slug($request->title);
-        }
-        $article->roo_titr = $request->roo_titr;
-        $article->body = $request->body;
-        $article->summery = $request->summery;
-        $article->user_id = Auth::id();
-        $article->author_id = $request->author_id;
-        $article->is_carousel = $request->is_carousel;
-        $article->publish_status = $request->publish_status;
-        if($request->publish_status==1 && $article->publish_date==''){
-            $article->publish_date = new \DateTime();
-        }
-        $article->thumbnail = $request->thumbnail;
-        $article->video_url = $request->video_url;
-        $article->save();
-        $article->categories()->sync($request->category_id);
+        if($request->type==1 && $request->image_url[0]==null){
+            Session::flash('danger', 'فیلد گالری تصاویر برای نوع خبر عکس الزامی است.');
+            return back();
+        }elseif(($request->type==2 || $request->type==3) && $request->video_url==null){
+            Session::flash('danger', 'فیلد آپلود فایل برای نوع خبر ویدیویی یا صوتی الزامی است.');
+            return back();
+        }else {
+            $article = Article::find($id);
+            $article->title = $request->title;
+            if ($request->slug) {
+                $article->slug = make_slug($request->slug);
+            } else {
+                $article->slug = make_slug($request->title);
+            }
+            $article->roo_titr = $request->roo_titr;
+            $article->body = $request->body;
+            $article->summery = $request->summery;
+            $article->type = $request->type;
+            $article->user_id = Auth::id();
+            $article->reporter = $request->reporter;
+            $article->photographer = $request->photographer;
+            $article->media_source = $request->media_source;
+            $article->is_carousel = $request->is_carousel;
+            $article->publish_status = $request->publish_status;
+            if ($request->publish_status == 1 && $article->publish_date == '') {
+                $article->publish_date = new \DateTime();
+            }
+            $article->thumbnail = $request->thumbnail;
+            $article->video_url = $request->video_url;
+            $article->save();
+            $article->categories()->sync($request->category_id);
+            if($request->subcategory_id){
+                $article->categories()->attach($request->subcategory_id);
+            }
+            if ($request->image_url[0] != null) {
+                $images = explode(',', $request->image_url[0]);
+                $article->photos()->sync($images);
+            }
 
-        if($request->image_url[0]!=null){
-            $images = explode(',',$request->image_url[0]);
-            $article->photos()->sync($images);
-        }
+            if ($request->tag) {
+                $tags = explode('،', $request->tag);
+                $article->attachTags($tags);
+            }
 
-        if($request->tag){
-            $tags = explode('،',$request->tag);
-            $article->attachTags($tags);
-        }
+            if ($request->removedTags) {
+                $article->detachTags($request->removedTags);
+            }
 
-        if($request->removedTags){
-            $article->detachTags($request->removedTags);
+            Session::flash('success', 'خبر با موفقیت ویرایش شد.');
+            return redirect()->route('article.index');
         }
-
-        Session::flash('success', 'خبر با موفقیت ویرایش شد.');
-        return redirect()->route('article.index');
     }
 
     /**
@@ -196,18 +220,21 @@ class ArticleController extends Controller
         $article = Article::find($id);
         if($request->action=='publish'){
             $article->publish_status = 1;
+            if ($article->publish_date == '') {
+                $article->publish_date = new \DateTime();
+            }
         }else{
             $article->publish_status = 2;
         }
         $article->save();
-        return back();
+        return redirect()->route('article.index');
     }
     public function articleList(Request $request,$id)
     {
         switch($request->input('filter')) {
             case 'user':
                 $articles = Article::with(['categories','user','tags'])
-                    ->where('author_id',$id)
+                    ->where('id',$id)
                     ->orderBy('created_at', 'desc')
                     ->paginate(20);
                 break;

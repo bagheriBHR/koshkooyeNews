@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Photo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -14,26 +15,35 @@ class PhotoController extends Controller
     {
         $photo = $request->file('file');
 
-        $name = time() . $photo->getClientOriginalName();
-        $small_name = 'small_'.time() . $photo->getClientOriginalName();
-        $medium_name = 'medium_'.time() . $photo->getClientOriginalName();
-        $large_name = 'large_'.time() . $photo->getClientOriginalName();
+        $year = Carbon::now()->year;
+        $month = Carbon::now()->month;
+        $imagePath = "/photos/thumbnail/{$year}/{$month}/";
 
-        Storage::disk('public')->putFileAs('photos/articles', $photo, $name);
+        $name = time() . $photo->getClientOriginalName();
+        $small_name = 'small_'.$name;
+        $medium_name = 'medium_'.$name;
+        $large_name = 'large_'.$name;
 
         $small_resize = Image::make($request->file('file'))
-            ->resize(100, null, function ($constraint) { $constraint->aspectRatio(); } );
-        Storage::disk('public')->put('photos/articles/thumbnail/'.$small_name,$small_resize);
+            ->resize(480, 270, function ($constraint) { $constraint->aspectRatio(); } )
+            ->encode('jpg');
+        Storage::disk('public')->put($imagePath.$small_name,$small_resize);
 
         $medium_resize = Image::make($request->file('file'))
-            ->resize(200, null, function ($constraint) { $constraint->aspectRatio(); } );
-        Storage::disk('public')->put('photos/articles/thumbnail/'.$medium_name,$medium_resize);
+            ->resize(600, 338, function ($constraint) { $constraint->aspectRatio(); } )
+            ->encode('jpg');
+        Storage::disk('public')->put($imagePath.$medium_name,$medium_resize);
 
         $large_resize = Image::make($request->file('file'))
-            ->resize(300, null, function ($constraint) { $constraint->aspectRatio(); } );
-        Storage::disk('public')->put('photos/articles/thumbnail/'.$large_name,$large_resize);
+            ->resize(800, 450, function ($constraint) { $constraint->aspectRatio(); } )
+            ->encode('jpg');
+        Storage::disk('public')->put($imagePath.$large_name,$large_resize);
 
-        return response()->json(['url' => $name]);
+        $photo = new Photo();
+        $photo->originalName = $name;
+        $photo->path = $imagePath;
+        $photo->save();
+        return response()->json(['url' => $photo->id]);
     }
     public function upload(Request $request)
     {
@@ -46,17 +56,36 @@ class PhotoController extends Controller
     {
         $photo = $request->file('file');
         $name = time() . $photo->getClientOriginalName();
-        Storage::disk('public')->putFileAs('photos/commercials', $photo, $name);
-        return response()->json(['url' => $name]);
+
+        $year = Carbon::now()->year;
+        $month = Carbon::now()->month;
+        $imagePath = "/photos/commercials/{$year}/{$month}/";
+
+        Storage::disk('public')->putFileAs($imagePath, $photo, $name);
+
+        $photo = new Photo();
+        $photo->originalName = $request->file('file')->getClientOriginalExtension();
+        $photo->path = $imagePath.$name;
+        $photo->save();
+        return response()->json(['url' => $photo->id]);
     }
     public function uploadGallery(Request $request)
     {
         $photo = $request->file('file');
         $name = time() . $photo->getClientOriginalName();
-        Storage::disk('public')->putFileAs('photos/gallery', $photo, $name);
+
+        $year = Carbon::now()->year;
+        $month = Carbon::now()->month;
+        $imagePath = "/photos/gallery/{$year}/{$month}/";
+
+        $medium_resize = Image::make($request->file('file'))
+            ->resize(600, 338, function ($constraint) { $constraint->aspectRatio(); } )
+            ->encode('jpg');
+        Storage::disk('public')->put($imagePath.$name,$medium_resize);
 
         $photo = new Photo();
-        $photo->path = $name;
+        $photo->path = $imagePath;
+        $photo->originalName = $name;
         $photo->save();
         return response()->json(['url' => $photo->id]);
     }
@@ -68,10 +97,13 @@ class PhotoController extends Controller
             $extension = $request->file('upload')->getClientOriginalExtension();
             $fileName = $fileName . '_' . time() . '.' . $extension;
 
-            $request->file('upload')->move(public_path('images'), $fileName);
+            $year = Carbon::now()->year;
+            $month = Carbon::now()->month;
+            $imagePath = "/images/ckeditor/{$year}/{$month}/";
+            $request->file('upload')->move(public_path($imagePath), $fileName);
 
             $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-            $url = asset('images/' . $fileName);
+            $url = asset($imagePath . $fileName);
             $msg = 'تصویر با موفقیت بارگذاری شد.';
             $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
 

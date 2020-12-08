@@ -20,6 +20,16 @@ Route::namespace('frontend')->group(function (){
     Route::get('/','HomeController@index')->name('home');
     Route::get('/news/{id}/{slug}','NewsController@show')->name('news.show');
     Route::get('/tag/{slug}','NewsController@tagNews')->name('news.tag');
+    Route::get('/service/{slug}','NewsController@categoryNews')->name('news.category');
+    Route::get('/photo','NewsController@photos')->name('news.photo');
+    Route::get('/video','NewsController@videos')->name('news.video');
+    Route::get('/sound','NewsController@sounds')->name('news.sound');
+    Route::post('news/comment/{id}','CommentController@store')->name('frontend.comment.store');
+    Route::post('news/comment', 'CommentController@reply')->name('frontend.comment.reply');
+    Route::get('news/{name}', 'NewsController@aboutus')->name('aboutus');
+    Route::post('contact', 'HomeController@contact')->name('form.contact');
+    Route::get('commercial/{id}', 'HomeController@commercialCounter')->name('commercial.counter');
+    Route::get('printNews/{id}', 'NewsController@printNews')->name('printNews');
 });
 
 Route::middleware('auth')->prefix('/admin')->namespace('backend')->group(function (){
@@ -48,6 +58,9 @@ Route::middleware('auth')->prefix('/admin')->namespace('backend')->group(functio
     Route::resource('commercial', 'CommercialController');
     Route::post('commercial/filter', 'CommercialController@filter')->name('commercial.filter');
     Route::post('commercial/search', 'CommercialController@search')->name('commercial.search');
-    Route::get('commercial/action/{id}', 'CommercialController@action')->name('commercial.action');
-
+    Route::get('comment/', 'CommentController@index')->name('comment.index');
+    Route::get('comment/action/{id}', 'CommentController@action')->name('comment.action');
+    Route::get('comment/{id}', 'CommentController@show')->name('comment.show');
+    Route::get('contact/{id}', 'ContactController@show')->name('contact.show');
+    Route::get('contact', 'ContactController@index')->name('contact.index');
 });

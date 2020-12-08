@@ -56,10 +56,10 @@
                                 <th class="text-right">بنر</th>
                                 <th class="text-right">عنوان</th>
                                 <th class="text-right"> وضعیت</th>
+                                <th class="text-right">موقعیت</th>
                                 <th class="text-right">نوع سرویس دهی</th>
-                                <th class="text-right">تعداد کلیک</th>
                                 <th class="text-right">زمان شروع</th>
-                                <th class="text-right">زمان پایان</th>
+                                <th class="text-right">پایان</th>
                                 <th class="text-right">تاریخ ایجاد</th>
                                 <th class="text-right"></th>
                             </tr>
@@ -68,7 +68,15 @@
                             @foreach($commercials as $key=>$commercial)
                                 <tr>
                                     <td class="text-right" scope="row">{{ $key+1 }}</td>
-                                    <td class="text-center p-0"><img src="{{'/storage/photos/commercials/'.$commercial->url }}" alt="" class="my-1" style="width:40px;"></td>
+                                    <td class="text-center p-0">
+                                        @if ($commercial->photo->originalName=='webm')
+                                            <video width="40px">
+                                                <source src="{{'/storage'.$commercial->photo->path}}" type="video/mp4" >
+                                            </video>
+                                        @else
+                                            <img src="{{'/storage'.$commercial->photo->path}}" alt="" class="my-1" style="width:40px;">
+                                        @endif
+                                    </td>
                                     <td class="text-right"><a href="{{route('commercial.edit',$commercial->id)}}">{{ $commercial->title}}</a></td>
                                     @if($commercial->status==0)
                                         <td class="text-center p-0"><span class="badge badge-danger p-1">غیر فعال</span></td>
@@ -77,25 +85,23 @@
                                     @else
                                         <td class="text-center p-0"> <span class="badge badge-info p-1"> آرشیو</span></td>
                                     @endif
+                                    <td class="text-center p-0">{{$commercial->location}}</td>
                                     @if($commercial->type==0)
                                         <td class="text-right p-0"><span class="p-1">تعداد کلیک</span></td>
+                                        <td class="text-center p-0">{{$commercial->start_date}}</td>
+                                        @if ($commercial->click_count==0)
+                                            <td class="text-right">{{'0'.'/'.$commercial->total_click }}</td>
+                                        @else
+                                            <td class="text-right">{{$commercial->click_count.'/'.$commercial->total_click }}</td>
+                                        @endif
                                     @elseif($commercial->type==1)
                                         <td class="text-right p-0"> <span class="p-1"> بازه زمانی</span></td>
+                                        <td class="text-center p-0">{{$commercial->start_date}}</td>
+                                        <td class="text-right">{{$commercial->finish_date}}</td>
                                     @endif
-                                    <td class="text-right">{{ $commercial->click_count ? $commercial->click_count : '-' }}</td>
-                                    <td class="text-center p-0">{{$commercial->start_at ? $commercial->start_at  : '-' }}</td>
-                                    <td class="text-center p-0">{{$commercial->finish_at ? $commercial->finish_at : '-'}}</td>
                                     <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($commercial->created_at)->formatDate() }}</td>
                                     <td>
                                         <div class="d-flex justify-content-end">
-                                            @if($commercial->type==0 && $commercial->status==0)
-                                                <form action="{{route('commercial.action',$commercial->id)}}" method="post">
-                                                    @method('GET')
-                                                    @csrf
-                                                    <input type="hidden" name="action" value="activate">
-                                                    <button type="submit" class=" ml-2 btn btn custombutton custombutton-success py-2 px-4" > فعالسازی</button>
-                                                </form>
-                                            @endif
                                             <form action="{{route('commercial.destroy',$commercial->id)}}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
