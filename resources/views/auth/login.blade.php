@@ -16,28 +16,23 @@
                                        type="text"
                                        class="form-control w-100 custom-input"
                                        name="username"
-                                       required
                                        onfocus="this.placeholder=''"
                                        onblur="this.placeholder='نام کابری'"
                                        placeholder="نام کاربری">
                                 <small class="text-danger">{{ $errors->first('username') }}</small>
                             </div>
                         </div>
-                    <div class="custom-form-group">
+                    <div class="w-100 custom-form-group ">
                         <i class="fas fa-lock form-icon"></i>
-                        <input id="password" type="password"
-                               class="form-control w-100 custom-input @error('password') is-invalid @enderror" name="password"
-                               required
-                               autocomplete="new-password"
-                               onfocus="this.placeholder=''"
-                               onblur="this.placeholder='رمز عبور'"
-                               placeholder="رمز عبور">
-
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                        <div class="w-100{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <input id="password" type="password"
+                                   class="form-control w-100 custom-input" name="password"
+                                   autocomplete="new-password"
+                                   onfocus="this.placeholder=''"
+                                   onblur="this.placeholder='رمز عبور'"
+                                   placeholder="رمز عبور">
+                            <small class="text-danger">{{ $errors->first('password') }}</small>
+                        </div>
                     </div>
                     <div class="grid custom-form-group d-flex align-items-start">
                         <label class="checkbox bounce">

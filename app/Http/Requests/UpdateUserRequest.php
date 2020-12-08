@@ -30,6 +30,7 @@ class UpdateUserRequest extends FormRequest
             'username'=>'required|unique:users',
             'username'=> Rule::unique('users')->ignore(request()->user),
             'email'=>'required |email',
+            'email'=> Rule::unique('users')->ignore(request()->user),
             'role'=>'required',
         ];
     }

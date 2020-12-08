@@ -81,14 +81,28 @@
                         </li>
                     @endif
                 @endforeach
-                <li class="nav-item dropdown">
+                @if($photoArticleCount>0 || $videoArticleCount>0 || $soundArticleCount>0)
+                    <li class="nav-item dropdown">
                     <a class="nav-link" >چند رسانه ای</a>
                     <ul class="dropdown-menu bg-dark" role="menu">
-                        <li><a href="{{route('news.photo')}}">عکس</a></li>
-                        <li><a href="{{route('news.video')}}">ویدیو</a></li>
-                        <li><a href="{{route('news.sound')}}">صوت</a></li>
+                        @if($photoArticleCount>0)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('news.photo')}}">عکس</a>
+                            </li>
+                        @endif
+                        @if($videoArticleCount>0)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('news.video')}}">ویدیو</a>
+                            </li>
+                        @endif
+                        @if($soundArticleCount>0)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('news.sound')}}">صوت</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
+                @endif
             </ul>
         </div>
     </nav>
