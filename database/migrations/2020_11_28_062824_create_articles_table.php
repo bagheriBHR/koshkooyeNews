@@ -24,6 +24,7 @@ class CreateArticlesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('view_count')->default(0);
             $table->boolean('is_carousel')->default(0);
+            $table->boolean('is_important')->default(0);
             $table->smallInteger('type')->default(0);
             $table->smallInteger('publish_status')->default(0);
             $table->string('reporter')->nullable();

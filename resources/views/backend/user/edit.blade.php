@@ -55,10 +55,10 @@
                                 <label for="checkbox1" class="custom-field-title form-check-label mr-3 ml-3">نویسنده</label>
 
                                 <input class="form-check-input" @if($user->is_editor==1) checked @endif type="checkbox" id="checkbox2" value="is_editor" name="role[]">
-                                <label for="checkbox2" class="custom-field-title form-check-label mr-3 ml-3">سردبیر</label>
+                                <label for="checkbox2" class="custom-field-title form-check-label mr-3 ml-3">مدیر</label>
 
                                 <input class="form-check-input" @if($user->is_admin==1) checked @endif type="checkbox" id="checkbox3" value="is_admin" name="role[]">
-                                <label for="checkbox3" class="custom-field-title form-check-label mr-3">مدیر</label>
+                                <label for="checkbox3" class="custom-field-title form-check-label mr-3">مدیر ارشد</label>
                             </div>
                         </div>
                     </div>

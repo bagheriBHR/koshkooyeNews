@@ -31,7 +31,7 @@
             <i class="fas fa-users  ml-2"></i>مدیریت کاربران
         </a>
     </p>
-    <div class="collapse show" id="collapseExample2">
+    <div class="collapse" id="collapseExample2">
         <div class="card card-body mb-4 border-0 p-0">
             <table class="w-100 text-right">
                 <tr>
@@ -68,7 +68,7 @@
                         <a class="d-flex align-items-center" href="{{route('tag.index')}}"><i class="fas fa-eye ml-2"></i> مشاهده</a>
                     </td>
                 </tr>
-                @can('update',\Illuminate\Support\Facades\Auth::user())
+                @can('viewAny',\Illuminate\Support\Facades\Auth::user())
                     <tr>
                         <td class="py-2 pr-2 font-weight-bold"><i class="fas fa-comment ml-2"></i>دیدگاه ها </td>
                         <td class="d-flex justify-content-end py-2 font-weight-normal pl-3">
@@ -79,13 +79,13 @@
             </table>
         </div>
     </div>
-    @can('create',\Illuminate\Support\Facades\Auth::user())
+    @can('viewAny',\Illuminate\Support\Facades\Auth::user())
     <p>
         <a class="btn btntitle w-100 text-right"  data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample">
             <i class="fas fa-add  ml-2"></i>مدیریت تبلیغات
         </a>
     </p>
-    <div class="collapse show" id="collapseExample4">
+    <div class="collapse" id="collapseExample4">
         <div class="card card-body mb-4 border-0 p-0">
             <table class="w-100 text-right">
                 <tr>
@@ -98,12 +98,14 @@
             </table>
         </div>
     </div>
+    @endcan
+    @can('viewAny',\Illuminate\Support\Facades\Auth::user())
     <p>
-        <a class="btn btntitle w-100 text-right"  data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample">
+        <a class="btn btntitle w-100 text-right"  data-toggle="collapse" data-target="#collapseExample5" aria-expanded="false" aria-controls="collapseExample">
             <i class="fas fa-add  ml-2"></i>مدیریت تماس ها
         </a>
     </p>
-    <div class="collapse show" id="collapseExample4">
+    <div class="collapse" id="collapseExample5">
         <div class="card card-body mb-4 border-0 p-0">
             <table class="w-100 text-right">
                 <tr>

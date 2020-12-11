@@ -23,63 +23,49 @@
                 <div class="form-group row d-flex align-items-center">
                     <label for="title" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">عنوان :</label>
                     <div class="col-sm-6">
-                        <input type="text" class="custom-field form-control form-control-sm" id="title" name="title">
+                        <input type="text" value="{{old('title')}}" class="custom-field form-control form-control-sm" id="title" name="title">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
                     <label for="banner" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  بنر تبلیغاتی :</label>
-                    <input type="hidden" name="banner" id="banner">
+                    <input type="hidden" value="{{old('banner')}}" name="banner" id="banner">
                     <div class="col-sm-6">
                         <div id="photo" class="dropzone" ></div>
+                        @if(session('commercial_banner'))
+                            @if (session('commercial_banner')->originalName=='webm')
+                                <video width="100px">
+                                    <source src="{{'/storage'.session('commercial_banner')->path}}" type="video/mp4" >
+                                </video>
+                            @else
+                                <img src="{{'/storage'.session('commercial_banner')->path}}" alt="" class="my-1" style="width:100px;">
+                            @endif
+                        @endif
                     </div>
                 </div>
-                <div class="form-group row d-flex align-items-center ">
-                    <label for="roles" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نوع سرویس دهی :</label>
-                    <div class="col-sm-6 d-flex justify-content-start">
-                        <div class="col-sm-8 text-right pr-md-0">
-                            <input class="form-check-input" type="radio" value="0" name="type" id="radio1">
-                            <label class="custom-field-title form-check-label mr-3 ml-3">تعداد کلیک</label>
-
-                            <input class="form-check-input" type="radio" value="1" name="type" id="radio2">
-                            <label class="custom-field-title form-check-label mr-3">بازه زمانی</label>
-                        </div>
+                <div class="form-group row d-flex align-items-center">
+                    <label for="click_count" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تعداد کلیک :</label>
+                    <div class="col-sm-6">
+                        <input type="number" value="{{old('total_click')}}" class="custom-field form-control form-control-sm" id="" name="total_click">
                     </div>
                 </div>
-                <div id="type0" class="desc">
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="start_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ شروع :</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="custom-field form-control form-control-sm" id="input3" name="start_date_click" />
-                            <span id="span3"></span>
-                        </div>
-                    </div>
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="click_count" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تعداد کلیک :</label>
-                        <div class="col-sm-6">
-                            <input type="number" class="custom-field form-control form-control-sm" id="" name="total_click">
-                        </div>
-                    </div>
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="url" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">آدرس :</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="custom-field form-control form-control-sm" id="url" name="url">
-                        </div>
+                <div class="form-group row d-flex align-items-center">
+                    <label for="url" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">آدرس :</label>
+                    <div class="col-sm-6">
+                        <input type="text" value="{{old('url')}}" class="custom-field form-control form-control-sm" id="url" name="url">
                     </div>
                 </div>
-                <div id="type1" class="desc">
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="start_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ شروع :</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="custom-field form-control form-control-sm" id="input2" name="start_date" />
-                            <span id="span2"></span>
-                        </div>
+                <div class="form-group row d-flex align-items-center">
+                    <label for="start_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ شروع :</label>
+                    <div class="col-sm-6">
+                        <input type="text" value="{{old('start_date')}}" class="custom-field form-control form-control-sm" id="input3" name="start_date" />
+                        <span id="span3"></span>
                     </div>
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="finish_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ پایان :</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="custom-field form-control form-control-sm" id="input1" name="finish_date" />
-                            <span id="span1"></span>
-                        </div>
+                </div>
+                <div class="form-group row d-flex align-items-center">
+                    <label for="finish_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ پایان :</label>
+                    <div class="col-sm-6">
+                        <input type="text" value="{{old('finish_date')}}" class="custom-field form-control form-control-sm" id="input1" name="finish_date" />
+                        <span id="span1"></span>
                     </div>
                 </div>
                 <div class="d-flex align-items-end">
@@ -98,20 +84,9 @@
     <script src="{{asset('backend/js/persianDatepicker.min.js')}}"></script>
     <script>
 
-        $(document).ready(function() {
-            $("div.desc").hide();
-            $("input[name$='type']").click(function() {
-                var test = $(this).val();
-
-                $("div.desc").hide();
-                $("#type" + test).show();
-            });
-        });
-
         //datepicker
         $(function() {
             $("#input1, #span1").persianDatepicker();
-            $("#input2, #span2").persianDatepicker();
             $("#input3, #span3").persianDatepicker();
         });
 

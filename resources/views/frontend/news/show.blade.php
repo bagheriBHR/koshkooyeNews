@@ -91,9 +91,9 @@
 
             <!-- comment form -->
             <div id="commentHash" class="comment d-flex flex-column mt-3 p-3 border bg-white">
-                @if(Session::has('success'))
+                @if(Session::has('commentsuccess'))
                     <div class="alert alert-success text-right">
-                        <div>{{Session('success')}}</div>
+                        <div>{{Session('commentsuccess')}}</div>
                     </div>
                 @endif
                 <h2 class="section-title">ارسال نظر</h2>
@@ -102,17 +102,17 @@
                     @csrf
                     <div class="form-row form-group">
                         <div class="col">
-                            <input type="text" class="form-control" name="name" id="name" placeholder="نام و نام خانوادگی">
+                            <input type="text" value="{{old('name')}}" class="form-control" name="name" id="name" placeholder="نام و نام خانوادگی">
                             <small class="text-danger">{{ $errors->first('name') }}</small>
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" name="email" id="email" placeholder="پست الکترونیکی">
+                            <input type="text"  value="{{old('email')}}" class="form-control" name="email" id="email" placeholder="پست الکترونیکی">
                             <small class="text-danger">{{ $errors->first('email') }}</small>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col form-group">
-                            <textarea type="text" rows="5" class="form-control" name="body" id="body" placeholder="نظر خود را وارد کنید..."></textarea>
+                            <textarea type="text"  value="{{old('body')}}" rows="5" class="form-control" name="body" id="body" placeholder="نظر خود را وارد کنید..."></textarea>
                             <small class="text-danger">{{ $errors->first('body') }}</small>
                         </div>
                     </div>
@@ -122,9 +122,19 @@
             <!-- end of comment form -->
 
             <!-- comments -->
-            @if(count($article->comments))
-                <div class="comment d-flex flex-column mt-3 p-3 border bg-white no-print">
+            @if(!($article->comments->isEmpty()))
+                <div class="comment d-flex flex-column mt-3 p-3 border bg-white no-print" id="replyHash">
                     <h2 class="section-title">نظرات شما</h2>
+                    @if(Session::has('replysuccess'))
+                        <div class="alert alert-success text-right">
+                            <div>{{Session('replysuccess')}}</div>
+                        </div>
+                    @endif
+                    @if(Session::has('replydanger'))
+                        <div class="alert alert-danger text-right">
+                            <div>{{Session('replydanger')}}</div>
+                        </div>
+                    @endif
                     @foreach($article->comments as $comment)
                         <div class="comment-card d-flex flex-column p-3 border">
                             <div class="d-flex align-items-end justify-content-between mb-2">
@@ -138,14 +148,14 @@
                                     @csrf
                                     <div class="d-flex">
                                         <div class="form-group col-md-6">
-                                            <input type="text" class="form-control form-control-sm" name="name" placeholder="نام و نام خانوادگی"/>
+                                            <input type="text" class="form-control form-control-sm" name="rname" placeholder="نام و نام خانوادگی"/>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <input type="email" class="form-control form-control-sm" name="email" placeholder="پست الکترونیکی"/>
+                                            <input type="email" class="form-control form-control-sm" name="remail" placeholder="پست الکترونیکی"/>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <textarea type="text" rows="10" class="custom-field form-control form-control-sm"  name="body" placeholder="توضیحات را وارد کنید..."></textarea>
+                                        <textarea type="text" rows="10" class="custom-field form-control form-control-sm"  name="rbody" placeholder="توضیحات را وارد کنید..."></textarea>
                                     </div>
                                     <input type="hidden" name="parent_id" value="{{$comment->id}}">
                                     <input type="hidden" name="article_id" value="{{$article->id}}">
@@ -154,7 +164,7 @@
                                     </div>
                                 </form>
                             </div>
-                            @if(count($comment->childrenRecursive) > 0)
+                            @if(!($comment->childrenRecursive->isEmpty()))
                                 @include('frontend.partials.comments', ['comments' => $comment->childrenRecursive,'article'=>$article])
                             @endif
                         </div>

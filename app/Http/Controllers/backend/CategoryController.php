@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -45,9 +46,24 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
+        if($request->input('slug')){
+            $request->merge(['slug'=>make_slug($request->input('slug'))]);
+        }else{
+            $request->merge(['slug'=>make_slug($request->input('title'))]);
+        }
 
+        $validator = Validator::make($request->all() , [
+            'name'=>'required ',
+            'slug' => 'unique:categories',
+        ],[
+            'name.required' => 'لطفا نام دسته بندی را وارد کنید',
+            'slug.unique'=>' نام مستعار دسته بندی باید یکتا باشد.',
+        ]);
+        if($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
         $category=new Category();
         $category->name=$request->name;
         if($request->slug){

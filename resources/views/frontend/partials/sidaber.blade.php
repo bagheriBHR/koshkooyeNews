@@ -12,9 +12,9 @@
                 @if($mostVisited)
                     @foreach($mostVisited as $key=>$article)
                     <div class="d-flex flex-column section">
-                        <a class="d-flex align-items-center" href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
+                        <a class="d-flex align-items-start" href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
                             @if($article->type==0)
-                                <i class="fa fa-circle number" style="font-size:5px"></i>
+                                <i class="fas fa-file-alt number"></i>
                             @elseif ($article->type==1)
                                 <i class="fa fa-camera number"></i>
                             @elseif ($article->type==2)
@@ -59,14 +59,14 @@
 <div class="d-none d-md-block col-2 px-0 pr-md-2 mb-2 no-print">
         @foreach($activeCommercials as $c)
             @if ($c->photo->originalName=='webm')
-                <a href="{{$c->type==0 ? route('commercial.counter',$c->id) : ''}}">
+                <a href="{{route('commercial.counter',$c->id)}}">
                     <video width="100%">
                         <source src="{{'/storage'.$c->photo->path}}" type="video/mp4" >
                     </video>
                 </a>
             @else
                 <div class="mb-2 w-100">
-                    <a href="{{$c->type==0 ? route('commercial.counter',$c->id) : ''}}"><img src="{{'/storage'.$c->photo->path}}" alt="" class="w-100"></a>
+                    <a href="{{route('commercial.counter',$c->id)}}"><img src="{{'/storage'.$c->photo->path}}" alt="" class="w-100"></a>
                 </div>
             @endif
         @endforeach

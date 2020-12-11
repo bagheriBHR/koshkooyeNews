@@ -62,7 +62,7 @@
                         </table>
                     </div>
                 </div>
-                @can('create',\Illuminate\Support\Facades\Auth::user())
+                @can('viewAny',\Illuminate\Support\Facades\Auth::user())
                 <p class="mb-0">
                     <a class="btn btntitle w-100 d-flex justify-content-between align-items-center"  data-toggle="collapse" data-target="#collapseExample13" aria-expanded="false" aria-controls="collapseExample">
                         <span class="d-flex align-items-center"><i class="fas fa-ad ml-2"></i>مدیریت تبلیغات</span>
@@ -81,13 +81,15 @@
                         </table>
                     </div>
                 </div>
-                    <a class="sidebarItem text-right d-flex align-items-center" href="{{route('comment.index')}}"><i class="fas fa-comment ml-2"></i> مدیریت دیدگا ها</a>
                 @endcan
                 <a class="sidebarItem text-right d-flex align-items-center" href="{{route('tag.index')}}"><i class="fas fa-tags ml-2"></i>تگ ها</a>
             </div>
 
-            @can('update',\Illuminate\Support\Facades\Auth::user())
+            @can('viewAny',\Illuminate\Support\Facades\Auth::user())
+                <a class="sidebarItem text-right d-flex align-items-center" href="{{route('comment.index')}}"><i class="fas fa-comment ml-2"></i> مدیریت دیدگا ها</a>
                 <a class="sidebarItem text-right d-flex align-items-center" href="{{route('contact.index')}}"><i class="fas fa-envelope  ml-2"></i> تماس ها</a>
+            @endcan
+            @can('update',\Illuminate\Support\Facades\Auth::user())
                 <a class="sidebarItem text-right d-flex align-items-center" href="{{route('setting.index')}}"><i class="fas fa-cog ml-2"></i>تنظیمات اولیه</a>
             @endcan
         </div>

@@ -36,7 +36,7 @@
                     </div>
                 </form>
             </div>
-            @if(count($comment->childrenRecursive) > 0)
+            @if(!($comment->childrenRecursive->isEmpty()))
                 @include('frontend.partials.comments', ['comments' => $comment->childrenRecursive,'article'=>$article])
             @endif
         </div>

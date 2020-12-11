@@ -9,7 +9,7 @@
                 @csrf
                 <div class="d-flex flex-column">
                     <h4 class="text-center mb-5 mt-4"><i class="fa fa-user ml-3"></i>ورود به پنل مدیریت</h4>
-                    <div class="custom-form-group d-flex flex-column">
+                    <div class="custom-form-group d-flex flex-column mb-0">
                         <i class="fas fa-user-lock form-icon"></i>
                             <div class="w-100 form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                 <input id="username"
@@ -18,7 +18,8 @@
                                        name="username"
                                        onfocus="this.placeholder=''"
                                        onblur="this.placeholder='نام کابری'"
-                                       placeholder="نام کاربری">
+                                       placeholder="نام کاربری"
+                                        autocomplete="nope">
                                 <small class="text-danger">{{ $errors->first('username') }}</small>
                             </div>
                         </div>
@@ -33,6 +34,14 @@
                                    placeholder="رمز عبور">
                             <small class="text-danger">{{ $errors->first('password') }}</small>
                         </div>
+                    </div>
+                    <div class="w-100 custom-form-group d-flex flex-column align-items-center justify-content-center">
+                       <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+                        @if ($errors->has('g-recaptcha-response'))
+                            <span class="text-center w-100 invalid-feedback" style="display: block">
+                                <strong>{{$errors->first('g-recaptcha-response')}}</strong>
+                            </span>
+                        @endif
                     </div>
                     <div class="grid custom-form-group d-flex align-items-start">
                         <label class="checkbox bounce">

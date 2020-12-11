@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\Console\Input\Input;
 
 class UserController extends Controller
 {
@@ -20,15 +22,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-//    public function __construct()
-//    {
-//        $this->authorizeResource(User::class,'user');
-//    }
+
     public function index()
     {
         $this->authorize('viewAny',Auth::user());
         $users = User::with(['articles'])->orderBy('created_at','desc')->paginate(10);
-        return view('backend.user.list',compact(['users']));
+        $firstUser = User::first();
+        return view('backend.user.list',compact(['users','firstUser']));
     }
 
     /**
@@ -49,9 +49,22 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RegisterRequest $request)
+    public function store(Request $request)
     {
         $this->authorize('create',Auth::user());
+        $validator = Validator::make($request->all() , [
+            'first_name'=>'required',
+            'last_name'=>'required',
+            'username'=>'required|unique:users',
+            'password'=>'required|min:8',
+            'email'=>'required|email|unique:users',
+            'role'=>'required',
+        ],[
+            'role.required'=>'نقش کاربر را مشخص کنید.'
+        ]);
+        if($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
         $roles = $request->input('role');
         $user = new User();
         $user->first_name = $request->input('first_name');

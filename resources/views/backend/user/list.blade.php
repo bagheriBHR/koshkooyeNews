@@ -48,7 +48,7 @@
                         </form>
                     </div>
 
-                    @if(count($users))
+                    @if(!empty($users))
                         <table class="customtable table mb-0 pb-0">
                             <thead>
                                 <tr>
@@ -65,49 +65,52 @@
                             </thead>
                             <tbody>
                                 @foreach($users as $key=>$user)
-                                <tr>
-                                    <td class="text-right" scope="row">{{ $key+1 }}</td>
-                                    <td class="text-center p-0"><img src="{{ $user->avatar ? '/storage/photos/avatar/'.$user->avatar : "http://www.placehold.it/400" }}" alt="" class="my-1" style="width:40px;"></td>
-                                    <td class="text-right p-0">{{$user->username}}</td>
-                                    @can('update',\Illuminate\Support\Facades\Auth::user())
-                                        <td class="text-right"><a href="{{route('user.edit',$user->id)}}">{{ $user->first_name . ' '. $user->last_name}}</a></td>
-                                    @endcan
-                                    @cannot('update',\Illuminate\Support\Facades\Auth::user())
-                                        <td class="text-right">{{ $user->first_name . ' '. $user->last_name}}</td>
-                                    @endcan
-                                    <td class="text-right">{{ $user->email }}</td>
-                                    <td class="text-right d-flex flex-column">
-                                        <span class="ml-1">{{$user->is_admin==1 ? 'مدیر' : ''}}</span>
-                                        <span class="ml-1">{{$user->is_author==1 ? 'نویسنده' : ''}}</span>
-                                        <span class="ml-1">{{$user->is_editor==1 ? 'سردبیر' : ''}}</span>
-                                    </td>
-                                    @if($user->status==0)
-                                        <td class="text-center p-0"><span class="badge badge-danger p-1">غیر فعال</span></td>
-                                    @elseif($user->status==1)
-                                        <td class="text-center p-0"> <span class="badge badge-success p-1"> فعال</span></td>
+                                    @if ($loop->last && \Illuminate\Support\Facades\Auth::id() != $firstUser->id)
+                                        @continue
                                     @endif
-                                    <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($user->created_at)->formatDate() }}</td>
-                                    <td class="p-0">
-                                      <div class="d-flex justify-content-end">
-                                          @if(count($user->articles)>0)
-                                              <form action="/admin/user/{{$user->id}}/articleList" method="post">
-                                                  @method('POST')
-                                                  @csrf
-                                                  <input type="hidden" name="filter" value="user">
-                                                  <button type="submit" class="ml-2 btn custombutton p-0 custombutton-primary p-1">مقالات </button>
-                                              </form>
-                                          @endif
-                                          @can('delete',\Illuminate\Support\Facades\Auth::user())
-                                              <form action="{{route('user.destroy',$user->id)}}" method="POST">
-                                                  @method('DELETE')
-                                                  @csrf
-                                                  <button onclick="return confirm('آیا از حذف کاربر مطمئن هستید؟');" class=" btn custombutton custombutton-danger p-1">حذف </button>
-                                              </form>
-                                          @endcan
-                                      </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                    <tr>
+                                        <td class="text-right" scope="row">{{ $key+1 }}</td>
+                                        <td class="text-center p-0"><img src="{{ $user->avatar ? '/storage/photos/avatar/'.$user->avatar : "http://www.placehold.it/400" }}" alt="" class="my-1" style="width:40px;"></td>
+                                        <td class="text-right p-0">{{$user->username}}</td>
+                                        @can('update',\Illuminate\Support\Facades\Auth::user())
+                                            <td class="text-right"><a href="{{route('user.edit',$user->id)}}">{{ $user->first_name . ' '. $user->last_name}}</a></td>
+                                        @endcan
+                                        @cannot('update',\Illuminate\Support\Facades\Auth::user())
+                                            <td class="text-right">{{ $user->first_name . ' '. $user->last_name}}</td>
+                                        @endcan
+                                        <td class="text-right">{{ $user->email }}</td>
+                                        <td class="text-right d-flex flex-column">
+                                            <span class="ml-1">{{$user->is_admin==1 ? 'مدیر' : ''}}</span>
+                                            <span class="ml-1">{{$user->is_author==1 ? 'نویسنده' : ''}}</span>
+                                            <span class="ml-1">{{$user->is_editor==1 ? 'سردبیر' : ''}}</span>
+                                        </td>
+                                        @if($user->status==0)
+                                            <td class="text-center p-0"><span class="badge badge-danger p-1">غیر فعال</span></td>
+                                        @elseif($user->status==1)
+                                            <td class="text-center p-0"> <span class="badge badge-success p-1"> فعال</span></td>
+                                        @endif
+                                        <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($user->created_at)->formatDate() }}</td>
+                                        <td class="p-0">
+                                          <div class="d-flex justify-content-end">
+                                              @if(count($user->articles)>0)
+                                                  <form action="/admin/user/{{$user->id}}/articleList" method="post">
+                                                      @method('POST')
+                                                      @csrf
+                                                      <input type="hidden" name="filter" value="user">
+                                                      <button type="submit" class="ml-2 btn custombutton p-0 custombutton-primary p-1">مقالات </button>
+                                                  </form>
+                                              @endif
+                                              @can('delete',\Illuminate\Support\Facades\Auth::user())
+                                                  <form action="{{route('user.destroy',$user->id)}}" method="POST">
+                                                      @method('DELETE')
+                                                      @csrf
+                                                      <button onclick="return confirm('آیا از حذف کاربر مطمئن هستید؟');" class=" btn custombutton custombutton-danger p-1">حذف </button>
+                                                  </form>
+                                              @endcan
+                                          </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     @else

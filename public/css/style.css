@@ -203,25 +203,20 @@ body {
 
 .header .top-header .search input {
   background-color: #4d4d4d;
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   font-size: 0.8rem !important;
   border: none;
   border-radius: 2px;
-  padding: 3px 10px;
+  padding: 4px 10px;
 }
 
 .header .top-header .search input:focus, .header .top-header .search input:active, .header .top-header .search input:-webkit-autofill, .header .top-header .search input:-webkit-autofill:hover, .header .top-header .search input:-webkit-autofill:focus {
-  -webkit-transition: background-color 5000s ease-in-out 0s !important;
+  -webkit-transition: background-color 5000s ease-in-out 0s س!important;
   transition: background-color 5000s ease-in-out 0s !important;
   -webkit-box-shadow: 0 0 0px 1000px #000 inset !important;
-  -webkit-text-fill-color: #3d3d3d !important;
   outline: none !important;
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
-    color: #bdbdbd !important;
-}
-.header .top-header input:active{
-    color: #bdbdbd !important;
 }
 
 .header .top-header .search input::-webkit-input-placeholder {
@@ -233,22 +228,10 @@ body {
   font-size: 0.8rem !important;
   color: #bdbdbd !important;
 }
-
-.header .top-header .search input::-ms-input-placeholder {
-  font-size: 0.8rem !important;
-  color: #bdbdbd !important;
-}
-
-.header .top-header .search input::placeholder {
-  font-size: 0.8rem !important;
-  color: #bdbdbd !important;
-}
-
 .header .top-header .search:hover .search-icon {
   cursor: pointer;
   color: #bbbbbb;
 }
-
 .header .top-header .search-icon {
   left: 13px;
   top: 4px;
@@ -359,7 +342,7 @@ body {
   margin: 5px 0px;
 }
 
-.main .category .right .position-absolute {
+.main .category .right .subcategory {
   position: absolute !important;
   background-color: #dd3333;
   padding: 5px 15px;
@@ -482,6 +465,7 @@ body {
 .main .tab-content .section .number {
   color: #c4c4c4;
   margin-bottom: 0px;
+    padding-top: 3px;
   font-size: 0.8rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -801,7 +785,6 @@ body {
   -webkit-transition: background-color 5000s ease-in-out 0s !important;
   transition: background-color 5000s ease-in-out 0s !important;
   -webkit-box-shadow: 0 0 0px 1000px #000 inset !important;
-  -webkit-text-fill-color: #3d3d3d !important;
   outline: none !important;
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
@@ -839,12 +822,15 @@ body {
 .footer-end{
     background-color: rgba(0,0,0,0.9);
 }
-.footer-end p {
+.footer-end p{
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.8rem;
 }
-
+.footer-end .design , .footer-end .design a{
+  font-size: 0.7rem !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+}
 .roo-titr {
   color: rgba(0, 0, 0, 0.6);
   text-align: right;
@@ -865,6 +851,15 @@ body {
     right: 0px;
     width: 30px;
     height: 30px;
+    background-color: rgba(255,255,255,0.6);
+    color: rgba(0,0,0,0.5);
+}
+.type-icon2{
+    top: 0px;
+    right: 0px;
+    width: 20px;
+    height: 20px;
+    font-size: 0.7rem !important;
     background-color: rgba(255,255,255,0.6);
     color: rgba(0,0,0,0.5);
 }
@@ -1384,7 +1379,7 @@ body {
 #return-to-top {
     position: fixed;
     z-index: 1000;
-    bottom: 15px;
+    bottom: 50px;
     right: 6px;
     /* background: rgb(0, 0, 0); */
     background: #4d4d4d;
@@ -1424,6 +1419,43 @@ body {
 .print{
     font-size: 1rem;
     color: rgba(0,0,0,0.7);
+}
+
+/*down page -------------------------------------------------------------------*/
+.down{
+    width: 100%;
+    height: 100vh;
+    background:radial-gradient(#fff, #717171);
+
+}
+.down > div > h1{
+    font-size: 2rem;
+    color: #ce3232;
+}
+.down > div > h6{
+    font-size: 1.1rem;
+    color: #696969;
+}
+.down > .not-found {
+    border-top: 2px solid rgba(0,0,0,0.3);
+    background-color: rgba(255,255,255,0.3);;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+}
+.down > .not-found > p{
+    font-size: 1rem;
+}
+
+.test{
+    background-color: #ce3232;
+    color: #fff;
+    z-index: 1;
+    transform: rotate(45deg);
+    width: 104px;
+    top: 10px;
+    right: -25px;
+    text-align: center;
+    padding: 2px 0px;
+    font-weight: bold;
 }
 
 

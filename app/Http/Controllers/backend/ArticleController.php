@@ -12,6 +12,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 class ArticleController extends Controller
@@ -26,6 +28,7 @@ class ArticleController extends Controller
         $articles = Article::with(['categories','user','tags','photo'])
             ->where('publish_status',0)
             ->orWhere('publish_status',1)
+            ->orderBy('publish_status', 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
         return view('backend.article.list',compact(['articles']));
@@ -49,14 +52,41 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ArticleRequest $request)
+    public function store(Request $request)
     {
+        if($request->input('slug')){
+            $request->merge(['slug'=>make_slug($request->input('slug'))]);
+        }else{
+            $request->merge(['slug'=>make_slug($request->input('title'))]);
+        }
+        $validator = Validator::make($request->all() , [
+            'title'=>'required',
+            'slug' => 'unique:articles',
+            'body' => 'required',
+            'thumbnail' => 'required',
+            'category_id'=>'required',
+            'tag'=>'required'
+        ],[
+            'title.required' => 'لطفا عنوان خبر را وارد نمایید.',
+            'slug.unique' => 'لطفا نام مستعار دیگری انتخاب کنید.',
+            'body.required' => 'لطفا متن خبر را وارد نمایید.',
+            'thumbnail.required' => 'لطفا تصویر اصلی خبر را انتخاب کنید.',
+            'category_id.required'=>'لطفا دسته بندی خبر را انتخاب کنید.',
+            'tag.required'=>'لطفا تگ های خبر را انتخاب کنید.'
+        ]);
+
+        $images = explode(',', $request->image_url[0]);
+        $imageCount = count($images);
+        $thumbnail_url = Photo::find($request->thumbnail);
+        if($validator->fails()) {
+            return back()->with(compact(['thumbnail_url','imageCount','images']))->withErrors($validator)->withInput();
+        }
         if($request->type==1 && $request->image_url[0]==null){
             Session::flash('danger', 'فیلد گالری تصاویر برای نوع خبر عکس الزامی است.');
-            return back();
+            return back()->with(compact('thumbnail_url'))->withErrors($validator)->withInput();
         }elseif(($request->type==2 || $request->type==3) && $request->video_url==null){
             Session::flash('danger', 'فیلد آپلود فایل برای نوع خبر ویدیویی یا صوتی الزامی است.');
-            return back();
+            return back()->with(compact('thumbnail_url'))->withErrors($validator)->withInput();
         }else{
             $article = new Article();
             $article->title = $request->title;
@@ -72,6 +102,7 @@ class ArticleController extends Controller
             $article->user_id = Auth::id();
             $article->reporter = $request->reporter;
             $article->is_carousel = $request->is_carousel;
+            $article->is_important = $request->is_important;
             $article->publish_status = $request->publish_status;
             $article->photographer = $request->photographer;
             $article->media_source = $request->media_source;
@@ -85,7 +116,6 @@ class ArticleController extends Controller
             $article->categories()->attach($request->subcategory_id);
 
             if($request->image_url[0]!=null) {
-                $images = explode(',', $request->image_url[0]);
                 $article->photos()->sync($images);
             }
 
@@ -152,6 +182,7 @@ class ArticleController extends Controller
             $article->summery = $request->summery;
             $article->type = $request->type;
             $article->user_id = Auth::id();
+            $article->is_important = $request->is_important;
             $article->reporter = $request->reporter;
             $article->photographer = $request->photographer;
             $article->media_source = $request->media_source;

@@ -20,13 +20,13 @@
                 <div class="form-group row d-flex align-items-center">
                     <label for="name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام :</label>
                     <div class="col-sm-4">
-                        <input type="text" class="custom-field form-control form-control-sm" id="name" name="name">
+                        <input type="text" value="{{old('name')}}" class="custom-field form-control form-control-sm" id="name" name="name">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
                     <label for="slug" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نام مستعار:</label>
                     <div class="col-sm-4">
-                        <input type="text" class="custom-field form-control form-control-sm" id="slug" name="slug">
+                        <input type="text" value="{{old('slug')}}" class="custom-field form-control form-control-sm" id="slug" name="slug">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
@@ -35,9 +35,11 @@
                         <select name="parent_id" class="custom-field form-control form-control-sm">
                             <option value="">بدون والد</option>
                             @foreach($categories as $category_list)
-                                <option value="{{$category_list->id}}">{{$category_list->name}}</option>
-                                @if(count($category_list->childrenRecursive)>0)
-                                    @include('backend.partials.categoryList',['categories'=>$category_list->childrenRecursive,'level'=>1])
+                                <option value="{{$category_list->id}}"
+                                    {{old('parent_id')== $category_list->id ? 'selected':''}}
+                                >{{$category_list->name}}</option>
+                                @if(!($category_list->childrenRecursive->isEmpty()))
+                                    @include('backend.partials.categoryList',['categories'=>$category_list->childrenRecursive,'level'=>1,'category'=>old('parent_id')])
                                 @endif
                             @endforeach
                         </select>

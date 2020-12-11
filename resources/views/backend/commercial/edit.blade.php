@@ -20,11 +20,11 @@
             <div class="d-flex flex-column flex-md-row bg-white w-100">
                 <div class="col-12 col-md-2 mt-3">
                     @if ($commercial->photo->originalName=='webm')
-                        <video width="40px">
+                        <video width="100px">
                             <source src="{{'/storage'.$commercial->photo->path}}" type="video/mp4" >
                         </video>
                     @else
-                        <img src="{{'/storage'.$commercial->photo->path}}" alt="" class="my-1" style="width:40px;">
+                        <img src="{{'/storage'.$commercial->photo->path}}" alt="" class="my-1" style="width:100px;">
                     @endif
                 </div>
                 <form class="col-12 col-md-10 customform p-3 w-100" method="post" action="{{route('commercial.update',$commercial->id)}}" enctype="multipart/form-data">
@@ -43,53 +43,30 @@
                         <div id="photo" class="dropzone" ></div>
                     </div>
                 </div>
-                <div class="form-group row d-flex align-items-center ">
-                    <label for="roles" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نوع سرویس دهی :</label>
-                    <div class="col-sm-6 d-flex justify-content-start">
-                        <div class="col-sm-8 text-right pr-md-0">
-                            <input class="form-check-input" @if($commercial->type==0) checked @endif type="radio" value="0" name="type" id="radio1">
-                            <label class="custom-field-title form-check-label mr-3 ml-3">تعداد کلیک</label>
-
-                            <input class="form-check-input" @if($commercial->type==1) checked @endif type="radio" value="1" name="type" id="radio2">
-                            <label class="custom-field-title form-check-label mr-3">بازه زمانی</label>
-                        </div>
+                <div class="form-group row d-flex align-items-center">
+                    <label for="click_count" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تعداد کلیک :</label>
+                    <div class="col-sm-6">
+                        <input type="number" value="{{$commercial->total_click}}" class="custom-field form-control form-control-sm" id="click_count" name="total_click">
                     </div>
                 </div>
-                <div id="type0" class="desc">
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="start_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ شروع :</label>
-                        <div class="col-sm-6">
-                            <input type="text" value="{{$commercial->start_date}}" class="custom-field form-control form-control-sm" id="input3" name="start_date_click" />
-                            <span id="span3"></span>
-                        </div>
-                    </div>
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="click_count" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تعداد کلیک :</label>
-                        <div class="col-sm-6">
-                            <input type="number" value="{{$commercial->total_click}}" class="custom-field form-control form-control-sm" id="click_count" name="total_click">
-                        </div>
-                    </div>
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="url" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">آدرس :</label>
-                        <div class="col-sm-6">
-                            <input type="text" value="{{$commercial->url}}" class="custom-field form-control form-control-sm" id="url" name="url">
-                        </div>
+                <div class="form-group row d-flex align-items-center">
+                    <label for="url" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">آدرس :</label>
+                    <div class="col-sm-6">
+                        <input type="text" value="{{$commercial->url}}" class="custom-field form-control form-control-sm" id="url" name="url">
                     </div>
                 </div>
-                <div id="type1" class="desc">
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="start_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ شروع :</label>
-                        <div class="col-sm-6">
-                            <input type="text" value="{{$commercial->start_date}}" class="custom-field form-control form-control-sm" id="input2" name="start_date" />
-                            <span id="span2"></span>
-                        </div>
+                <div class="form-group row d-flex align-items-center">
+                    <label for="start_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ شروع :</label>
+                    <div class="col-sm-6">
+                        <input type="text" value="{{$commercial->start_date}}" class="custom-field form-control form-control-sm" id="input3" name="start_date" />
+                        <span id="span3"></span>
                     </div>
-                    <div class="form-group row d-flex align-items-center">
-                        <label for="finish_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ پایان :</label>
-                        <div class="col-sm-6">
-                            <input type="text" value="{{$commercial->finish_date}}" class="custom-field form-control form-control-sm" id="input1" name="finish_date" />
-                            <span id="span1"></span>
-                        </div>
+                </div>
+                <div class="form-group row d-flex align-items-center">
+                    <label for="finish_at" class=" required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تاریخ پایان :</label>
+                    <div class="col-sm-6">
+                        <input type="text" value="{{$commercial->finish_date}}" class="custom-field form-control form-control-sm" id="input1" name="finish_date" />
+                        <span id="span1"></span>
                     </div>
                 </div>
                 <div class="d-flex align-items-end">
@@ -108,26 +85,8 @@
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="{{asset('backend/js/persianDatepicker.min.js')}}"></script>
     <script>
-
-        $(document).ready(function() {
-            if({{$commercial->type}}){
-                $("div.desc").hide();
-                $("#type1").show();
-            }else{
-                $("div.desc").hide();
-                $("#type0").show();
-            }
-            $("input[name$='type']").click(function() {
-                var test = $(this).val();
-
-                $("div.desc").hide();
-                $("#type" + test).show();
-            });
-        });
-
         $(function() {
             $("#input1, #span1").persianDatepicker();
-            $("#input2, #span2").persianDatepicker();
             $("#input3, #span3").persianDatepicker();
         });
 

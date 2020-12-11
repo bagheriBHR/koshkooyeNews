@@ -44,7 +44,7 @@
                         </form>
                     </div>
 
-                    @if(count($articles))
+                    @if(!($articles->isEmpty()))
                         <table class="customtable table mb-0 pb-0">
                             <thead>
                             <tr>
@@ -53,7 +53,8 @@
                                 <th class="text-right">تیتر</th>
                                 <th class="text-right">تگ ها</th>
                                 <th class="text-right">تعداد بازدید</th>
-                                <th class="text-right">نمایش در کروسل</th>
+                                <th class="text-right">اسلایدر</th>
+                                <th class="text-right">مهم</th>
                                 <th class="text-right">وضعیت نشر</th>
                                 <th class="text-right">تاریخ نشر</th>
                                 <th class="text-right"></th>
@@ -76,6 +77,11 @@
                                         <td class="text-center p-0"><span class="badge badge-danger p-1">غیر فعال</span></td>
                                     @elseif($article->is_carousel==1)
                                         <td class="text-center p-0"> <span class="badge badge-success p-1"> فعال</span></td>
+                                    @endif
+                                    @if($article->is_important==0)
+                                        <td class="text-center p-0"><span class="badge badge-danger p-1">خیر</span></td>
+                                    @elseif($article->is_important==1)
+                                        <td class="text-center p-0"> <span class="badge badge-success p-1"> بله</span></td>
                                     @endif
                                     @if($article->publish_status==0)
                                         <td class="text-center p-0"><span class="badge badge-danger p-1">پیش نویس</span></td>

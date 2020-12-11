@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Photo;
 use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class SettingController extends Controller
 {
@@ -47,6 +49,7 @@ class SettingController extends Controller
             'logo_url' => 'required',
             'about_us' => 'required',
             'contact_us' => 'required',
+            'footer' => 'required',
             'meta_keyword' => 'required',
             'meta_description' => 'required',
         ],[
@@ -54,6 +57,7 @@ class SettingController extends Controller
             'logo_url.required' => 'لوگو وب سایت را انتخاب کنید.',
             'about_us.required' => 'فیلد درباره ما الزامی است.',
             'contact_us.required' => 'فیلد تماس با ما الزامی است.',
+            'footer.required' => 'فیلد متن پاورقی الزامی است.',
             'meta_keyword.required' => 'فیلد کلمات متا الزامی است.',
             'meta_description.required' => 'فیلد توضیحات متا الزامی است.',
         ]);
@@ -64,6 +68,8 @@ class SettingController extends Controller
         $setting->is_active = $request->is_active;
         $setting->about_us = $request->about_us;
         $setting->contact_us = $request->contact_us;
+        $setting->footer = $request->footer;
+        $setting->is_test = $request->is_test;
         $setting->whatsapp = $request->whatsapp;
         $setting->telegram = $request->telegram;
         $setting->facebook = $request->facebook;
@@ -109,19 +115,24 @@ class SettingController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('update',Auth::user());
-        $request->validate([
+        $validator = Validator::make($request->all() , [
             'website_name' => 'required',
             'about_us' => 'required',
             'contact_us' => 'required',
+            'footer' => 'required',
             'meta_keyword' => 'required',
             'meta_description' => 'required',
         ],[
-            'website_name.required' => 'فیلد نام وب سایت الزامی است.',
-            'about_us.required' => 'فیلد درباره ما الزامی است.',
-            'contact_us.required' => 'فیلد تماس با ما الزامی است.',
-            'meta_keyword.required' => 'فیلد کلمات متا الزامی است.',
-            'meta_description.required' => 'فیلد توضیحات متا الزامی است.',
+            'website_name' => 'required',
+            'about_us' => 'required',
+            'contact_us' => 'required',
+            'footer' => 'required',
+            'meta_keyword' => 'required',
+            'meta_description' => 'required',
         ]);
+        if($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
         $setting = Setting::all()->first();
         $setting->website_name = $request->website_name;
         $setting->logo_url = $request->logo_url;
@@ -129,6 +140,8 @@ class SettingController extends Controller
         $setting->is_active = $request->is_active;
         $setting->about_us = $request->about_us;
         $setting->contact_us = $request->contact_us;
+        $setting->footer = $request->footer;
+        $setting->is_test = $request->is_test;
         $setting->whatsapp = $request->whatsapp;
         $setting->telegram = $request->telegram;
         $setting->facebook = $request->facebook;

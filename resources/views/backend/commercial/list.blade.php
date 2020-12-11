@@ -15,7 +15,7 @@
             </div>
 
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center w-100">
-                @can('update',\Illuminate\Support\Facades\Auth::user())
+                @can('viewAny',\Illuminate\Support\Facades\Auth::user())
                     <h2 class="title2 mb-0 pt-3 py-md-3 font-weight-normal">عنوان تبلیغ مورد نظر را برای تغییر انتخاب کنید</h2>
                     <a href="{{route('commercial.create')}}" class="btn custombutton my-3 my-md-0 d-flex align-items-center"><i class="fa fa-plus ml-3 green"></i>افزودن تبلیغ</a>
                 @endcan
@@ -56,9 +56,8 @@
                                 <th class="text-right">بنر</th>
                                 <th class="text-right">عنوان</th>
                                 <th class="text-right"> وضعیت</th>
-                                <th class="text-right">موقعیت</th>
-                                <th class="text-right">نوع سرویس دهی</th>
-                                <th class="text-right">زمان شروع</th>
+                                <th class="text-right">تعداد کلیک</th>
+                                <th class="text-right"> شروع</th>
                                 <th class="text-right">پایان</th>
                                 <th class="text-right">تاریخ ایجاد</th>
                                 <th class="text-right"></th>
@@ -85,27 +84,16 @@
                                     @else
                                         <td class="text-center p-0"> <span class="badge badge-info p-1"> آرشیو</span></td>
                                     @endif
-                                    <td class="text-center p-0">{{$commercial->location}}</td>
-                                    @if($commercial->type==0)
-                                        <td class="text-right p-0"><span class="p-1">تعداد کلیک</span></td>
-                                        <td class="text-center p-0">{{$commercial->start_date}}</td>
-                                        @if ($commercial->click_count==0)
-                                            <td class="text-right">{{'0'.'/'.$commercial->total_click }}</td>
-                                        @else
-                                            <td class="text-right">{{$commercial->click_count.'/'.$commercial->total_click }}</td>
-                                        @endif
-                                    @elseif($commercial->type==1)
-                                        <td class="text-right p-0"> <span class="p-1"> بازه زمانی</span></td>
-                                        <td class="text-center p-0">{{$commercial->start_date}}</td>
-                                        <td class="text-right">{{$commercial->finish_date}}</td>
-                                    @endif
+                                    <td class="text-right">{{$commercial->total_click  ? $commercial->click_count.'/'.$commercial->total_click : '-'}}</td>
+                                    <td class="text-center p-0">{{$commercial->start_date}}</td>
+                                    <td class="text-right">{{$commercial->finish_date}}</td>
                                     <td class="text-center p-0">{{\Hekmatinasser\Verta\Verta::instance($commercial->created_at)->formatDate() }}</td>
                                     <td>
                                         <div class="d-flex justify-content-end">
                                             <form action="{{route('commercial.destroy',$commercial->id)}}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button onclick="return confirm('آیا از حذف تبلیغ مطمئن هستید؟');" class="ml-2 btn custombutton custombutton-danger py-2 px-4">حذف </button>
+                                                <button onclick="return confirm('آیا از حذف تبلیغ مطمئن هستید؟');" class="ml-2 btn custombutton custombutton-danger py-1 px-1">حذف </button>
                                             </form>
                                         </div>
                                     </td>

@@ -7,33 +7,29 @@
     <!-- carousel -->
     <div class="carousel-container d-flex flex-column-reverse flex-md-row-reverse mx-2 mx-md-3 mt-3 pt-0">
         <div class="col px-0 d-flex flex-wrap side">
-            @foreach($sliders as $article)
-                @if ($loop->index<=3)
-                    <div class="col-12 col-md-6 mb-2 px-1">
-                        <div class="w-100 bg-white border  d-flex flex-column align-items-start h-100">
-                            <div class="w-100 position-relative">
-                                <img src="{{'/storage'.$article->photo->path.'large_'.$article->photo->originalName }}" alt="" class="w-100 h-100">
-                                <div class="category blue position-absolute">{{$article->categories[0]->name}}</div>
-                            </div>
-{{--                            <h6 class="my-2 px-2 text-right">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</h6>--}}
-                            <a class="p-2 mb-0 text-justify" href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">{{$article->title}}</a>
+            @foreach($important as $article)
+                <div class="col-12 col-md-6 mb-2 px-1">
+                    <div class="w-100 bg-white border  d-flex flex-column align-items-start {{$importantCount>2 ? 'h-100' : ''}}">
+                        <div class="w-100 position-relative">
+                            <img src="{{'/storage'.$article->photo->path.'large_'.$article->photo->originalName }}" alt="" class="w-100 h-100">
+                            <div class="category blue position-absolute">{{$article->categories[0]->name}}</div>
                         </div>
+                        <a class="p-2 mb-0 text-justify" href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">{{$article->title}}</a>
                     </div>
-                @endif
+                </div>
             @endforeach
         </div>
         <div class="col-12 col-md-7 mb-3 mb-md-0 mb-md-0 px-2 px-md-0 mt-2 mt-md-0">
             <section class="center slider w-100 mt-0" dir="ltr">
                 @foreach($sliders as $article)
-                    @if ($loop->index<=3) @continue @endif
-                        <a href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
-                            <div class="topitem2 position-relative" dir="rtl">
-                                <div class="title2 position-absolute d-flex align-items-end justify-content-start w-100">
-                                    <h3 class="p-3 mb-0 w-100 text-right">{{ $article->title }}</h3>
-                                </div>
-                                <img  src="{{'/storage'.$article->photo->path.'large_'.$article->photo->originalName }}" alt="{{ $article->title }}" class="h-100 w-100">
+                    <a href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
+                        <div class="topitem2 position-relative" dir="rtl">
+                            <div class="title2 position-absolute d-flex align-items-end justify-content-start w-100">
+                                <h3 class="p-3 mb-0 w-100 text-right">{{ $article->title }}</h3>
                             </div>
-                        </a>
+                            <img  src="{{'/storage'.$article->photo->path.'large_'.$article->photo->originalName }}" alt="{{ $article->title }}" class="h-100 w-100">
+                        </div>
+                    </a>
                 @endforeach
             </section>
         </div>
@@ -45,7 +41,6 @@
         <div class="col-12 col-md-7 d-flex flex-column px-0 pl-md-2">
             <!-- categories -->
             @foreach($categories as $category)
-                @if(count($category->articles))
                 <div class="d-flex flex-column category px-3 pt-3 pb-0">
                     <div class="col-12 d-flex p-0 mb-3 line position-relative d-flex justify-content-between">
                         <h2 class="title pb-2 m-0 text-right position-relative pl-5">{{$category->name}}</h2>
@@ -82,7 +77,6 @@
                     </div>
                     <div class="all d-flex justify-content-center border-top py-2 mt-2"><a href="{{route('news.category',$category->slug)}}"> نمایش همه ...</a></div>
                 </div>
-                @endif
             @endforeach
             <!-- end of categories -->
         </div>
@@ -91,7 +85,7 @@
     <!-- end of body -->
 
     <!-- photo and video news-->
-    @if(count($photoArticles) && count($videoArticles))
+    @if(!($photoArticles->isEmpty()) && !($videoArticles->isEmpty()))
         <div class="image-card d-flex flex-column pt-3 px-2 px-md-5 mt-3">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-12 col-md-6 d-flex flex-column justify-content-between px-0 pl-md-5">
@@ -129,7 +123,7 @@
                 </div>
             </div>
         </div>
-        @elseif(count($photoArticles) && count($videoArticles)==0)
+        @elseif(!($photoArticles->isEmpty()) && ($videoArticles->isEmpty()))
             <div class="image-card d-flex flex-column py-3 px-2 px-md-5 mt-3">
                 <div class="d-flex flex-column flex-md-row">
                     <div class="col-12 px-0 d-flex flex-column justify-content-between">
@@ -150,7 +144,7 @@
                     </div>
                 </div>
             </div>
-         @elseif(count($photoArticles)==0 && count($videoArticles))
+         @elseif(($photoArticles->isEmpty()) && !($videoArticles->isEmpty()))
         <div class="image-card d-flex flex-column py-3 px-2 px-md-5 mt-3">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-12 videoSection d-flex flex-column justify-content-between mt-3 mt-md-0">

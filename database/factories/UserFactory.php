@@ -19,10 +19,12 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'first_name' => $faker->firstName,
-        'last_name' => $faker->lastName,
-        'email'=>$faker->email,
-        'password' => \Illuminate\Support\Facades\Hash::make('123456'),// password
+        'first_name' => 'bahareh',
+        'last_name' => 'bagheri',
+        'email'=> 'bagheri_bhr@yahoo.com',
+        'password' => \Illuminate\Support\Facades\Hash::make('5Aban1368'),// password
         'remember_token' => Str::random(10),
+        'is_admin' => 1,
+        'username'=>'baharAdmin99'
     ];
 });

@@ -16,20 +16,22 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::namespace('frontend')->group(function (){
-    Route::get('/','HomeController@index')->name('home');
-    Route::get('/news/{id}/{slug}','NewsController@show')->name('news.show');
-    Route::get('/tag/{slug}','NewsController@tagNews')->name('news.tag');
-    Route::get('/service/{slug}','NewsController@categoryNews')->name('news.category');
-    Route::get('/photo','NewsController@photos')->name('news.photo');
-    Route::get('/video','NewsController@videos')->name('news.video');
-    Route::get('/sound','NewsController@sounds')->name('news.sound');
-    Route::post('news/comment/{id}','CommentController@store')->name('frontend.comment.store');
-    Route::post('news/comment', 'CommentController@reply')->name('frontend.comment.reply');
-    Route::get('news/{name}', 'NewsController@aboutus')->name('aboutus');
-    Route::post('contact', 'HomeController@contact')->name('form.contact');
-    Route::get('commercial/{id}', 'HomeController@commercialCounter')->name('commercial.counter');
-    Route::get('printNews/{id}', 'NewsController@printNews')->name('printNews');
+Route::group(['middleware'=>'active'], function() {
+    Route::namespace('frontend')->group(function () {
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::get('/news/{id}/{slug}', 'NewsController@show')->name('news.show');
+        Route::get('/tag/{slug}', 'NewsController@tagNews')->name('news.tag');
+        Route::get('/service/{slug}', 'NewsController@categoryNews')->name('news.category');
+        Route::get('/photo', 'NewsController@photos')->name('news.photo');
+        Route::get('/video', 'NewsController@videos')->name('news.video');
+        Route::get('/sound', 'NewsController@sounds')->name('news.sound');
+        Route::post('news/comment/{id}', 'CommentController@store')->name('frontend.comment.store');
+        Route::post('news/comment', 'CommentController@reply')->name('frontend.comment.reply');
+        Route::get('news/{name}', 'NewsController@aboutus')->name('aboutus');
+        Route::get('contact', 'HomeController@contact')->name('form.contact');
+        Route::get('commercial/{id}', 'HomeController@commercialCounter')->name('commercial.counter');
+        Route::get('printNews/{id}', 'NewsController@printNews')->name('printNews');
+    });
 });
 
 Route::middleware('auth')->prefix('/admin')->namespace('backend')->group(function (){

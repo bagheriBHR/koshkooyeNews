@@ -22,24 +22,27 @@
     </div>
 @endif
 <!-- header -->
-<div class="header d-flex flex-column no-print">
+<div class="header d-flex flex-column no-print position-relative">
+   @if ($setting->is_test == 1)
+        <div class="position-absolute test">آزمایشی</div>
+   @endif
     <div class="top-header d-flex flex-column flex-md-row align-items-center position-relative">
         <img src="{{asset("/images/frontend/dotted-world-map.png")}}" class="position-absolute world-pattern" alt="">
-        <div class="d-flex follow py-2 pr-2 pr-md-5">
+        <div class="d-flex follow py-2 pr-2 justify-content-center">
             @if($setting->instagram)
-                <a href="http://www.instagram.com/{{$setting->instagram}}"><i class="fab fa-instagram"></i></a>
+                <a href="{{$setting->instagram}}"><i class="fab fa-instagram"></i></a>
             @endif
             @if($setting->twitter)
-                <a href="http://www.twitter.com/{{$setting->twitter}}"><i class="fab fa-twitter"></i></a>
+                <a href="{{$setting->twitter}}"><i class="fab fa-twitter"></i></a>
             @endif
              @if($setting->facebook)
-                <a href="http://www.facebook.com/{{$setting->facebook}}"><i class="fab fa-facebook"></i></a>
+                <a href="{{$setting->facebook}}"><i class="fab fa-facebook"></i></a>
             @endif
              @if($setting->whatsapp)
-                <a href="http://www.whatsapp.com/{{$setting->whatsapp}}"><i class="fab fa-whatsapp"></i></a>
+                <a href="{{$setting->whatsapp}}"><i class="fab fa-whatsapp"></i></a>
             @endif
                 @if($setting->telegram)
-                <a href="https://t.me/{{$setting->telegram}}"><i class="fab fa-telegram"></i></a>
+                <a href="{{$setting->telegram}}"><i class="fab fa-telegram"></i></a>
             @endif
         </div>
         <div class="search mx-2 ml-md-5">
@@ -66,10 +69,9 @@
                     <div class="triangle-up position-absolute"></div>
                 </li>
                 @foreach ($parentCategories as $category)
-                    @if(count($category->articles))
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="{{route('news.category',$category->slug)}}">{{$category->name}}</a>
-                            @if(count($category->childrenRecursive))
+                            @if(!($category->childrenRecursive->isEmpty()))
                                 <ul class="dropdown-menu bg-dark" role="menu">
                                     @foreach($category->childrenRecursive as $child)
                                         <li >
@@ -79,7 +81,6 @@
                                 </ul>
                             @endif
                         </li>
-                    @endif
                 @endforeach
                 @if($photoArticleCount>0 || $videoArticleCount>0 || $soundArticleCount>0)
                     <li class="nav-item dropdown">
@@ -115,19 +116,19 @@
 <div class="footer d-flex flex-column p-2 p-md-3 no-print">
     <div class="d-flex justify-content-center follow py-2 pr-2 pr-md-5">
         @if($setting->instagram)
-            <a href="http://www.instagram.com/{{$setting->instagram}}"><i class="fab fa-instagram"></i></a>
+            <a href="{{$setting->instagram}}"><i class="fab fa-instagram"></i></a>
         @endif
         @if($setting->twitter)
-            <a href="http://www.twitter.com/{{$setting->twitter}}"><i class="fab fa-twitter"></i></a>
+            <a href="{{$setting->twitter}}"><i class="fab fa-twitter"></i></a>
         @endif
         @if($setting->facebook)
-            <a href="http://www.facebook.com/{{$setting->facebook}}"><i class="fab fa-facebook"></i></a>
+            <a href="{{$setting->facebook}}"><i class="fab fa-facebook"></i></a>
         @endif
         @if($setting->whatsapp)
-            <a href="http://www.whatsapp.com/{{$setting->whatsapp}}"><i class="fab fa-whatsapp"></i></a>
+            <a href="{{$setting->whatsapp}}"><i class="fab fa-whatsapp"></i></a>
         @endif
         @if($setting->telegram)
-            <a href="https://t.me/{{$setting->telegram}}"><i class="fab fa-telegram"></i></a>
+            <a href="{{$setting->telegram}}"><i class="fab fa-telegram"></i></a>
         @endif
     </div>
     <div class="d-flex justify-content-center">
@@ -136,11 +137,9 @@
                 <a class="nav-link" href="{{route('home')}}">صفحه اصلی </a>
             </li>
             @foreach ($parentCategories as $category)
-                @if(count($category->articles))
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('news.category',$category->slug)}}">{{$category->name}}</a>
                     </li>
-                @endif
             @endforeach
             @if($photoArticleCount>0)
                 <li class="nav-item">
@@ -225,8 +224,13 @@
         </div>
     </div>
 </div>
-<div class="p-2 footer-end no-print">
-    <p class="mb-0">News Agency  is licensed under a  Creative Commons Attribution 4.0 International License</p>
+<div class="p-2 px-md-3 footer-end d-flex flex-column flex-md-row no-print">
+    <div class="col-12 col-md-9 d-flex justify-content-start align-items-end">
+        <p class="mb-0 text-right">{{$setting->footer}}</p>
+    </div>
+    <div class="col-12 col-md-3 d-flex justify-content-end align-items-end">
+        <p class="mb-0 design">Design by :<a href="mailto:bagheri_bhr@yahoo.com" class="ml-2">B.Bagheri</a></p>
+    </div>
 </div>
 <!-- end of footer -->
 

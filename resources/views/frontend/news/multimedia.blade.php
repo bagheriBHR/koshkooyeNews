@@ -13,7 +13,7 @@
     <!-- body -->
     <div class="d-flex flex-column flex-md-row px-2 px-md-5 main my-3">
         <div class="col-12 d-flex flex-column px-0 pl-md-2">
-             @if(count($articles))
+             @if(!($articles->isEmpty()))
                  <!-- carousel -->
                 <div class="d-flex flex-wrap w-100">
                     @if($group=='عکس')

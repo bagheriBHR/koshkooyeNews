@@ -66,6 +66,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row d-flex align-items-center ">
+                        <label for="is_active" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> وب سایت آزمایشی :</label>
+                        <div class="col-sm-4 d-flex justify-content-start">
+                            <div class="col-sm-8 text-right pr-md-0">
+                                <input class="form-check-input" @if($setting->is_test==1) checked @endif  type="radio" value="1" name="is_test" id="radio1">
+                                <label class="custom-field-title form-check-label mr-3 ml-3">بله</label>
+
+                                <input class="form-check-input" @if($setting->is_test==0) checked @endif  type="radio" value="0" name="is_test" id="radio2">
+                                <label class="custom-field-title form-check-label mr-3">خیر</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="body" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> تماس با ما :</label>
                         <div class="col-sm-8">
@@ -76,6 +88,12 @@
                         <label for="body" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> درباره ما :</label>
                         <div class="col-sm-8">
                             <textarea type="text" class="custom-field form-control form-control-sm ckeditor" id="textareaDescription2" rows="10" id="about_us" name="about_us" >{{$setting->about_us}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="meta_description" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> متن پاورقی :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="custom-field form-control form-control-sm " rows="2" name="footer" >{{$setting->footer}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
@@ -140,87 +158,115 @@
                     <div class="form-group row d-flex align-items-center">
                         <label for="website_name" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2">نام وب سایت :</label>
                         <div class="col-sm-8">
-                            <input  type="text" class="custom-field form-control form-control-sm" id="website_name" name="website_name">
+                            <input  type="text" value="{{old('website_name')}}" class="custom-field form-control form-control-sm" id="website_name" name="website_name">
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="logo_url" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> لوگو وب سایت :</label>
-                        <input type="hidden" name="logo_url" id="logo_url">
+                        <input type="hidden" value="{{old('logo_url')}}" name="logo_url" id="logo_url">
                         <div class="col-sm-8">
                             <div id="photo" class="dropzone" ></div>
+                            @if(old('logo_url'))
+                                <div class="col-3 mt-2">
+                                    <img src="{{'/storage/photos/avatar/'.old('logo_url')}}" alt="" class="img-fluid mb-3">
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="logo_url" class="custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> بنر وب سایت :</label>
-                        <input type="hidden" name="banner" id="banner">
+                        <input type="hidden" value="{{old('banner')}}" name="banner" id="banner">
                         <div class="col-sm-8">
                             <div id="banner-photo" class="dropzone" ></div>
+                            @if(old('banner'))
+                                <div class="col-3 mt-2">
+                                    <img src="{{'/storage/photos/avatar/'.old('banner')}}" alt="" class="img-fluid mb-3">
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center ">
                         <label for="is_active" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> وضعیت وب سایت :</label>
                         <div class="col-sm-4 d-flex justify-content-start">
                             <div class="col-sm-8 text-right pr-md-0">
-                                <input class="form-check-input" checked type="radio" value="1" name="is_active" id="radio1">
+                                <input class="form-check-input" @if(old('is_active')==1) checked @endif  type="radio" value="1" name="is_active" id="radio1">
                                 <label class="custom-field-title form-check-label mr-3 ml-3">فعال</label>
 
-                                <input class="form-check-input" type="radio" value="0" name="is_active" id="radio2">
+                                <input class="form-check-input" @if(old('is_active')==0) checked @endif  type="radio" value="0" name="is_active" id="radio2">
                                 <label class="custom-field-title form-check-label mr-3">غیرفعال</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center ">
+                        <label for="is_active" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> وب سایت آزمایشی :</label>
+                        <div class="col-sm-4 d-flex justify-content-start">
+                            <div class="col-sm-8 text-right pr-md-0">
+                                <input class="form-check-input" @if(old('is_test')==1) checked @endif  type="radio" value="1" name="is_test" id="radio1">
+                                <label class="custom-field-title form-check-label mr-3 ml-3">بله</label>
+
+                                <input class="form-check-input" @if(old('is_test')==0) checked @endif  type="radio" value="0" name="is_test" id="radio2">
+                                <label class="custom-field-title form-check-label mr-3">خیر</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="body" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> تماس با ما :</label>
                         <div class="col-sm-8">
-                            <textarea type="text" class="custom-field form-control form-control-sm ckeditor" id="textareaDescription" rows="10" id="contact_us" name="contact_us" ></textarea>
+                            <textarea type="text" class="custom-field form-control form-control-sm ckeditor" id="textareaDescription" rows="10" id="contact_us" name="contact_us" >{{old('contact_us')}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="body" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> درباره ما :</label>
                         <div class="col-sm-8">
-                            <textarea type="text" class="custom-field form-control form-control-sm ckeditor" id="textareaDescription2" rows="10" id="about_us" name="about_us" ></textarea>
+                            <textarea type="text" class="custom-field form-control form-control-sm ckeditor" id="textareaDescription2" rows="10" id="about_us" name="about_us" >{{old('about_us')}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row d-flex align-items-center">
+                        <label for="meta_description" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> متن پاورقی :</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="custom-field form-control form-control-sm " rows="2" name="footer" >{{old('footer')}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="whatsapp" class="custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> واتس آپ :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="custom-field form-control form-control-sm" id="whatsapp" name="whatsapp">
+                            <input type="text" value="{{old('whatsapp')}}" class="custom-field form-control form-control-sm" id="whatsapp" name="whatsapp">
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="telegram" class="custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> تلگرام :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="custom-field form-control form-control-sm" id="telegram" name="telegram">
+                            <input type="text" value="{{old('telegram')}}" class="custom-field form-control form-control-sm" id="telegram" name="telegram">
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="facebook" class="custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> فیس بوک :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="custom-field form-control form-control-sm" id="facebook" name="facebook">
+                            <input type="text" value="{{old('facebook')}}" class="custom-field form-control form-control-sm" id="facebook" name="facebook">
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="twitter" class="custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> توییتر :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="custom-field form-control form-control-sm" id="twitter" name="twitter">
+                            <input type="text" value="{{old('twitter')}}" class="custom-field form-control form-control-sm" id="twitter" name="twitter">
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="instagram" class="custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> اینستاگرام :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="custom-field form-control form-control-sm" id="instagram" name="instagram">
+                            <input type="text" value="{{old('instagram')}}" class="custom-field form-control form-control-sm" id="instagram" name="instagram">
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="meta_keyword" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> کلمات کلیدی متا :</label>
                         <div class="col-sm-8">
-                            <textarea type="text" class="custom-field form-control form-control-sm " rows="2" id="meta_keyword" name="meta_keyword" ></textarea>
+                            <textarea type="text" class="custom-field form-control form-control-sm " rows="2" id="meta_keyword" name="meta_keyword" >{{old('meta_keyword')}}</textarea>
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center">
                         <label for="meta_description" class="required custom-field-title col-sm-3 col-form-label text-right font-weight-bold mr-2"> توضیحات متا :</label>
                         <div class="col-sm-8">
-                            <textarea type="text" class="custom-field form-control form-control-sm " rows="10" id="meta_description" name="meta_description" ></textarea>
+                            <textarea type="text" class="custom-field form-control form-control-sm " rows="10" id="meta_description" name="meta_description" >{{old('meta_description')}}</textarea>
                         </div>
                     </div>
                     <div class="d-flex">

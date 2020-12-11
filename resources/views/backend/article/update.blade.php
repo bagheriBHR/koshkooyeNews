@@ -64,25 +64,6 @@
                         <textarea type="text" class="custom-field form-control form-control-sm" rows="10" id="summery" name="summery" >{{$article->summery}}</textarea>
                     </div>
                 </div>
-{{--                <div class="form-group row d-flex align-items-center">--}}
-{{--                    <label for="body" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> دسته بندی خبر:</label>--}}
-{{--                    <div class="col-sm-6">--}}
-{{--                        <select name="category_id[]" class="w-100 custom-field" multiple>--}}
-{{--                            <option value="">با نگه داشتن کلید Cntrl چندین دسته بندی را انتخاب کنید...</option>--}}
-{{--                            @foreach($categories as $category_list)--}}
-{{--                                <option value="{{$category_list->id}}"--}}
-{{--                                @foreach($article->categories as $item)--}}
-{{--                                    {{$item->id == $category_list->id ? "selected" : ""}}--}}
-{{--                                    @endforeach>--}}
-{{--                                    {{$category_list->name}}--}}
-{{--                                </option>--}}
-{{--                                @if(count($category_list->childrenRecursive)>0)--}}
-{{--                                    @include('backend.partials.categoryList',['categories'=>$category_list->childrenRecursive,'level'=>1,'category'=>$article->categories,'multiple'=>true])--}}
-{{--                                @endif--}}
-{{--                            @endforeach--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
                     <div class="form-group row d-flex align-items-center">
                         <label for="body" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> دسته بندی خبر:</label>
                         <div class="col-sm-6">
@@ -114,7 +95,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="form-group row d-flex align-items-center">
                             <label for="photo_id" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">  تصویر اصلی :</label>
                             <input type="hidden" name="thumbnail" id="thumbnail" value="{{$article->thumbnail}}">
@@ -170,7 +150,7 @@
                         </div>
                         <div class="desc media1 media2 media3">
                             <div class="form-group row d-flex align-items-center ">
-                                <label for="photographer" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تصویربردار یا صدابردار :</label>
+                                <label for="photographer" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تصویربردار :</label>
                                 <div class="col-sm-6 d-flex justify-content-start">
                                     <input type="text" class="custom-field form-control form-control-sm" value="{{$article->photographer}}" id="photographer" name="photographer">
                                 </div>
@@ -216,14 +196,27 @@
                         </div>
                     </div>
                     <div class="form-group row d-flex align-items-center ">
-                        <label for="publish_status" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نمایش در کروسل :</label>
+                        <label for="publish_status" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> نمایش در اسلایدر :</label>
                         <div class="col-sm-6 d-flex justify-content-start">
                             <div class="col-sm-8 text-right pr-md-0">
+                                <input class="form-check-input" @if ($article->is_carousel==0) checked @endif type="radio" value="0" name="is_carousel" id="radio2">
+                                <label class="custom-field-title form-check-label mx-3">غیرفعال</label>
+
                                 <input class="form-check-input" @if ($article->is_carousel==1) checked @endif type="radio" value="1" name="is_carousel" id="radio1">
                                 <label class="custom-field-title form-check-label mr-3 ml-3">فعال</label>
+                            </div>
+                        </div>
+                    </div>
 
-                                <input class="form-check-input" @if ($article->is_carousel==0) checked @endif type="radio" value="0" name="is_carousel" id="radio2">
-                                <label class="custom-field-title form-check-label mr-3">غیرفعال</label>
+                    <div class="form-group row d-flex align-items-center ">
+                        <label for="publish_status" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">خبر مهم :</label>
+                        <div class="col-sm-6 d-flex justify-content-start">
+                            <div class="col-sm-8 text-right pr-md-0">
+                                <input class="form-check-input" @if ($article->is_important==0) checked @endif type="radio" value="0" name="is_important" id="radio2">
+                                <label class="custom-field-title form-check-label mx-3">خیر</label>
+
+                                <input class="form-check-input" @if ($article->is_important==1) checked @endif type="radio" value="1" name="is_important" id="radio1">
+                                <label class="custom-field-title form-check-label mr-3">بله</label>
                             </div>
                         </div>
                     </div>
