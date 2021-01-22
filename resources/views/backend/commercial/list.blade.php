@@ -144,28 +144,6 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <p class="mb-0">
-                                            <a class="btn btntitle w-100 d-flex justify-content-between align-items-center"  data-toggle="collapse" data-target="#collapseExample31" aria-expanded="false" aria-controls="collapseExample">
-                                                <span class="d-flex align-items-center"><i class="fas fa-toggle-off ml-3"></i>نوع سرویس دهی</span>
-                                                <span class="fa fa-angle-right js-rotate-if-collapsed"></span>
-                                            </a>
-                                        </p>
-                                        <div class="collapse" id="collapseExample31">
-                                            <div class="border-0 p-0">
-                                                <table class="w-100 text-right">
-                                                    <tr>
-                                                        <td class="py-2 pr-2">
-                                                            <button type="submit" name="filter" value="click_count">تعداد کلیک</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="py-2 pr-2">
-                                                            <button type="submit" name="filter" value="date">بازه زمانی</button>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -39,7 +39,7 @@ class CommentController extends Controller
             $comment->article_id = $id;
             $comment->save();
             Session::flash('commentsuccess','نظر شما با موفقیت درج گردید و در انتظار تایید مدیر است.');
-            return redirect()->to(app('url')->previous()."#commentHash")->withInput();
+            return redirect()->to(app('url')->previous()."#commentHash");
 
     }
     public function reply(Request $request)

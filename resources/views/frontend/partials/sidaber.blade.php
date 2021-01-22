@@ -56,23 +56,27 @@
 <!-- end of tabs -->
 
 <!-- commercials -->
-<div class="d-none d-md-block col-2 px-0 pr-md-2 mb-2 no-print">
+<div class=" col-12 col-md-2 px-0 pr-md-2 mb-2 no-print">
+    @if(!($activeCommercials->isEmpty()))
         @foreach($activeCommercials as $c)
             @if ($c->photo->originalName=='webm')
-                <a href="{{route('commercial.counter',$c->id)}}">
+                <a href="{{route('commercial.counter',$c->id)}}" target="_blank">
                     <video width="100%">
                         <source src="{{'/storage'.$c->photo->path}}" type="video/mp4" >
                     </video>
                 </a>
             @else
                 <div class="mb-2 w-100">
-                    <a href="{{route('commercial.counter',$c->id)}}"><img src="{{'/storage'.$c->photo->path}}" alt="" class="w-100"></a>
+                    <a href="{{route('commercial.counter',$c->id)}}" target="_blank"><img src="{{'/storage'.$c->photo->path}}" alt="" class="w-100"></a>
                 </div>
             @endif
         @endforeach
-        <div class="border d-flex flex-column align-items-center justify-content-center p-3">
-            <h6 class="text-gray">محل قرار گیری تبلیغات شما.</h6>
-            <h6 class="text-gray">سایز 200 x ...</h6>
+    @else
+        <div class="d-flex flex-column">
+            <img src="{{asset('images/frontend/400x200.jpg')}}" class="w-100 mt-2">
+            <img src="{{asset('images/frontend/400x400.jpg')}}" class="w-100 mt-2">
+            <img src="{{asset('images/frontend/400x600.jpg')}}" class="w-100 mt-2">
         </div>
+    @endif
 </div>
 <!-- end of commercials -->

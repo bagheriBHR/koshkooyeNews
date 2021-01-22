@@ -6,7 +6,7 @@
         <div class="single col-12 col-md-7 d-flex flex-column px-0 pl-md-2 ">
             <div class="bg-white p-3 border">
                 <div class="mt-3">
-                    <div class="col-12 d-flex p-0 mb-3 line position-relative d-flex justify-content-between">
+                    <div class="col-12 d-flex flex-column flex-md-row p-0 mb-3 line position-relative d-flex justify-content-between">
                         <h2 class="title d-flex pb-2 m-0 text-right position-relative pl-5">
                             @foreach($article->categories as $category)
                                 @if($category->parent_id == null)
@@ -17,19 +17,19 @@
                                 @endif
                             @endforeach
                         </h2>
-                        <div class="d-flex share">
+                        <div class="d-flex share py-1 py-md-0">
                             <a class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-share-alt ml-2"></i>اشتراک گذاری
                                 </a>
                                 <div class="dropdown-menu py-0" aria-labelledby="navbarDropdown">
-                                    <a href="https://web.whatsapp.com/send?text={{url()->current()}}" class="dropdown-item text-right"><i class="fab fa-whatsapp ml-2"></i>واتس آپ</a>
-                                    <a href="https://telegram.me/share/url?url={{url()->current()}}" class="dropdown-item text-right"><i class="fab fa-telegram ml-2"></i>تلگرام</a>
-                                    <a href="https://twitter.com/home?status={{url()->current()}}" class="dropdown-item text-right"><i class="fab fa-twitter ml-2"></i>توییتر</a>
-                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" class="dropdown-item text-right"><i class="fab fa-facebook ml-2"></i>فیس بوک</a>
+                                    <a href="https://web.whatsapp.com/send?text={{url()->current()}}" target="_blank" class="dropdown-item text-right"><i class="fab fa-whatsapp ml-2"></i>واتس آپ</a>
+                                    <a href="https://telegram.me/share/url?url={{url()->current()}}" target="_blank" class="dropdown-item text-right"><i class="fab fa-telegram ml-2"></i>تلگرام</a>
+                                    <a href="https://twitter.com/home?status={{url()->current()}}" target="_blank" class="dropdown-item text-right"><i class="fab fa-twitter ml-2"></i>توییتر</a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" target="_blank" class="dropdown-item text-right"><i class="fab fa-facebook ml-2"></i>فیس بوک</a>
                                 </div>
                             </a>
-                            <a href="{{route('printNews',$article->id)}}" class="d-flex align-items-center"><i class="fas fa-print"></i></a>
+                            <div class="d-none d-md-block"><a href="{{route('printNews',$article->id)}}" class="d-flex align-items-center"><i class="fas fa-print"></i></a></div>
                         </div>
                         <div class="time position-absolute mr-auto">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</div>
                     </div>
@@ -42,9 +42,9 @@
                         <p class="summery">{{$article->summery}}</p>
                     @endif
                     @if($article->type==0)
-                        <img src="{{'/storage'.$article->photo->path.'medium_'.$article->photo->originalName }}" class="w-100" alt="">
+                        <img src="{{'/storage'.$article->photo->path.'medium_'.$article->photo->originalName }}" class="m-2 w-100" alt="">
                     @endif
-                    <p>{!! $article->body !!}</p>
+                    <div>{!! $article->body !!}</div>
                     @if($article->type==1)
                         <div class="w-100 d-flex flex-wrap">
                             @foreach($article->photos as $photo)
@@ -112,7 +112,7 @@
                     </div>
                     <div class="form-row">
                         <div class="col form-group">
-                            <textarea type="text"  value="{{old('body')}}" rows="5" class="form-control" name="body" id="body" placeholder="نظر خود را وارد کنید..."></textarea>
+                            <textarea type="text"  rows="5" class="form-control" name="body" id="body" placeholder="نظر خود را وارد کنید...">{{old('body')}}</textarea>
                             <small class="text-danger">{{ $errors->first('body') }}</small>
                         </div>
                     </div>
@@ -183,12 +183,10 @@
 @endsection
 @section('script')
     <script>
-        //comment form
         $(".btn-open").click(function(){
-            $('.form-reply').css('display', 'none');
             var service = this.id;
             var service_id = '#f-' + service;
-            $(service_id).show('slow');
+            $(service_id).toggle();
         })
     </script>
 @endsection

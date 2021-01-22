@@ -1,6 +1,7 @@
 @extends('backend.layouts.master')
 @section('style')
     <link rel="stylesheet" href="{{asset('backend/css/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/css/bootstrap-tagsinput.css')}}">
 @endsection
 @section('content')
     <div class="d-flex flex-column flex-md-row w-100 h-100">
@@ -131,7 +132,7 @@
                                             @foreach($article->photos as $photo)
                                                 <div class="col-sm-3" id="updated_photo_{{$photo->id}}">
                                                     <img src="{{'/storage'.$photo->path.$photo->originalName}}" class="w-100">
-                                                    <button type="button" class="btn btn-danger mx-1 my-0" onclick="removeImages({{$photo->id}})">حذف</button>
+                                                    <button type="button" class="btn btn-danger mx-1 my-0 removeImage" onclick="removeImages({{$photo->id}})">حذف</button>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -148,7 +149,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="desc media1 media2 media3">
+                        <div class="desc media1 media2">
                             <div class="form-group row d-flex align-items-center ">
                                 <label for="photographer" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> تصویربردار :</label>
                                 <div class="col-sm-6 d-flex justify-content-start">
@@ -171,8 +172,8 @@
                     <div class="form-group row d-flex align-items-center">
                         <label for="tag" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تگ ها :</label>
                         <div class="col-sm-6 text-right">
-                            <input type="text" placeholder="تگها را با علامت کاما(،) از هم جدا کنید." class="mb-2 custom-field form-control form-control-sm" name="tag">
-                            <div class="row">
+                            <input type="text" data-role="tagsinput" class=" custom-field form-control form-control-sm" name="tag">
+                            <div class="row mt-2">
                                 @foreach($article->tags as $tag)
                                     <div class=" ml-4 d-flex position-relative mb-4"  id="updated_tag_{{$tag->id}}">
                                         <span id="output" class="px-2 py-0 bg-primary text-white"> {{ $tag->name }}</span>
@@ -234,6 +235,7 @@
 
         <script type="text/javascript" src="{{asset('backend/js/dropzone.js')}}"></script>
         <script src="{{asset('backend/js/ckeditor/ckeditor.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
         <script>
 
             $(document).ready(function() {

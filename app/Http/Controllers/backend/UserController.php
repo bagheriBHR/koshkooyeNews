@@ -160,8 +160,9 @@ class UserController extends Controller
             Session::flash('warning', 'نام خانوادگی کاربر را وارد کنید.');
             return redirect()->route('user.index');
         }else{
+            $firstUser = User::first();
             $users = User::where('last_name', 'LIKE', '%' . $request->search . '%')->paginate(10);
-            return view('backend.user.list',compact(['users']));
+            return view('backend.user.list',compact(['users','firstUser']));
         }
     }
     public function filter(Request $request)
@@ -184,7 +185,8 @@ class UserController extends Controller
                 $users = User::where('status',0)->paginate(10);
                 break;
         }
-             return view('backend.user.list',compact(['users']));
+        $firstUser = User::first();
+        return view('backend.user.list',compact(['users','firstUser']));
     }
 
 }

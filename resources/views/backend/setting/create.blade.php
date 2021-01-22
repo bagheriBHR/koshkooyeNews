@@ -44,12 +44,13 @@
                         <input type="hidden" name="banner" id="banner" value="{{$setting->banner}}">
                         <div class="col-sm-8">
                             <div id="banner-photo" class="dropzone" ></div>
-                            @if($setting->banner)
+                            <strong class="text-danger">* سایز عکس باید 75 : 1024 باشد.</strong>
+                        @if($setting->banner)
                                 <div class="w-100 d-flex justify-content-start align-items-center">
                                     <div class="mt-3">
                                         <img src="{{ '/storage/photos/avatar/'.$setting->banner}}" alt="" id="imgSrc" class="img-fluid">
                                     </div>
-                                    <button id="bannerBtn" type="button" class="btn btn-danger mr-3" onclick="deleteBanner()">حذف بنر</button>
+                                    <button id="bannerBtn" type="button" class="btn btn-danger mr-3 removeImage" onclick="deleteBanner()">حذف بنر</button>
                                 </div>
                             @endif
                         </div>
@@ -178,7 +179,8 @@
                         <input type="hidden" value="{{old('banner')}}" name="banner" id="banner">
                         <div class="col-sm-8">
                             <div id="banner-photo" class="dropzone" ></div>
-                            @if(old('banner'))
+                            <strong class="text-danger">* سایز عکس باید 75 : 1024 باشد.</strong>
+                        @if(old('banner'))
                                 <div class="col-3 mt-2">
                                     <img src="{{'/storage/photos/avatar/'.old('banner')}}" alt="" class="img-fluid mb-3">
                                 </div>

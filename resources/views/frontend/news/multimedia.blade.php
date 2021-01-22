@@ -16,21 +16,7 @@
              @if(!($articles->isEmpty()))
                  <!-- carousel -->
                 <div class="d-flex flex-wrap w-100">
-                    @if($group=='عکس')
-                        <section class="center slider col-12 mt-0" dir="ltr">
-                            @foreach($articles as $article)
-                                @if ($loop->index>=3) @continue @endif
-                                <a href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
-                                    <div class="topitem3 topitem2 mt-2 d-flex flex-column align-items-center mt-md-0 position-relative h-100">
-                                        <img src="{{'/storage'.$article->photo->path.'large_'.$article->photo->originalName }}" class="">
-                                        <h3 class="title position-absolute w-100 py-2 px-3 mb-0">{{$article->title}}</h3>
-                                    </div>
-                                </a>
-                            @endforeach
-                        </section>
-                    @endif
                     @foreach($articles as $article)
-                        @if ($loop->index<3 && $group=='عکس') @continue @endif
                         <div class="topitem2 col-12 col-md-3 position-relative mt-3">
                            <div class="multimedia h-100">
                                <a href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">

@@ -13,9 +13,12 @@ use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use App\Traits\CommercialTrait;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
+    use CommercialTrait;
     public function index(Request $request)
     {
             if(count($request->all())>0){
@@ -72,6 +75,7 @@ class HomeController extends Controller
                     ->where('is_carousel',0)
                     ->where('is_important',0)
                     ->where('type',0)
+                    ->OrWhere('type',3)
                     ->orderBy('created_at','desc')
                     ->limit(7);
             }])->where('parent_id','=',null)->whereHas('articles',function($q) {
@@ -94,47 +98,38 @@ class HomeController extends Controller
                 ->where('is_important',0)
                 ->limit(6)->get();
 
-            $commercials = Commercial::where('status',0)->orWhere('status',1)->get();
-            foreach ($commercials as $commercial){
-                if($commercial->status==0){
-                    if ($commercial->start_date==verta()->formatDate()){
-                        $commercial->status=1;
-                        $commercial->save();
-                    }
-                }
-                if($commercial->status==1){
-                    if (($commercial->total_click!=null && $commercial->click_count== $commercial->total_click) || $commercial->finish_date==verta()->formatDate()){
-                        $commercial->status=2;
-                        $commercial->save();
-                    }
-                }
-            }
+            $this->handleCommercials();
             $activeCommercials = Commercial::where('status',1)->get();
 
             return view('frontend.home.home',compact(['sliders','important','importantCount','categories','photoArticles','videoArticles','activeCommercials']));
-//            $custom_com = Home::com()
-//
     }
 
     public function contact(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all() , [
             'name' => 'required',
             'email' => 'required|email',
             'body' => 'required',
         ],[
             'name.required' => 'نام و نام خانوادگی خود را وارد کنید',
-            'body.required' => 'متن را وارد کنید',
+            'body.required' => 'نظر خود را وارد کنید',
             'email.required' => 'پست الکترونیکی خود را وارد کنید',
             'email.email' => 'پست الکترونیکی نامعتبر است',
         ]);
+
+        if($validator->fails()) {
+            return redirect()->to(app('url')->previous()."#contactHash")->withErrors($validator)->withInput();
+
+        }
+
+
         $contact=new Contact();
         $contact->body = $request->body;
         $contact->name = $request->name;
         $contact->email = $request->email;
         $contact->save();
-        Session::flash('success','با موفقیت ثبت گردید.');
-        return back();
+        Session::flash('success','نظر شما با موفقیت درج گردید و در انتظار تایید مدیر است.');
+        return redirect()->to(app('url')->previous()."#contactHash");
     }
 
     public function commercialCounter($id)
@@ -146,8 +141,4 @@ class HomeController extends Controller
         return Redirect::to($url);
     }
 
-    public function  commercial()
-    {
-
-    }
 }

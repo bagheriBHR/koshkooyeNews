@@ -10,7 +10,7 @@ class TagController extends Controller
 {
     public function index()
     {
-        $tags = Tag::orderBy('created_at','desc')->paginate(20);
+        $tags = Tag::with('articles')->whereHas('articles')->orderBy('created_at','desc')->paginate(20);
         return view('backend.tag.list',compact(['tags']));
     }
 }

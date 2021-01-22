@@ -58,7 +58,7 @@
                             <h3 class="roo-titr">{{$category->articles[0]->roo_titr ? $category->articles[0]->roo_titr : '' }}</h3>
                             <a href="{{route('news.show',['id'=>$category->articles[0]->id,'slug'=>$category->articles[0]->slug])}}">{{$category->articles[0]->title}}</a>
                             <span class="text-right">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($category->articles[0]->publish_date)->format(' %d %B، %Y') ) }}</span>
-                            <p class="mb-0">{!! \Illuminate\Support\Str::limit($category->articles[0]->body,200) !!}</p>
+                            <div class="mb-0">{!! \Illuminate\Support\Str::limit($category->articles[0]->body,200) !!}</div>
                         </div>
                         <div class="col-12 col-md-6 d-flex flex-column left pl-0">
                             @foreach($category->articles as $article)
@@ -86,7 +86,7 @@
 
     <!-- photo and video news-->
     @if(!($photoArticles->isEmpty()) && !($videoArticles->isEmpty()))
-        <div class="image-card d-flex flex-column pt-3 px-2 px-md-5 mt-3">
+        <div class="image-card d-flex flex-column py-3 px-2 px-md-5 mt-3">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-12 col-md-6 d-flex flex-column justify-content-between px-0 pl-md-5">
                     <h2 class="section-title">خبرهای تصویری</h2>

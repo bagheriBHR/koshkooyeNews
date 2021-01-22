@@ -6,32 +6,16 @@ use App\Article;
 use App\Category;
 use App\Commercial;
 use App\Http\Controllers\Controller;
+use App\Traits\CommercialTrait;
 use Illuminate\Http\Request;
 use Spatie\Tags\Tag;
 
 class NewsController extends Controller
 {
+    use CommercialTrait;
     public function show(Request $request,$id,$slug)
     {
-        $commercials = Commercial::where('status',0)->orWhere('status',1)->get();
-        foreach ($commercials as $commercial){
-            if($commercial->status==0){
-                if ($commercial->start_date==verta()->formatDate()){
-                    $commercial->status=1;
-                    $commercial->save();
-                }
-            }
-            if($commercial->status==1){
-                if ($commercial->type==1 && $commercial->finish_date==verta()->formatDate()){
-                    $commercial->status=2;
-                    $commercial->save();
-                }
-                if ($commercial->type==0 && $commercial->click_count== $commercial->total_click){
-                    $commercial->status=2;
-                    $commercial->save();
-                }
-            }
-        }
+        $this->handleCommercials();
         $activeCommercials = Commercial::where('status',1)->get();
 
         $article = Article::where('id',$id)->with(['photos','categories','tags','user','comments'=>function($q){
@@ -48,34 +32,18 @@ class NewsController extends Controller
     public function tagNews($slug)
     {
         $tag = Tag::findOrCreate($slug);
-        return $tag;
         $id = $tag->id;
         $articles = Article::whereHas('tags',function($q) use($id){
             $q->where('tag_id',$id);
         })->paginate(20);
+        $categories = Category::where('parent_id',null)->whereHas('articles')->get();
+        return view('frontend.news.search',compact('articles','categories','tag'));
     }
     public function categoryNews($slug)
     {
-        $commercials = Commercial::where('status',0)->orWhere('status',1)->get();
-        foreach ($commercials as $commercial){
-            if($commercial->status==0){
-                if ($commercial->start_date==verta()->formatDate()){
-                    $commercial->status=1;
-                    $commercial->save();
-                }
-            }
-            if($commercial->status==1){
-                if ($commercial->type==1 && $commercial->finish_date==verta()->formatDate()){
-                    $commercial->status=2;
-                    $commercial->save();
-                }
-                if ($commercial->type==0 && $commercial->click_count== $commercial->total_click){
-                    $commercial->status=2;
-                    $commercial->save();
-                }
-            }
-        }
+        $this->handleCommercials();
         $activeCommercials = Commercial::where('status',1)->get();
+
         $category = Category::where('slug',$slug)->first();
         $articles = Article::whereHas('categories',function($q) use($category){
             $q->where('category_id',$category->id);
@@ -89,7 +57,7 @@ class NewsController extends Controller
         $articles = Article::orderBy('created_at','desc')
             ->where('publish_status',1)
             ->where('type',1)
-            ->paginate(30);
+            ->paginate(28);
         $group = 'عکس';
         return view('frontend.news.multimedia',compact(['articles','group']));
     }
@@ -98,7 +66,7 @@ class NewsController extends Controller
         $articles = Article::orderBy('created_at','desc')
             ->where('publish_status',1)
             ->where('type',2)
-            ->paginate(30);
+            ->paginate(28);
         $group= 'فیلم';
         return view('frontend.news.multimedia',compact(['articles','group']));
     }
@@ -107,7 +75,7 @@ class NewsController extends Controller
         $articles = Article::orderBy('created_at','desc')
             ->where('publish_status',1)
             ->where('type',3)
-            ->paginate(30);
+            ->paginate(28);
         $group= 'صوت';
         return view('frontend.news.multimedia',compact(['articles','group']));
     }

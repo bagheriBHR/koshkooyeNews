@@ -1,6 +1,7 @@
 @extends('backend.layouts.master')
 @section('style')
     <link rel="stylesheet" href="{{asset('backend/css/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/css/bootstrap-tagsinput.css')}}">
 @endsection
 @section('content')
     <div class="d-flex flex-column flex-md-row w-100 h-100">
@@ -85,6 +86,7 @@
                     <input type="hidden" value="{{old('thumbnail')}}" name="thumbnail" id="thumbnail">
                     <div class="col-sm-6">
                         <div id="photo" class="dropzone" ></div>
+                        <strong class="text-danger">* سایز عکس باید 1080 : 1920 باشد.</strong>
                         @if(session('thumbnail_url'))
                             <div class="col-3 mt-2">
                                 <img src="{{ '/storage'.session('thumbnail_url')->path.'small_'.session('thumbnail_url')->originalName}}" alt="" class="img-fluid mb-3">
@@ -116,10 +118,10 @@
                         <input type="hidden" name="image_url[]" id="image_url">
                         <div class="col-sm-6">
                             <div id="articlePhoto" class="dropzone"></div>
-                            {{old('image_url.0')}}
+                            <strong class="text-danger">* سایز عکس باید 1080 : 1920 باشد.</strong>
                             @if(session('imageCount'))
                                 <div class="mt-2">
-                                    <p> {{session('imageCount')}} تصویر انتخاب شده</p>
+                                    <p class="text-success font-weight-bold"> {{session('imageCount')}}* 3 عکس برای گالری تصاویر انتخاب شده</p>
                                 </div>
                             @endif
                         </div>
@@ -164,8 +166,8 @@
                 </div>
                 <div class="form-group row d-flex align-items-center">
                     <label for="tag" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">تگ ها :</label>
-                    <div class="col-sm-6">
-                        <input type="text" placeholder="تگها را با علامت کاما(،) از هم جدا کنید." class="custom-field form-control form-control-sm" value="{{old('tag')}}" id="tag" name="tag">
+                    <div class="col-sm-6 d-flex justify-content-start">
+                        <input type="text"  data-role="tagsinput" class="custom-field form-control form-control-sm" value="{{old('tag')}}" id="tag" name="tag">
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center ">
@@ -216,6 +218,7 @@
 
     <script type="text/javascript" src="{{asset('backend/js/dropzone.js')}}"></script>
     <script src="{{asset('backend/js/ckeditor/ckeditor.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
     <script>
 
         var old_type= {{ old('type') ? old('type') : 0 }};
@@ -277,6 +280,7 @@
             }
         });
 
+        var photos = [].concat({{session('image')}})
         var photosGallery = []
         var drop3 = new Dropzone('#articlePhoto', {
             addRemoveLinks: true,
@@ -293,7 +297,7 @@
             }
         });
         articleGallery = function(){
-            document.getElementById('image_url').value = photosGallery;
+            document.getElementById('image_url').value = photosGallery.concat(photos);;
         }
 
         CKEDITOR.replace('textareaDescription',{

@@ -5,12 +5,12 @@
 @section('content')
     <div class="px-2 px-md-5 mt-3 searchPage">
         <form action="{{route('home')}}" method="GET" role="search" class="w-100 d-flex flex-column justify-content-center" autocomplete="off">
-            <div class="d-flex flex-md-row mb-2">
+            <div class="d-flex flex-column flex-md-row mb-2">
                 <input hidden value="advance">
-                <input type="text" placeholder="عبارت مورد نظر را وارد کنید..." name="q" class="custom-field form-control col-12 col-md-11">
-                <button type="submit" class="col btn btn-filter mb-0 px-4 mr-0 mr-md-2">فیلتر</button>
+                <input type="text" value="{{isset($tag) ? $tag->name : ''}}" placeholder="عبارت مورد نظر را وارد کنید..." name="q" class="custom-field form-control col-12 col-md-11">
+                <button type="submit" class=" d-none d-md-block col btn btn-filter mb-0 px-4 mr-0 mr-md-2">فیلتر</button>
             </div>
-            <div class="w-100 d-flex flex-md-row">
+            <div class="w-100 d-flex flex-column flex-md-row">
                 <div class="col-md-3 px-0 custom-select">
                     <select name="service">
                         <option value="">سرویس خبر</option>
@@ -29,13 +29,15 @@
                     </select>
                 </div>
                 <div  class="col px-0 form-group mb-1 mr-0 mr-md-4">
-                    <input type="text" class="h-100 custom-field form-control form-control-sm" id="input2" placeholder="از تاریخ" name="from" />
+                    <input type="text" class="h-100 custom-field form-control form-control-sm pr-3" id="input2" placeholder="از تاریخ" name="from" />
                     <span id="span2"></span>
                 </div>
                 <div  class="col px-0 form-group mb-1 mr-0 mr-md-4">
-                    <input type="text" class="h-100 custom-field form-control" id="input1" placeholder="تا تاریخ" name="end" />
+                    <input type="text" class="h-100 custom-field form-control pr-3" id="input1" placeholder="تا تاریخ" name="end" />
                     <span id="span1"></span>
                 </div>
+                <button type="submit" class="d-block d-md-none col btn btn-filter mt-2 mb-0 px-4 mr-0 mr-md-2">فیلتر</button>
+
             </div>
         </form>
     </div>
@@ -58,9 +60,9 @@
                                 <img src="{{'/storage'.$article->photo->path.'medium_'.$article->photo->originalName }}" alt="{{$article->title}}" class="w-100 h-100">
                             </div>
                             <div class="col-12 col-md-9 d-flex flex-column justify-content-center pl-1">
-                                <h3 class="roo-titr">لورم ایپسوم یا طرح‌نما :</h3>
-                                <h2 class="mt-3 mt-md-1">{{$article->title}}</h2>
-                                <p class="mb-2">{!! \Illuminate\Support\Str::limit($article->body,450) !!}</p>
+                                <h3 class="roo-titr mt-3">لورم ایپسوم یا طرح‌نما :</h3>
+                                <h2 class="mt-1 mt-md-1">{{$article->title}}</h2>
+                                <div>{!! \Illuminate\Support\Str::limit($article->body,350) !!}</div>
                                 <span>{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</span>
                             </div>
                         </a>

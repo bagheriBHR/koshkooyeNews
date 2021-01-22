@@ -31,7 +31,8 @@
                     <input type="hidden" value="{{old('banner')}}" name="banner" id="banner">
                     <div class="col-sm-6">
                         <div id="photo" class="dropzone" ></div>
-                        @if(session('commercial_banner'))
+                        <strong class="text-danger">* سایز عکس باید * : 400 باشد.</strong>
+                    @if(session('commercial_banner'))
                             @if (session('commercial_banner')->originalName=='webm')
                                 <video width="100px">
                                     <source src="{{'/storage'.session('commercial_banner')->path}}" type="video/mp4" >

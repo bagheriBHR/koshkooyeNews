@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="form-group row d-flex align-items-center">
-                    <label for="email" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> ایمیل :</label>
+                    <label for="email" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2"> پست الکترونیکی :</label>
                     <div class="col-sm-6">
                         <input type="text" value="{{old('email')}}" class="custom-field form-control form-control-sm" id="email" name="email" >
                     </div>

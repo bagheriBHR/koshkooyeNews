@@ -14,35 +14,41 @@
                 <!-- carousel -->
                 <div class="d-flex flex-wrap">
                     <div class="px-1 w-100">
-                        <div class="topitem2 w-100 px-0 position-relative border">
-                            <div class="title position-absolute w-100 pr-3">
-                                <h3 class="my-2">{{$articles[0]->title}}</h3>
+                        <a href="{{route('news.show',['id'=>$articles[0]->id,'slug'=>$articles[0]->slug])}}">
+                            <div class="topitem2 w-100 px-0 position-relative border">
+                                <div class="title position-absolute w-100">
+                                    <h3 class="p-3 mb-0">{{$articles[0]->title}}</h3>
+                                </div>
+                                @if($articles[0]->type==1)
+                                    <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-camera"></i></div>
+                                @elseif($articles[0]->type==2)
+                                    <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-film"></i></div>
+                                @elseif($articles[0]->type==3)
+                                    <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-volume-up"></i></div>
+                                @endif
+                                <img src="{{'/storage'.$articles[0]->photo->path.'medium_'.$articles[0]->photo->originalName }}" alt="" class="h-100 w-100">
                             </div>
-                            @if($articles[0]->type==1)
-                                <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-camera"></i></div>
-                            @elseif($articles[0]->type==2)
-                                <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-film"></i></div>
-                            @elseif($articles[0]->type==3)
-                                <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-volume-up"></i></div>
-                            @endif
-                            <a href="{{route('news.show',['id'=>$articles[0]->id,'slug'=>$articles[0]->slug])}}"><img src="{{'/storage'.$articles[0]->photo->path.'medium_'.$articles[0]->photo->originalName }}" alt="" class="h-100 w-100"></a>
-                        </div>
+                        </a>
                     </div>
                     @foreach($articles as $article)
                         @if ($loop->index<=3)
                             @if ($loop->first) @continue @endif
-                            <div class="topitem2 col px-0 mx-md-1 position-relative mt-3 border">
-                                <div class="title position-absolute w-100 pr-3">
-                                    <h3 class="my-2">{{$article->title}}</h3>
+                            <div class="topitem4 col-12 col-md px-0 mx-md-1 position-relative mt-3">
+                                <div class="h-100 w-100 bg-white">
+                                    @if($article->type==1)
+                                        <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-camera"></i></div>
+                                    @elseif($article->type==2)
+                                        <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-film"></i></div>
+                                    @elseif($article->type==3)
+                                        <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-volume-up"></i></div>
+                                    @endif
+                                    <img src="{{'/storage'.$article->photo->path.'large_'.$article->photo->originalName }}" alt="" class="w-100">
+                                    <div class="title  w-100">
+                                        <a href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
+                                            <h4 class="mb-0 text-justify px-2 py-3">{{$article->title}}</h4>
+                                        </a>
+                                    </div>
                                 </div>
-                                @if($article->type==1)
-                                    <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-camera"></i></div>
-                                @elseif($article->type==2)
-                                    <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-film"></i></div>
-                                @elseif($article->type==3)
-                                    <div class="type-icon position-absolute d-flex align-items-center justify-content-center"><i class="fa fa-volume-up"></i></div>
-                                @endif
-                                <a href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}"><img src="{{'/storage'.$article->photo->path.'large_'.$article->photo->originalName }}" alt="" class="h-100 w-100"></a>
                             </div>
                         @else
                             <div class="category-item mt-3 mx-md-1">
@@ -58,9 +64,9 @@
                                         <img src="{{'/storage'.$article->photo->path.'medium_'.$article->photo->originalName }}" alt="{{$article->title}}" class="w-100 h-100">
                                     </div>
                                     <div class="col-12 col-md-8 d-flex flex-column justify-content-center pl-1">
-                                        <h3 class="roo-titr">لورم ایپسوم یا طرح‌نما :</h3>
-                                        <h2 class="mt-3 mt-md-0">{{$article->title}}</h2>
-                                        <p class="mb-2">{!! \Illuminate\Support\Str::limit($article->body,200) !!}</p>
+                                        <h3 class="roo-titr mt-3">لورم ایپسوم یا طرح‌نما :</h3>
+                                        <h2 class="mt-1 mt-md-0">{{$article->title}}</h2>
+                                        <div class="mb-0">{!! \Illuminate\Support\Str::limit($article->body,200) !!}</div>
                                         <span>{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</span>
                                     </div>
                                 </a>

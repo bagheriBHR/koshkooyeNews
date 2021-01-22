@@ -25,7 +25,10 @@
             @if(Auth::check())
                 <h1 class="font-weight-normal py-2"><a href="{{route('admin.home')}}">پنل مدیریت</a></h1>
             @else
-                <h1 class="font-weight-normal py-2"><a href="{{route('home')}}">نمایش وبگاه</a></h1>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <h1 class="font-weight-normal py-2"><a href="{{route('home')}}">نمایش وبگاه</a></h1>
+                    <h3 class="font-weight-normal login-link py-2"><a href="{{route('login')}}">ورود</a></h3>
+                </div>
             @endif
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mt-2 mt-md-0">
                 @if(Auth::check())
@@ -36,7 +39,7 @@
                     @guest
 
                     @else
-                        <li class=" py-0"><a href="{{route('home')}}"> نمایش وبگاه</a><span class="text-white mx-1">/</span></li>
+                        <li class=" py-0"><a href="{{route('home')}}" target="_blank"> نمایش وبگاه</a><span class="text-white mx-1">/</span></li>
                         <li class=" py-0">
                             <a href="{{route('user.password.index')}}">تغییر گذرواژه</a><span class="text-white mx-1">/</span>
                         </li>

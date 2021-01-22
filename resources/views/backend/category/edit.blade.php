@@ -18,7 +18,7 @@
                 @method('PATCH')
                 @csrf
                 <div class="form-group row d-flex align-items-center">
-                    <label for="name" class="custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام :</label>
+                    <label for="name" class="required custom-field-title col-sm-2 col-form-label text-right font-weight-bold mr-2">نام :</label>
                     <div class="col-sm-4">
                         <input type="text" class="custom-field form-control form-control-sm" value="{{$category->name}}" id="name" name="name">
                     </div>

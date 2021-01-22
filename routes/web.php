@@ -28,7 +28,7 @@ Route::group(['middleware'=>'active'], function() {
         Route::post('news/comment/{id}', 'CommentController@store')->name('frontend.comment.store');
         Route::post('news/comment', 'CommentController@reply')->name('frontend.comment.reply');
         Route::get('news/{name}', 'NewsController@aboutus')->name('aboutus');
-        Route::get('contact', 'HomeController@contact')->name('form.contact');
+        Route::post('contact', 'HomeController@contact')->name('form.contact');
         Route::get('commercial/{id}', 'HomeController@commercialCounter')->name('commercial.counter');
         Route::get('printNews/{id}', 'NewsController@printNews')->name('printNews');
     });

@@ -20,7 +20,7 @@ class CommercialController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Auth::user());
-        $commercials = Commercial::orderBy('status','asc')->orderBy('created_at','desc')->paginate(20);
+        $commercials = Commercial::where('status',0)->OrWhere('status',1)->orderBy('status','asc')->orderBy('created_at','desc')->paginate(20);
         return view('backend.commercial.list', compact(['commercials']));
     }
 
@@ -133,11 +133,10 @@ class CommercialController extends Controller
         $commercial->title = $request->title;
         $commercial->url = $request->url;
         $commercial->banner = $request->banner;
-        $commercial->status = $request->status;
         $commercial->total_click = $request->total_click;
         $commercial->start_date = $request->start_date;
         $commercial->finish_date = $request->finish_date;
-        $commercial->status = 0;
+        $commercial->status = $commercial->status;
         $commercial->save();
 
         Session::flash('success', 'ویرایش تبلیغ با موفقیت انجام شد.');
@@ -183,12 +182,6 @@ class CommercialController extends Controller
                 break;
             case 'archive':
                 $commercials = Commercial::where('status', 2)->paginate(10);
-                break;
-            case 'click_count':
-                $commercials = Commercial::where('type', 0)->paginate(10);
-                break;
-            case 'date':
-                $commercials = Commercial::where('type', 1)->paginate(10);
                 break;
         }
         return view('backend.commercial.list', compact(['commercials']));

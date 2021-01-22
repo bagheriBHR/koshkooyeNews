@@ -167,7 +167,7 @@
                                         </div>
                                         <p class="mb-0">
                                             <a class="btn btntitle w-100 d-flex justify-content-between align-items-center"  data-toggle="collapse" data-target="#collapseExample31" aria-expanded="false" aria-controls="collapseExample">
-                                                <span class="d-flex align-items-center"><i class="fas fa-toggle-off ml-3"></i> نمایش در کروسل</span>
+                                                <span class="d-flex align-items-center"><i class="fas fa-toggle-off ml-3"></i>وضعیت نمایش </span>
                                                 <span class="fa fa-angle-right js-rotate-if-collapsed"></span>
                                             </a>
                                         </p>
@@ -176,12 +176,12 @@
                                                 <table class="w-100 text-right">
                                                     <tr>
                                                         <td class="py-2 pr-2">
-                                                            <button type="submit" name="filter" value="is_carousel">فعال</button>
+                                                            <button type="submit" name="filter" value="slider">اخبار اسلایدر</button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="py-2 pr-2">
-                                                            <button type="submit" name="filter" value="isnot_carousel">غیر فعال</button>
+                                                            <button type="submit" name="filter" value="important">اخبار مهم</button>
                                                         </td>
                                                     </tr>
                                                 </table>

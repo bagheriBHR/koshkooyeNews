@@ -25,17 +25,20 @@ class PhotoController extends Controller
         $large_name = 'large_'.$name;
 
         $small_resize = Image::make($request->file('file'))
-            ->resize(480, 270, function ($constraint) { $constraint->aspectRatio(); } )
+            ->fit(426, 240,function ($constraint) {
+                $constraint->upsize();})
             ->encode('jpg');
         Storage::disk('public')->put($imagePath.$small_name,$small_resize);
 
         $medium_resize = Image::make($request->file('file'))
-            ->resize(600, 338, function ($constraint) { $constraint->aspectRatio(); } )
+            ->fit(640, 360,function ($constraint) {
+                $constraint->upsize();})
             ->encode('jpg');
         Storage::disk('public')->put($imagePath.$medium_name,$medium_resize);
 
         $large_resize = Image::make($request->file('file'))
-            ->resize(800, 450, function ($constraint) { $constraint->aspectRatio(); } )
+            ->fit(800, 450,function ($constraint) {
+                $constraint->upsize();})
             ->encode('jpg');
         Storage::disk('public')->put($imagePath.$large_name,$large_resize);
 
@@ -79,8 +82,10 @@ class PhotoController extends Controller
         $imagePath = "/photos/gallery/{$year}/{$month}/";
 
         $medium_resize = Image::make($request->file('file'))
-            ->resize(600, 338, function ($constraint) { $constraint->aspectRatio(); } )
+            ->fit(640, 360,function ($constraint) {
+                $constraint->upsize();})
             ->encode('jpg');
+
         Storage::disk('public')->put($imagePath.$name,$medium_resize);
 
         $photo = new Photo();

@@ -51,7 +51,7 @@ class CategoryController extends Controller
         if($request->input('slug')){
             $request->merge(['slug'=>make_slug($request->input('slug'))]);
         }else{
-            $request->merge(['slug'=>make_slug($request->input('title'))]);
+            $request->merge(['slug'=>make_slug($request->input('name'))]);
         }
 
         $validator = Validator::make($request->all() , [

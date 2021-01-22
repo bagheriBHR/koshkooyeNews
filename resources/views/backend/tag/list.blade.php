@@ -16,7 +16,7 @@
             <!-- tables -->
             <div class="d-flex flex-column-reverse flex-md-row w-100 mt-3">
                 <div class="w-100 mb-3 mb-md-0">
-                    @if(count($tags))
+                    @if(!($tags->isEmpty()))
                         <table class="customtable table mb-0 pb-0">
                             <thead>
                             <tr>

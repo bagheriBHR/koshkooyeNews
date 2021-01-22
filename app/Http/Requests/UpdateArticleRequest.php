@@ -43,7 +43,7 @@ class UpdateArticleRequest extends FormRequest
     public function messages()
     {
         return[
-            'title.required' => 'لطفا عنوان خبر را وارد نمایید.',
+            'title.required' => 'لطفا تیتر خبر را وارد نمایید.',
             'slug.unique' => 'لطفا نام مستعار دیگری انتخاب کنید.',
             'body.required' => 'لطفا متن خبر را وارد نمایید.',
             'thumbnail.required' => 'لطفا تصویر اصلی خبر را انتخاب کنید.',

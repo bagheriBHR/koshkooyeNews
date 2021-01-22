@@ -17,7 +17,7 @@
 <body>
 <a href="javascript:" id="return-to-top" title="انتقال به بالا"><i class="fa fa-angle-up"></i></a>
 @if ($setting->banner)
-    <div class="w-100">
+    <div class="w-100 banner">
         <img src="{{ '/storage/photos/avatar/'.$setting->banner}}" alt="" class="w-100">
     </div>
 @endif
@@ -56,7 +56,7 @@
         <span class="time mr-auto">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::now()->format(' %d %B %Y') ) }}</span>
     </div>
     <nav class="px-0 navbar navbar-expand-lg navbar-light py-0">
-        <a class="navbar-brand py-0 position-relative pr-4 pr-md-4 mr-0" href="#">
+        <a class="navbar-brand py-0 position-relative pr-4 pr-md-4 mr-0" href="{{route('home')}}">
             <div class="logo-container"><img src={{'/storage/photos/avatar/'.$setting->logo_url}}  class="h-100"></div>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,10 +72,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="{{route('news.category',$category->slug)}}">{{$category->name}}</a>
                             @if(!($category->childrenRecursive->isEmpty()))
-                                <ul class="dropdown-menu bg-dark" role="menu">
+                                <ul class="dropdown-menu bg-menu mobile-hidden" role="menu">
                                     @foreach($category->childrenRecursive as $child)
                                         <li >
-                                            <a href="{{route('news.category',$category->slug)}}">{{$child->name}}</a>
+                                            <a href="{{route('news.category',$child->slug)}}">{{$child->name}}</a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -85,20 +85,20 @@
                 @if($photoArticleCount>0 || $videoArticleCount>0 || $soundArticleCount>0)
                     <li class="nav-item dropdown">
                     <a class="nav-link" >چند رسانه ای</a>
-                    <ul class="dropdown-menu bg-dark" role="menu">
+                    <ul class="dropdown-menu bg-menu" role="menu">
                         @if($photoArticleCount>0)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('news.photo')}}">عکس</a>
+                            <li class="nav-item text-right">
+                                <a href="{{route('news.photo')}}">عکس</a>
                             </li>
                         @endif
                         @if($videoArticleCount>0)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('news.video')}}">ویدیو</a>
+                            <li class="nav-item text-right">
+                                <a href="{{route('news.video')}}">ویدیو</a>
                             </li>
                         @endif
                         @if($soundArticleCount>0)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('news.sound')}}">صوت</a>
+                            <li class="nav-item text-right">
+                                <a href="{{route('news.sound')}}">صوت</a>
                             </li>
                         @endif
                     </ul>
@@ -195,9 +195,9 @@
         </div>
         <div class="col-12 col-md-3">
             <h3 class="footer-title">درباره ما</h3>
-            <p class="text-justify">{!! \Illuminate\Support\Str::limit($setting->about_us,600) !!}</p>
+            <div class="text-justify">{!! \Illuminate\Support\Str::limit($setting->about_us,600) !!}</div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4" id="contactHash">
             <h3 class="footer-title">تماس با ما</h3>
             @if(Session::has('success'))
                 <div class="alert alert-success text-right">
@@ -208,15 +208,15 @@
                 @method('POST')
                 @csrf
                 <div class="form-group">
-                    <input class="form-control text-white form-control-sm" type="text" name="name" id="name" placeholder="نام و نام خانوادگی">
+                    <input class="form-control text-white form-control-sm" value="{{old('name')}}" type="text" name="name" id="name" placeholder="نام و نام خانوادگی">
                     <small class="text-danger">{{ $errors->first('name') }}</small>
                 </div>
                 <div class="form-group">
-                    <input class="form-control text-white form-control-sm" type="text" id="email" name="email" placeholder="ایمیل">
+                    <input class="form-control text-white form-control-sm" value="{{old('email')}}" type="text" id="email" name="email" placeholder="ایمیل">
                     <small class="text-danger">{{ $errors->first('email') }}</small>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control text-white form-control-sm" rows="5" id="body" name="body" placeholder=""></textarea>
+                    <textarea class="form-control text-white form-control-sm" rows="5" id="body" name="body" placeholder="">{{old('body')}}</textarea>
                     <small class="text-danger">{{ $errors->first('body') }}</small>
                 </div>
                 <button type="submit" class="btn btn-blue mb-2">ارسال</button>
@@ -225,10 +225,10 @@
     </div>
 </div>
 <div class="p-2 px-md-3 footer-end d-flex flex-column flex-md-row no-print">
-    <div class="col-12 col-md-9 d-flex justify-content-start align-items-end">
+    <div class="col-12 col-md-9 d-flex justify-content-center justify-content-md-start align-items-end">
         <p class="mb-0 text-right">{{$setting->footer}}</p>
     </div>
-    <div class="col-12 col-md-3 d-flex justify-content-end align-items-end">
+    <div class="col-12 col-md-3 mt-1 mt-md-0 d-flex justify-content-center justify-content-md-end align-items-end">
         <p class="mb-0 design">Design by :<a href="mailto:bagheri_bhr@yahoo.com" class="ml-2">B.Bagheri</a></p>
     </div>
 </div>

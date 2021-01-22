@@ -67,7 +67,7 @@ class ArticleController extends Controller
             'category_id'=>'required',
             'tag'=>'required'
         ],[
-            'title.required' => 'لطفا عنوان خبر را وارد نمایید.',
+            'title.required' => 'لطفا تیتر خبر را وارد نمایید.',
             'slug.unique' => 'لطفا نام مستعار دیگری انتخاب کنید.',
             'body.required' => 'لطفا متن خبر را وارد نمایید.',
             'thumbnail.required' => 'لطفا تصویر اصلی خبر را انتخاب کنید.',
@@ -75,11 +75,12 @@ class ArticleController extends Controller
             'tag.required'=>'لطفا تگ های خبر را انتخاب کنید.'
         ]);
 
+        $image = $request->image_url[0];
         $images = explode(',', $request->image_url[0]);
         $imageCount = count($images);
         $thumbnail_url = Photo::find($request->thumbnail);
         if($validator->fails()) {
-            return back()->with(compact(['thumbnail_url','imageCount','images']))->withErrors($validator)->withInput();
+            return back()->with(compact(['thumbnail_url','imageCount','image']))->withErrors($validator)->withInput();
         }
         if($request->type==1 && $request->image_url[0]==null){
             Session::flash('danger', 'فیلد گالری تصاویر برای نوع خبر عکس الزامی است.');
@@ -119,7 +120,7 @@ class ArticleController extends Controller
                 $article->photos()->sync($images);
             }
 
-            $tags = explode('،',$request->tag);
+            $tags = explode(',',$request->tag);
             $article->attachTags($tags);
 
             Session::flash('success', 'خبر با موفقیت اضافه شد.');
@@ -204,7 +205,7 @@ class ArticleController extends Controller
             }
 
             if ($request->tag) {
-                $tags = explode('،', $request->tag);
+                $tags = explode(',', $request->tag);
                 $article->attachTags($tags);
             }
 
@@ -295,11 +296,11 @@ class ArticleController extends Controller
             case 'archive':
                 $articles =Article::where('publish_status', 2)->paginate(10);
                 break;
-            case 'is_carousel':
+            case 'slider':
                 $articles =Article::where('is_carousel', 1)->paginate(10);
                 break;
-            case 'isnot_carousel':
-                $articles =Article::where('is_carousel', 0)->paginate(10);
+            case 'important':
+                $articles =Article::where('is_important', 1)->paginate(10);
                 break;
         }
         return view('backend.article.list', compact(['articles']));
