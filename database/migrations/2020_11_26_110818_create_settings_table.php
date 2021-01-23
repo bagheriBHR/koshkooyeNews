@@ -29,7 +29,7 @@ class CreateSettingsTable extends Migration
             $table->string("twitter")->nullable();
             $table->string("instagram")->nullable();
             $table->string('meta_keyword');
-            $table->string('meta_description');
+            $table->text('meta_description');
             $table->timestamps();
         });
     }

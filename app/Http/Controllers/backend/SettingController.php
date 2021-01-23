@@ -49,7 +49,7 @@ class SettingController extends Controller
             'logo_url' => 'required',
             'about_us' => 'required',
             'contact_us' => 'required',
-            'footer' => 'required',
+            'footer' => 'required|max:500',
             'meta_keyword' => 'required',
             'meta_description' => 'required',
         ],[
@@ -58,6 +58,7 @@ class SettingController extends Controller
             'about_us.required' => 'فیلد درباره ما الزامی است.',
             'contact_us.required' => 'فیلد تماس با ما الزامی است.',
             'footer.required' => 'فیلد متن پاورقی الزامی است.',
+            'footer.max' => 'تعداد کاراکتر های پاورقی از حد مجاز خارج شده است.',
             'meta_keyword.required' => 'فیلد کلمات متا الزامی است.',
             'meta_description.required' => 'فیلد توضیحات متا الزامی است.',
         ]);
@@ -119,7 +120,7 @@ class SettingController extends Controller
             'website_name' => 'required',
             'about_us' => 'required',
             'contact_us' => 'required',
-            'footer' => 'required',
+            'footer' => 'required|max:500',
             'meta_keyword' => 'required',
             'meta_description' => 'required',
         ],[
@@ -127,6 +128,7 @@ class SettingController extends Controller
             'about_us' => 'required',
             'contact_us' => 'required',
             'footer' => 'required',
+            'footer.max' => 'تعداد کاراکتر های پاورقی از حد مجاز خارج شده است.',
             'meta_keyword' => 'required',
             'meta_description' => 'required',
         ]);

@@ -15,7 +15,7 @@
         <p>احتمالاً آدرس را اشتباه تایپ کرده‌اید. برای دسترسی به وب سایت بر روی <a href="{{route('home')}}">خانه</a> کلیک کنید.</p>
         <div class="d-flex justify-content-center">
             <span class="ml-1">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::now()->format(' %d %B %Y') ) }}</span>
-            <span><span class="ml-1">|</span>{{$setting->website_name}}</span>
+            <span><span class="ml-1">|</span>{{$setting?$setting->website_name:''}}</span>
         </div>
     </div>
 </div>

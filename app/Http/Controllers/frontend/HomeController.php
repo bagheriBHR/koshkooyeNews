@@ -70,20 +70,23 @@ class HomeController extends Controller
                         $q->where('parent_id',null);
                     }])->where('is_important',1)
                         ->where('publish_status',1)->orderBy('created_at','desc')->count();
+
             $categories = Category::with(['childrenRecursive','articles'=>function($q){
                 $q->where('publish_status',1)
                     ->where('is_carousel',0)
                     ->where('is_important',0)
                     ->where('type',0)
-                    ->OrWhere('type',3)
-                    ->orderBy('created_at','desc')
-                    ->limit(7);
-            }])->where('parent_id','=',null)->whereHas('articles',function($q) {
-                $q->where('publish_status', 1)
-                    ->where('is_carousel', 0)
-                    ->where('type',0)
-                    ->where('is_important', 0);
-            })->get();
+                    ->OrWhere('type',3);
+            }])->where('parent_id','=',null)
+                ->whereHas('articles',function($q) {
+                    $q->where('publish_status', 1)
+                        ->where('is_carousel', 0)
+                        ->where('type',0)
+                        ->OrWhere('type',3)
+                        ->where('is_important', 0);
+            })->get()->each(function($category) {
+                    $category->limitRelationship('articles', 7);
+                });
 
             $photoArticles = Article::where('publish_status',1)
                 ->where('type',1)

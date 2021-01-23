@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Article;
 use App\Category;
+use App\Comment;
 use App\Commercial;
 use App\Http\Controllers\Controller;
 use App\Traits\CommercialTrait;
@@ -24,9 +25,10 @@ class NewsController extends Controller
         },'comments.childrenRecursive'=>function($q){
             $q->where('status',1);
         }])->first();
+        $comment_count = Comment::where('article_id',$id)->where('status',1)->count();
         $article->view_count++;
         $article->save();
-        return view('frontend.news.show',compact(['article','activeCommercials']));
+        return view('frontend.news.show',compact(['article','activeCommercials','comment_count']));
     }
 
     public function tagNews($slug)

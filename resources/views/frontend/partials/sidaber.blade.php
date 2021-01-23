@@ -36,7 +36,7 @@
                     <div class="d-flex flex-column section">
                         <a class="d-flex align-items-center" href="{{route('news.show',['id'=>$lArticle->id,'slug'=>$lArticle->slug])}}">
                             @if($lArticle->type==0)
-                                <i class="fa fa-circle number" style="font-size:5px"></i>
+                                <i class="fa fa-file-alt number"></i>
                             @elseif ($lArticle->type==1)
                                 <i class="fa fa-camera number"></i>
                             @elseif ($lArticle->type==2)
@@ -57,26 +57,18 @@
 
 <!-- commercials -->
 <div class=" col-12 col-md-2 px-0 pr-md-2 mb-2 no-print">
-    @if(!($activeCommercials->isEmpty()))
-        @foreach($activeCommercials as $c)
-            @if ($c->photo->originalName=='webm')
-                <a href="{{route('commercial.counter',$c->id)}}" target="_blank">
-                    <video width="100%">
-                        <source src="{{'/storage'.$c->photo->path}}" type="video/mp4" >
-                    </video>
-                </a>
-            @else
-                <div class="mb-2 w-100">
-                    <a href="{{route('commercial.counter',$c->id)}}" target="_blank"><img src="{{'/storage'.$c->photo->path}}" alt="" class="w-100"></a>
-                </div>
-            @endif
-        @endforeach
-    @else
-        <div class="d-flex flex-column">
-            <img src="{{asset('images/frontend/400x200.jpg')}}" class="w-100 mt-2">
-            <img src="{{asset('images/frontend/400x400.jpg')}}" class="w-100 mt-2">
-            <img src="{{asset('images/frontend/400x600.jpg')}}" class="w-100 mt-2">
-        </div>
-    @endif
+    @foreach($activeCommercials as $c)
+        @if ($c->photo->originalName=='webm')
+            <a href="{{route('commercial.counter',$c->id)}}" target="_blank">
+                <video width="100%">
+                    <source src="{{'/storage'.$c->photo->path}}" type="video/mp4" >
+                </video>
+            </a>
+        @else
+            <div class="mb-2 w-100">
+                <a href="{{route('commercial.counter',$c->id)}}" target="_blank"><img src="{{'/storage'.$c->photo->path}}" alt="" class="w-100"></a>
+            </div>
+        @endif
+    @endforeach
 </div>
 <!-- end of commercials -->

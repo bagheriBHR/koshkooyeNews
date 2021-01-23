@@ -9,6 +9,8 @@
     <meta name="keywords" content="{{$setting->meta_keyword}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/slick/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('css/slick/slick-theme.css')}}">
 
     @yield('style')
 
@@ -17,7 +19,7 @@
 <body>
 <a href="javascript:" id="return-to-top" title="انتقال به بالا"><i class="fa fa-angle-up"></i></a>
 @if ($setting->banner)
-    <div class="w-100 banner">
+    <div class="w-100 banner d-none d-md-block">
         <img src="{{ '/storage/photos/avatar/'.$setting->banner}}" alt="" class="w-100">
     </div>
 @endif
@@ -28,7 +30,7 @@
    @endif
     <div class="top-header d-flex flex-column flex-md-row align-items-center position-relative">
         <img src="{{asset("/images/frontend/dotted-world-map.png")}}" class="position-absolute world-pattern" alt="">
-        <div class="d-flex follow py-2 pr-2 justify-content-center">
+        <div class="d-flex follow py-2 pr-md-2 justify-content-center align-items-center">
             @if($setting->instagram)
                 <a href="{{$setting->instagram}}"><i class="fab fa-instagram"></i></a>
             @endif
@@ -46,29 +48,37 @@
             @endif
         </div>
         <div class="search mx-2 ml-md-5">
-            <form action="{{ route('home') }}" class="position-relative my-2 my-md-0" method="GET" role="search">
-                <input type="text"  onfocus="this.placeholder=''" onblur="this.placeholder='جستجو کنید...'" name="q" placeholder="جستجو کنید..." class="w-100">
-                <a href="{{ route('home') }}" class=" mt-1">
-                    <button type="submit" class=" position-absolute search-icon"><i class="fa fa-search"></i></button>
-                </a>
+            <form class=" position-relative my-2 my-md-0 " >
+                <input type="text"  onfocus="this.placeholder=''" onblur="this.placeholder='جستجو کنید...'" name="search" placeholder="جستجو کنید..." class="w-100">
+                <a><i class="fa fa-search position-absolute search-icon"></i></a>
             </form>
         </div>
-        <span class="time mr-auto">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::now()->format(' %d %B %Y') ) }}</span>
+        <span class="time ml-0 ml-md-5 my-1 my-md-0 d-flex justify-content-center justify-content-md-end">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::now()->format(' %d %B %Y') ) }}</span>
     </div>
     <nav class="px-0 navbar navbar-expand-lg navbar-light py-0">
-        <a class="navbar-brand py-0 position-relative pr-4 pr-md-4 mr-0" href="{{route('home')}}">
-            <div class="logo-container"><img src={{'/storage/photos/avatar/'.$setting->logo_url}}  class="h-100"></div>
+        <a class="navbar-brand py-0 position-relative pr-1 pr-md-4 mr-0" href="{{route('home')}}">
+            <div class="logo-container d-flex justify-content-md-center justify-content-start"><img src={{'/storage/photos/avatar/'.$setting->logo_url}}  class="h-100"></div>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse m-0" id="navbarNav">
-            <ul class="navbar-nav w-100 pr-4 pr-md-5 ml-md-4 h-100">
-                <li class="nav-item position-relative">
-                    <a class="nav-link" href="{{route('home')}}">صفحه اصلی </a>
-                    <div class="triangle-up position-absolute"></div>
-                </li>
-                @foreach ($parentCategories as $category)
+        <div class="middle w-100">
+           <div class="w-100 bg-search d-flex align-items-center">
+               <div class="center2 slider py-0 w-100 my-0 " dir="ltr">
+                   @foreach($latest as $article)
+                       <a class="d-flex align-items-center justify-content-end" href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
+                           <h6 class="mb-0 text-right">{{ $article->title }}</h6>
+                       </a>
+                   @endforeach
+               </div>
+           </div>
+            <div class="collapse navbar-collapse m-0" id="navbarNav">
+                <ul class="navbar-nav w-100 pr-4 pr-md-5 ml-md-4 h-100">
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" href="{{route('home')}}">صفحه اصلی </a>
+                        <div class="triangle-up position-absolute"></div>
+                    </li>
+                    @foreach ($parentCategories as $category)
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="{{route('news.category',$category->slug)}}">{{$category->name}}</a>
                             @if(!($category->childrenRecursive->isEmpty()))
@@ -81,30 +91,31 @@
                                 </ul>
                             @endif
                         </li>
-                @endforeach
-                @if($photoArticleCount>0 || $videoArticleCount>0 || $soundArticleCount>0)
-                    <li class="nav-item dropdown">
-                    <a class="nav-link" >چند رسانه ای</a>
-                    <ul class="dropdown-menu bg-menu" role="menu">
-                        @if($photoArticleCount>0)
-                            <li class="nav-item text-right">
-                                <a href="{{route('news.photo')}}">عکس</a>
-                            </li>
-                        @endif
-                        @if($videoArticleCount>0)
-                            <li class="nav-item text-right">
-                                <a href="{{route('news.video')}}">ویدیو</a>
-                            </li>
-                        @endif
-                        @if($soundArticleCount>0)
-                            <li class="nav-item text-right">
-                                <a href="{{route('news.sound')}}">صوت</a>
-                            </li>
-                        @endif
-                    </ul>
-                </li>
-                @endif
-            </ul>
+                    @endforeach
+                    @if($photoArticleCount>0 || $videoArticleCount>0 || $soundArticleCount>0)
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" >چند رسانه ای</a>
+                            <ul class="dropdown-menu bg-menu" role="menu">
+                                @if($photoArticleCount>0)
+                                    <li class="nav-item text-right">
+                                        <a href="{{route('news.photo')}}">عکس</a>
+                                    </li>
+                                @endif
+                                @if($videoArticleCount>0)
+                                    <li class="nav-item text-right">
+                                        <a href="{{route('news.video')}}">ویدیو</a>
+                                    </li>
+                                @endif
+                                @if($soundArticleCount>0)
+                                    <li class="nav-item text-right">
+                                        <a href="{{route('news.sound')}}">صوت</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
+                </ul>
+            </div>
         </div>
     </nav>
 </div>
@@ -171,7 +182,7 @@
                 <div class="d-flex justify-content-start news-navigation">
                     <ul>
                         @foreach($mostVisited as $article)
-                            @if ($loop->index>6) @break @endif
+                            @if ($loop->index>5) @break @endif
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">{{$article->title}}</a>
                             </li>
@@ -184,7 +195,7 @@
                 <div class="d-flex justify-content-start news-navigation">
                     <ul>
                         @foreach($latest as $article)
-                            @if ($loop->index>6) @break @endif
+                            @if ($loop->index>5) @break @endif
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">{{$article->title}}</a>
                             </li>
@@ -195,7 +206,7 @@
         </div>
         <div class="col-12 col-md-3">
             <h3 class="footer-title">درباره ما</h3>
-            <div class="text-justify">{!! \Illuminate\Support\Str::limit($setting->about_us,600) !!}</div>
+            <div class="text-justify">{!! \Illuminate\Support\Str::limit($setting->about_us,750) !!}</div>
         </div>
         <div class="col-12 col-md-4" id="contactHash">
             <h3 class="footer-title">تماس با ما</h3>
@@ -237,7 +248,41 @@
 
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="{{asset('css/slick/slick.min.js')}}" charset="utf-8"></script>
 <script>
+    $(document).on('ready', function() {
+        $(".center2").slick({
+            slidesToShow: 1,
+            infinite: true,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 5000,
+            fade: true,
+            cssEase: 'linear',
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        centerMode: false,
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        arrows: false,
+                        centerMode: false,
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    });
+
     $('.dropdown').hover(function() {
         $(this).find('.dropdown-menu').stop(true, true).delay(200).slideDown(200);
     }, function() {

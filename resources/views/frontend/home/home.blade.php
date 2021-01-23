@@ -1,8 +1,4 @@
 @extends('frontend.layouts.master')
-@section('style')
-    <link rel="stylesheet" href="{{asset('css/slick/slick.css')}}">
-    <link rel="stylesheet" href="{{asset('css/slick/slick-theme.css')}}">
-@endsection
 @section('content')
     <!-- carousel -->
     <div class="carousel-container d-flex flex-column-reverse flex-md-row-reverse mx-2 mx-md-3 mt-3 pt-0">
@@ -25,7 +21,7 @@
                     <a href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
                         <div class="topitem2 position-relative" dir="rtl">
                             <div class="title2 position-absolute d-flex align-items-end justify-content-start w-100">
-                                <h3 class="p-3 mb-0 w-100 text-right">{{ $article->title }}</h3>
+                                <h3 class="p-2 p-md-3 mb-0 w-100 text-right">{{ $article->title }}</h3>
                             </div>
                             <img  src="{{'/storage'.$article->photo->path.'large_'.$article->photo->originalName }}" alt="{{ $article->title }}" class="h-100 w-100">
                         </div>
@@ -58,7 +54,11 @@
                             <h3 class="roo-titr">{{$category->articles[0]->roo_titr ? $category->articles[0]->roo_titr : '' }}</h3>
                             <a href="{{route('news.show',['id'=>$category->articles[0]->id,'slug'=>$category->articles[0]->slug])}}">{{$category->articles[0]->title}}</a>
                             <span class="text-right">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($category->articles[0]->publish_date)->format(' %d %B، %Y') ) }}</span>
-                            <div class="mb-0">{!! \Illuminate\Support\Str::limit($category->articles[0]->body,200) !!}</div>
+                            @if($category->articles[0]->summery)
+                                <p class="text-justify">{{$category->articles[0]->summery}}</p>
+                            @else
+                                <div class="mb-0">{!! \Illuminate\Support\Str::limit($category->articles[0]->body,250) !!}</div>
+                            @endif
                         </div>
                         <div class="col-12 col-md-6 d-flex flex-column left pl-0">
                             @foreach($category->articles as $article)
@@ -170,8 +170,6 @@
     <!-- end of photo and video news -->
 @endsection
 @section('script')
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="{{asset('css/slick/slick.min.js')}}" charset="utf-8"></script>
     <script>
         $(document).on('ready', function() {
             $(".center").slick({
@@ -187,33 +185,6 @@
                             arrows: false,
                             centerMode: false,
                             slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            arrows: false,
-                            centerMode: false,
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
-            $(".center2").slick({
-                dots: true,
-                infinite: true,
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                arrows:true,
-                responsive: [
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            arrows: false,
-                            centerMode: false,
-                            slidesToShow:1,
                             slidesToScroll: 1
                         }
                     },

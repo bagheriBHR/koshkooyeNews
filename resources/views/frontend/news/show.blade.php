@@ -29,9 +29,8 @@
                                     <a href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" target="_blank" class="dropdown-item text-right"><i class="fab fa-facebook ml-2"></i>فیس بوک</a>
                                 </div>
                             </a>
-                            <div class="d-none d-md-block"><a href="{{route('printNews',$article->id)}}" class="d-flex align-items-center"><i class="fas fa-print"></i></a></div>
+                            <div class="d-none d-md-block"><a href="{{route('printNews',$article->id)}}" class="d-flex align-items-center h-100"><i class="fas fa-print"></i></a></div>
                         </div>
-                        <div class="time position-absolute mr-auto">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</div>
                     </div>
                 </div>
                 <!-- single -->
@@ -41,9 +40,14 @@
                     @if($article->summery)
                         <p class="summery">{{$article->summery}}</p>
                     @endif
-                    @if($article->type==0)
-                        <img src="{{'/storage'.$article->photo->path.'medium_'.$article->photo->originalName }}" class="m-2 w-100" alt="">
-                    @endif
+                    <img src="{{'/storage'.$article->photo->path.'medium_'.$article->photo->originalName }}" class="m-2 w-100" alt="">
+                    <div class="d-flex align-items-center justify-content-between mt-2 border-bottom w-100 pb-2 mb-2">
+                        <div class="d-flex article_info">
+                            <span class="d-flex align-items-center px-3  border-left"><i class="fa fa-eye ml-2"></i> {{$article->view_count}}</span>
+                            <span class="d-flex align-items-center px-3"><i class="far fa-comment ml-2"></i> {{$comment_count}}</span>
+                        </div>
+                        <div class="time">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</div>
+                    </div>
                     <div>{!! $article->body !!}</div>
                     @if($article->type==1)
                         <div class="w-100 d-flex flex-wrap">

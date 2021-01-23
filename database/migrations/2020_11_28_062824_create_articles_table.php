@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->string('slug')->unique();
             $table->string('roo_titr')->nullable();
             $table->text('body');
-            $table->string('summery')->nullable();
+            $table->text('summery')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('view_count')->default(0);

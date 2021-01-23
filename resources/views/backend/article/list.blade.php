@@ -51,8 +51,8 @@
                                 <th class="text-right">شماره</th>
                                 <th class="text-right">تصویر</th>
                                 <th class="text-right">تیتر</th>
-                                <th class="text-right">تگ ها</th>
-                                <th class="text-right">تعداد بازدید</th>
+                                <th class="text-right">دسته بندی</th>
+                                <th class="text-right">نوع</th>
                                 <th class="text-right">اسلایدر</th>
                                 <th class="text-right">مهم</th>
                                 <th class="text-right">وضعیت نشر</th>
@@ -68,11 +68,19 @@
                                     <td class="text-center p-0"><img src="{{ '/storage'.$article->photo->path.'small_'.$article->photo->originalName }}" alt="" class="my-1" style="width:40px;"></td>
                                     <td class="text-right"><a href="{{route('article.edit',$article->id)}}">{{ \Illuminate\Support\Str::limit($article->title,40)}}</a></td>
                                     <td class="text-right">
-                                        @foreach($article->tags as $tag)
-                                            <li class="list-unstyled p-0">{{ $tag->name }}</li>
+                                        @foreach($article->categories as $category)
+                                            <li class="list-unstyled p-0">{{ $category->name }}</li>
                                         @endforeach
                                     </td>
-                                    <td class="text-right">{{ $article->view_count }}</td>
+                                    @if($article->type == 0)
+                                        <td class="text-right">متن</td>
+                                    @elseif($article->type == 1)
+                                        <td class="text-right">عکس</td>
+                                    @elseif($article->type == 2)
+                                        <td class="text-right">فیلم</td>
+                                    @elseif($article->type == 2)
+                                        <td class="text-right">صوتی</td>
+                                    @endif
                                     @if($article->is_carousel==0)
                                         <td class="text-center p-0"><span class="badge badge-danger p-1">غیر فعال</span></td>
                                     @elseif($article->is_carousel==1)
