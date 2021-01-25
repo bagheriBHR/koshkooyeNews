@@ -48,8 +48,9 @@
         <div class="search mx-2 ml-md-5">
             <form class=" position-relative my-2 my-md-0 " action="{{route('home')}}" method="post">
                 @method('get')
+                @csrf
                 <input type="text"  onfocus="this.placeholder=''" onblur="this.placeholder='جستجو کنید...'" name="search" placeholder="جستجو کنید..." class="w-100">
-                <a><i class="fa fa-search position-absolute search-icon"></i></a>
+                <a type="submit"><i class="fa fa-search position-absolute search-icon"></i></a>
             </form>
         </div>
         <span class="time d-none d-md-block ml-0 ml-md-5 my-1 my-md-0 d-flex justify-content-center justify-content-md-end">{{'امروز :  '.convertToPersianNumber(\Hekmatinasser\Verta\Verta::now()->format('l %d %B %Y').' - '.\Hekmatinasser\Verta\Verta::now()->format(' H:i') ) }}</span>
