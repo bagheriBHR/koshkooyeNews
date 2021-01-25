@@ -1,8 +1,4 @@
 @extends('frontend.layouts.master')
-@section('style')
-    <link rel="stylesheet" href="{{asset('css/slick/slick.css')}}">
-    <link rel="stylesheet" href="{{asset('css/slick/slick-theme.css')}}">
-@endsection
 @section('content')
     <div class="px-2 px-md-5 mt-3">
         <div class="col-12 d-flex p-0 mb-3 line position-relative d-flex justify-content-between">
@@ -47,41 +43,5 @@
         </div>
     </div>
     <!-- end of body -->
-@endsection
-@section('script')
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="{{asset('css/slick/slick.min.js')}}" charset="utf-8"></script>
-    <script>
-        $(document).on('ready', function() {
-
-            $('.center').slick({
-                centerMode: true,
-                centerPadding: '60px',
-                slidesToShow: 1,
-                dots: true,
-                arrows:true,
-                responsive: [
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            arrows: false,
-                            centerMode: true,
-                            centerPadding: '40px',
-                            slidesToShow: 1
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            arrows: false,
-                            centerMode: true,
-                            centerPadding: '40px',
-                            slidesToShow: 1
-                        }
-                    }
-                ]
-            });
-        });
-    </script>
 @endsection
 

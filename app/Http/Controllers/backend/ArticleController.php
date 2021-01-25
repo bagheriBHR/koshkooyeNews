@@ -273,12 +273,12 @@ class ArticleController extends Controller
             case 'category' :
                 $articles = Article::whereHas('categories',function($q) use($id){
                     $q->where('category_id',$id);
-                })->paginate(20);
+                })->orderBy('created_at', 'desc')->paginate(20);
                 break;
             case 'tag':
                 $articles = Article::whereHas('tags',function($q) use($id){
                     $q->where('tag_id',$id);
-                })->paginate(20);
+                })->orderBy('created_at', 'desc')->paginate(20);
                 break;
         }
         return view('backend.article.list',compact(['articles']));
@@ -288,19 +288,19 @@ class ArticleController extends Controller
         $this->authorize('create', Auth::user());
         switch ($request->input('filter')) {
             case 'active':
-                $articles =Article::where('publish_status', 1)->paginate(10);
+                $articles =Article::where('publish_status', 1)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'deactive':
-                $articles =Article::where('publish_status', 0)->paginate(10);
+                $articles =Article::where('publish_status', 0)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'archive':
-                $articles =Article::where('publish_status', 2)->paginate(10);
+                $articles =Article::where('publish_status', 2)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'slider':
-                $articles =Article::where('is_carousel', 1)->paginate(10);
+                $articles =Article::where('is_carousel', 1)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'important':
-                $articles =Article::where('is_important', 1)->paginate(10);
+                $articles =Article::where('is_important', 1)->orderBy('created_at', 'desc')->paginate(10);
                 break;
         }
         return view('backend.article.list', compact(['articles']));

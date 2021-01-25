@@ -76,14 +76,12 @@ class HomeController extends Controller
                 $q->where('publish_status',1)
                     ->where('is_carousel',0)
                     ->where('is_important',0)
-                    ->where('type',0)
-                    ->OrWhere('type',3);
+                    ->where('type',0);
             }])->where('parent_id','=',null)
                 ->whereHas('articles',function($q) {
                     $q->where('publish_status', 1)
                         ->where('is_carousel', 0)
                         ->where('type',0)
-                        ->OrWhere('type',3)
                         ->where('is_important', 0);
             })->get()->each(function($category) {
                     $category->limitRelationship('articles', 7);
@@ -94,7 +92,13 @@ class HomeController extends Controller
                 ->orderBy('created_at','desc')
                 ->where('is_carousel',0)
                 ->where('is_important',0)
-                ->limit(4)->get();
+                ->limit(6)->get();
+            $soundArticles = Article::where('publish_status',1)
+                ->where('type',3)
+                ->orderBy('created_at','desc')
+                ->where('is_carousel',0)
+                ->where('is_important',0)
+                ->limit(6)->get();
             $videoArticles = Article::where('publish_status',1)
                 ->where('type',2)
                 ->orderBy('created_at','desc')
@@ -103,9 +107,9 @@ class HomeController extends Controller
                 ->limit(6)->get();
 
             $this->handleCommercials();
-            $activeCommercials = Commercial::where('status',1)->get();
+            $activeCommercials = Commercial::where('status',1)->orderBy('created_at','desc')->get();
 
-            return view('frontend.home.home',compact(['sliders','important','importantCount','categories','photoArticles','videoArticles','activeCommercials']));
+            return view('frontend.home.home',compact(['soundArticles','sliders','important','importantCount','categories','photoArticles','videoArticles','activeCommercials']));
     }
 
     public function contact(Request $request)

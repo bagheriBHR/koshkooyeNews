@@ -175,13 +175,13 @@ class CommercialController extends Controller
         $this->authorize('viewAny', Auth::user());
         switch ($request->input('filter')) {
             case 'active':
-                $commercials = Commercial::where('status', 1)->paginate(10);
+                $commercials = Commercial::where('status', 1)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'deactive':
-                $commercials = Commercial::where('status', 0)->paginate(10);
+                $commercials = Commercial::where('status', 0)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'archive':
-                $commercials = Commercial::where('status', 2)->paginate(10);
+                $commercials = Commercial::where('status', 2)->orderBy('created_at', 'desc')->paginate(10);
                 break;
         }
         return view('backend.commercial.list', compact(['commercials']));

@@ -27,7 +27,7 @@
         <div class="position-absolute test">آزمایشی</div>
    @endif
     <div class="top-header d-flex flex-column flex-md-row align-items-center position-relative">
-        <img src="{{asset("/images/frontend/dotted-world-map.png")}}" class="position-absolute world-pattern" alt="">
+        <img src="{{asset("/img/dotted-world-map.png")}}" class="position-absolute world-pattern" alt="">
         <div class="d-flex follow py-2 pr-md-2 justify-content-center align-items-center">
             @if($setting->instagram)
                 <a href="{{$setting->instagram}}"><i class="fab fa-instagram"></i></a>
@@ -46,14 +46,12 @@
             @endif
         </div>
         <div class="search mx-2 ml-md-5">
-            <form class=" position-relative my-2 my-md-0 " action="{{route('home')}}" method="post">
-                @method('get')
-                @csrf
-                <input type="text"  onfocus="this.placeholder=''" onblur="this.placeholder='جستجو کنید...'" name="search" placeholder="جستجو کنید..." class="w-100">
-                <a type="submit"><i class="fa fa-search position-absolute search-icon"></i></a>
+            <form class=" position-relative my-2 my-md-0 " action="{{route('home')}}" method="get">
+                <input type="text"  onfocus="this.placeholder=''" onblur="this.placeholder='جستجو کنید...'" name="q" placeholder="جستجو کنید..." class="w-100">
+                <button type="submit" class="position-absolute"><i class="fa fa-search position-absolute search-icon"></i></button>
             </form>
         </div>
-        <span class="time d-none d-md-block ml-0 ml-md-5 my-1 my-md-0 d-flex justify-content-center justify-content-md-end">{{'امروز :  '.convertToPersianNumber(\Hekmatinasser\Verta\Verta::now()->format('l %d %B %Y').' - '.\Hekmatinasser\Verta\Verta::now()->format(' H:i') ) }}</span>
+        <span class="time d-none d-md-block ml-0 ml-md-5 my-1 my-md-0 d-flex justify-content-center justify-content-md-end">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::now()->format('l %d %B %Y').' - '.\Hekmatinasser\Verta\Verta::now()->format(' H:i') ) }}</span>
     </div>
     <nav class="px-0 navbar navbar-expand-lg navbar-light py-0">
         <a class="navbar-brand py-0 position-relative pr-1 mr-0" href="{{route('home')}}">
@@ -62,7 +60,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="middle" id="middleSize">
+        <div class="middle w-100" id="middleSize">
            <div class="bg-search">
               <div class="h-100 carousel-container pl-1 d-flex align-items-center">
                   <div class="carousel-info ml-2 text-white d-flex align-items-center justify-content-end"><i class="far fa-newspaper ml-2"></i>گزیده خبرها : </div>
@@ -226,7 +224,7 @@
         </div>
         <div class="col-12 col-md-3">
             <h3 class="footer-title">درباره ما</h3>
-            <div class="text-justify">{!! \Illuminate\Support\Str::limit($setting->about_us,750) !!}</div>
+            <div class="text-justify">{!! \Illuminate\Support\Str::limit($setting->about_us,650) !!}</div>
         </div>
         <div class="col-12 col-md-4" id="contactHash">
             <h3 class="footer-title">تماس با ما</h3>
@@ -271,18 +269,18 @@
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script>
 
-    resizeFunction();
-    window.onresize = function(){resizeFunction();};
-
-    function resizeFunction(){
-        var screenW = screen.width;
-        if (screenW >= 1024){
-            var w = (screenW -280);
-            document.getElementById('middleSize').setAttribute("style","width:"+w+"px");
-        }else{
-            document.getElementById("middleSize").style.width ='100%';
-        }
-    }
+    // resizeFunction();
+    // window.onresize = function(){resizeFunction();};
+    //
+    // function resizeFunction(){
+    //     var screenW = screen.width;
+    //     if (screenW >= 1024){
+    //         var w = (screenW -280);
+    //         document.getElementById('middleSize').setAttribute("style","width:"+w+"px");
+    //     }else{
+    //         document.getElementById("middleSize").style.width ='100%';
+    //     }
+    // }
 
     $('.dropdown').hover(function() {
         $(this).find('.dropdown-menu').stop(true, true).delay(200).slideDown(200);

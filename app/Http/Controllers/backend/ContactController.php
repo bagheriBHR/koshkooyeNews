@@ -12,7 +12,7 @@ class ContactController extends Controller
     public function index()
     {
         $this->authorize('viewAny',Auth::user());
-        $contacts = Contact::paginate(20);
+        $contacts = Contact::orderBy('created_at', 'desc')->paginate(20);
         return view('backend.contact.list',compact('contacts'));
     }
     public function show($id)

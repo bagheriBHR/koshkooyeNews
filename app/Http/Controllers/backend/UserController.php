@@ -161,7 +161,7 @@ class UserController extends Controller
             return redirect()->route('user.index');
         }else{
             $firstUser = User::first();
-            $users = User::where('last_name', 'LIKE', '%' . $request->search . '%')->paginate(10);
+            $users = User::where('last_name', 'LIKE', '%' . $request->search . '%')->orderBy('created_at', 'desc')->paginate(10);
             return view('backend.user.list',compact(['users','firstUser']));
         }
     }
@@ -170,19 +170,19 @@ class UserController extends Controller
         $this->authorize('viewAny',Auth::user());
         switch($request->input('filter')){
             case 'admin':
-                $users = User::where('is_admin',1)->paginate(10);
+                $users = User::where('is_admin',1)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'author':
-                $users = User::where('is_author',1)->paginate(10);
+                $users = User::where('is_author',1)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'editor':
-                $users = User::where('is_editor',1)->paginate(10);
+                $users = User::where('is_editor',1)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'active':
-                $users = User::where('status',1)->paginate(10);
+                $users = User::where('status',1)->orderBy('created_at', 'desc')->paginate(10);
                 break;
             case 'deactive':
-                $users = User::where('status',0)->paginate(10);
+                $users = User::where('status',0)->orderBy('created_at', 'desc')->paginate(10);
                 break;
         }
         $firstUser = User::first();

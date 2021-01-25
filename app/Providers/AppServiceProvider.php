@@ -36,8 +36,8 @@ class AppServiceProvider extends ServiceProvider
         }])->where('parent_id',null)
             ->whereHas('articles')
             ->get();
-        $mostVisited = Article::where('publish_status',1)->orderBy('view_count','desc')->limit(30)->get();
-        $latest = Article::where('publish_status',1)->orderBy('created_at','desc')->limit(30)->get();
+        $mostVisited = Article::where('publish_status',1)->orderBy('view_count','desc')->limit(40)->get();
+        $latest = Article::where('publish_status',1)->orderBy('created_at','desc')->limit(40)->get();
         $lastTitr = Article::where('publish_status',1)->orderBy('created_at','desc')->limit(10)->get();
         $photoArticleCount = Article::where('type',1)->where('publish_status',1)->count();
         $archiveCount = Article::where('publish_status',2)->count();

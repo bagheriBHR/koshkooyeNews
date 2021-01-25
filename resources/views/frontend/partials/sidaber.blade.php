@@ -22,7 +22,8 @@
                             @elseif ($article->type==3)
                                 <i class="fa fa-volume-up number"></i>
                             @endif
-                            <h2 class="mb-0">{{$article->title}}</h2>
+                                <h2 class="mb-0">{{$article->title}}<span class="pr-1"> <i class="far fa-clock ml-1"></i>{{\Hekmatinasser\Verta\Verta::instance($article->publish_date)->formatDifference() }}</span>
+                                </h2>
                         </a>
                     </div>
                 @endforeach
@@ -34,7 +35,7 @@
                 @if($latest)
                     @foreach($latest as $key=>$lArticle)
                     <div class="d-flex flex-column section">
-                        <a class="d-flex align-items-center" href="{{route('news.show',['id'=>$lArticle->id,'slug'=>$lArticle->slug])}}">
+                        <a class="d-flex align-items-start" href="{{route('news.show',['id'=>$lArticle->id,'slug'=>$lArticle->slug])}}">
                             @if($lArticle->type==0)
                                 <i class="fa fa-file-alt number"></i>
                             @elseif ($lArticle->type==1)
@@ -44,7 +45,8 @@
                             @elseif ($lArticle->type==3)
                                 <i class="fa fa-volume-up number"></i>
                             @endif
-                            <h2 class="mb-0">{{$lArticle->title}}</h2>
+                            <h2 class="mb-0">{{$lArticle->title}}<span class="pr-1"> <i class="far fa-clock ml-1"></i>{{\Hekmatinasser\Verta\Verta::instance($lArticle->publish_date)->formatDifference() }}</span>
+                            </h2>
                         </a>
                     </div>
                 @endforeach

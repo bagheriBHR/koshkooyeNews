@@ -29,7 +29,7 @@
                                     <a href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" target="_blank" class="dropdown-item text-right"><i class="fab fa-facebook ml-2"></i>فیس بوک</a>
                                 </div>
                             </div>
-                            <div class="d-none d-md-block"><a href="{{route('printNews',$article->id)}}" class="d-flex align-items-center h-100"><i class="fas fa-print"></i></a></div>
+                            <div class="d-none d-md-block"><a href="{{route('printNews',$article->id)}}" target="_blank" class="d-flex align-items-center h-100"><i class="fas fa-print"></i></a></div>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                             <span class="d-flex align-items-center px-3  border-left"><i class="fa fa-eye ml-2"></i> {{$article->view_count}}</span>
                             <span class="d-flex align-items-center px-3"><i class="far fa-comment ml-2"></i> {{$comment_count}}</span>
                         </div>
-                        <div class="time pl-3">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</div>
+                        <div class="time pl-3">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y').' - '.\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format( 'H:i') ) }}</div>
                     </div>
                     <div>{!! $article->body !!}</div>
                     @if($article->type==1)
@@ -86,7 +86,10 @@
                         <span class="end mt-2">منبع خبر : {{$article->media_source}}</span>
                     @endif
                     <span class="end mt-3">انتها پیام /</span>
-                    <div class="tagCard d-flex flex-wrap mt-3 d-flex align-items-center">
+                    <div class="tagTitle position-relative w-100 text-right mt-3">
+                        <span class="bg-white pl-3">برچسب ها</span>
+                    </div>
+                    <div class="tagCard d-flex flex-wrap mt-2 d-flex align-items-center">
                         @foreach($article->tags as $tag)
                          <div class="px-2 py-1 tagItem"><a href="{{route('news.tag',make_slug($tag->name))}}">{{$tag->name}}</a></div>
                         @endforeach
@@ -103,6 +106,10 @@
                     </div>
                 @endif
                 <h2 class="section-title">ارسال نظر</h2>
+                    <ul class="pr-3">
+                        <li class="text-right">نظرات حاوی توهین و هرگونه نسبت ناروا به اشخاص حقیقی و حقوقی منتشر نمی‌شود.</li>
+                        <li class="text-right">  نظراتی که غیر از زبان فارسی یا غیر مرتبط با خبر باشد منتشر نمی‌شود.</li>
+                    </ul>
                 <form method="post" action="{{route('frontend.comment.store',$article->id)}}">
                     @method('POST')
                     @csrf

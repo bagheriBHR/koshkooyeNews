@@ -35,14 +35,14 @@
                             <small class="text-danger">{{ $errors->first('password') }}</small>
                         </div>
                     </div>
-{{--                    <div class="w-100 custom-form-group d-flex flex-column align-items-center justify-content-center">--}}
-{{--                       <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>--}}
-{{--                        @if ($errors->has('g-recaptcha-response'))--}}
-{{--                            <span class="text-center w-100 invalid-feedback" style="display: block">--}}
-{{--                                <strong>{{$errors->first('g-recaptcha-response')}}</strong>--}}
-{{--                            </span>--}}
-{{--                        @endif--}}
-{{--                    </div>--}}
+                    <div class="w-100 custom-form-group d-flex flex-column align-items-center justify-content-center">
+                       <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+                        @if ($errors->has('g-recaptcha-response'))
+                            <span class="text-center w-100 invalid-feedback" style="display: block">
+                                <strong>{{$errors->first('g-recaptcha-response')}}</strong>
+                            </span>
+                        @endif
+                    </div>
                     <div class="grid custom-form-group d-flex align-items-start">
                         <label class="checkbox bounce">
                             <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} />

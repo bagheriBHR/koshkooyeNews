@@ -8,7 +8,7 @@
 </script>
 <div class="col-md-12 pl-0">
     @foreach($comments as $comment)
-        <div class="subComment pr-5 border-top pt-3 mt-3">
+        <div class="subComment pr-1 border-top pt-3 mt-3">
             <div class="d-flex align-items-end justify-content-between mb-2">
                 <h6>{{$comment->name}} :</h6>
                 <button class="btn-open" id="div-comment-{{$comment->id}}">پاسخ</button>
@@ -20,14 +20,14 @@
                     @csrf
                     <div class="d-flex">
                         <div class="form-group col-md-6">
-                            <input type="text" class="form-control form-control-sm" name="name" placeholder="نام و نام خانوادگی"/>
+                            <input type="text" class="form-control form-control-sm" name="rname" placeholder="نام و نام خانوادگی"/>
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="email" class="form-control form-control-sm" name="email" placeholder="پست الکترونیکی"/>
+                            <input type="email" class="form-control form-control-sm" name="remail" placeholder="پست الکترونیکی"/>
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <textarea type="text" rows="10" class="custom-field form-control form-control-sm"  name="body" placeholder="توضیحات را وارد کنید..."></textarea>
+                        <textarea type="text" rows="10" class="custom-field form-control form-control-sm"  name="rbody" placeholder="توضیحات را وارد کنید..."></textarea>
                     </div>
                     <input type="hidden" name="parent_id" value="{{$comment->id}}">
                     <input type="hidden" name="article_id" value="{{$article->id}}">

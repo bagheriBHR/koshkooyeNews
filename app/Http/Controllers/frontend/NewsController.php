@@ -17,7 +17,7 @@ class NewsController extends Controller
     public function show(Request $request,$id,$slug)
     {
         $this->handleCommercials();
-        $activeCommercials = Commercial::where('status',1)->get();
+        $activeCommercials = Commercial::where('status',1)->orderBy('created_at','desc')->get();
 
         $article = Article::where('id',$id)->with(['photos','categories','tags','user','comments'=>function($q){
             $q->where('parent_id',null)
@@ -52,14 +52,14 @@ class NewsController extends Controller
     public function categoryNews($slug)
     {
         $this->handleCommercials();
-        $activeCommercials = Commercial::where('status',1)->get();
+        $activeCommercials = Commercial::where('status',1)->orderBy('created_at','desc')->get();
 
         $category = Category::where('slug',$slug)->first();
         $articles = Article::whereHas('categories',function($q) use($category){
             $q->where('category_id',$category->id);
         })->orderBy('created_at','desc')
             ->where('publish_status',1)
-            ->paginate(30);
+            ->paginate(15);
         return view('frontend.news.category',compact(['articles','category','activeCommercials']));
     }
     public function photos()
@@ -86,7 +86,7 @@ class NewsController extends Controller
             ->where('publish_status',1)
             ->where('type',3)
             ->paginate(28);
-        $group= 'صوت';
+        $group= 'صدا';
         return view('frontend.news.multimedia',compact(['articles','group']));
     }
 
