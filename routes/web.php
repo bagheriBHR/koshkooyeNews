@@ -21,6 +21,7 @@ Route::group(['middleware'=>'active'], function() {
         Route::get('/', 'HomeController@index')->name('home');
         Route::get('/news/{id}/{slug}', 'NewsController@show')->name('news.show');
         Route::get('/tag/{slug}', 'NewsController@tagNews')->name('news.tag');
+        Route::get('/archive', 'NewsController@archiveNews')->name('news.archive');
         Route::get('/service/{slug}', 'NewsController@categoryNews')->name('news.category');
         Route::get('/photo', 'NewsController@photos')->name('news.photo');
         Route::get('/video', 'NewsController@videos')->name('news.video');

@@ -78,7 +78,7 @@
                                         <td class="text-right">عکس</td>
                                     @elseif($article->type == 2)
                                         <td class="text-right">فیلم</td>
-                                    @elseif($article->type == 2)
+                                    @elseif($article->type == 3)
                                         <td class="text-right">صوتی</td>
                                     @endif
                                     @if($article->is_carousel==0)

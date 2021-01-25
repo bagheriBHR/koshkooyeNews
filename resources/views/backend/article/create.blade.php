@@ -121,7 +121,7 @@
                             <strong class="text-danger">* سایز عکس باید 1080 : 1920 باشد.</strong>
                             @if(session('imageCount'))
                                 <div class="mt-2">
-                                    <p class="text-success font-weight-bold"> {{session('imageCount')}}* 3 عکس برای گالری تصاویر انتخاب شده</p>
+                                    <p class="text-success font-weight-bold"> {{session('imageCount')}} عکس برای گالری تصاویر انتخاب شده</p>
                                 </div>
                             @endif
                         </div>

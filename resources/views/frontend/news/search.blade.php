@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="{{asset('backend/css/persianDatepicker-default.css')}}">
 @endsection
 @section('content')
+
+    @if($type == 'search')
     <div class="px-2 px-md-5 mt-3 searchPage">
         <form action="{{route('home')}}" method="GET" role="search" class="w-100 d-flex flex-column justify-content-center" autocomplete="off">
             <div class="d-flex flex-column flex-md-row mb-2">
@@ -41,7 +43,7 @@
             </div>
         </form>
     </div>
-
+   @endif
     <!-- body -->
     <div class="d-flex flex-column flex-md-row px-2 px-md-5 main my-3">
         <div class="col-12 d-flex flex-column px-0 pl-md-2">

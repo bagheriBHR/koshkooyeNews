@@ -35,7 +35,7 @@
                         </div>
 
                         <button type="submit" value="ثبت" class="btn form-button">
-                            ورود
+                            تغییر گذرواژه
                         </button>
                     </div>
                 </form>

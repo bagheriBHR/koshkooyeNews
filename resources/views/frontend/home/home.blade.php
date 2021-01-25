@@ -1,4 +1,8 @@
 @extends('frontend.layouts.master')
+@section('style')
+    <link rel="stylesheet" href="{{asset('css/slick/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('css/slick/slick-theme.css')}}">
+@endsection
 @section('content')
     <!-- carousel -->
     <div class="carousel-container d-flex flex-column-reverse flex-md-row-reverse mx-2 mx-md-3 mt-3 pt-0">
@@ -45,7 +49,8 @@
                         <div class="col-12 col-md-6 d-flex flex-column right align-items-right custom-border-bottom custom-border-left mb-3 pb-3 mb-md-0 pb-md-0 pr-0">
                             <div class="position-relative mb-4">
                                 <img src="{{'/storage'.$category->articles[0]->photo->path.'medium_'.$category->articles[0]->photo->originalName }}" class="w-100" alt="">
-                                @foreach($category->articles[0]->categories as $item)
+                                <div class="position-absolute">{{$category->name}}</div>
+                            @foreach($category->articles[0]->categories as $item)
                                     @if($item->parent_id == $category->id)
                                         <div class="position-absolute">{{$item->name}}</div>
                                     @endif
@@ -170,6 +175,7 @@
     <!-- end of photo and video news -->
 @endsection
 @section('script')
+    <script type="text/javascript" src="{{asset('css/slick/slick.min.js')}}" charset="utf-8"></script>
     <script>
         $(document).on('ready', function() {
             $(".center").slick({

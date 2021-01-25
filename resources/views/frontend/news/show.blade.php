@@ -18,7 +18,7 @@
                             @endforeach
                         </h2>
                         <div class="d-flex share py-1 py-md-0">
-                            <a class="nav-item dropdown">
+                            <div class="nav-item dropdown d-flex align-items-center">
                                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-share-alt ml-2"></i>اشتراک گذاری
                                 </a>
@@ -28,7 +28,7 @@
                                     <a href="https://twitter.com/home?status={{url()->current()}}" target="_blank" class="dropdown-item text-right"><i class="fab fa-twitter ml-2"></i>توییتر</a>
                                     <a href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" target="_blank" class="dropdown-item text-right"><i class="fab fa-facebook ml-2"></i>فیس بوک</a>
                                 </div>
-                            </a>
+                            </div>
                             <div class="d-none d-md-block"><a href="{{route('printNews',$article->id)}}" class="d-flex align-items-center h-100"><i class="fas fa-print"></i></a></div>
                         </div>
                     </div>
@@ -40,13 +40,15 @@
                     @if($article->summery)
                         <p class="summery">{{$article->summery}}</p>
                     @endif
-                    <img src="{{'/storage'.$article->photo->path.'medium_'.$article->photo->originalName }}" class="m-2 w-100" alt="">
+                    <div class="w-100 d-flex justify-content-center">
+                        <img src="{{'/storage'.$article->photo->path.'medium_'.$article->photo->originalName }}" class=" w-100" alt="">
+                    </div>
                     <div class="d-flex align-items-center justify-content-between mt-2 border-bottom w-100 pb-2 mb-2">
                         <div class="d-flex article_info">
                             <span class="d-flex align-items-center px-3  border-left"><i class="fa fa-eye ml-2"></i> {{$article->view_count}}</span>
                             <span class="d-flex align-items-center px-3"><i class="far fa-comment ml-2"></i> {{$comment_count}}</span>
                         </div>
-                        <div class="time">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</div>
+                        <div class="time pl-3">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::instance($article->publish_date)->format(' %d %B، %Y') ) }}</div>
                     </div>
                     <div>{!! $article->body !!}</div>
                     @if($article->type==1)
@@ -65,7 +67,7 @@
                         </video>
                     @endif
                     @if($article->type==3)
-                        <audio controls style="width: 100%">
+                        <audio controls class="audio-container">
                             <source src="{{ '/storage'. $article->video_url }}">
                             <source src="horse.ogg" type="audio/ogg">
                             <source src="horse.mp3" type="audio/mpeg">

@@ -37,9 +37,17 @@ class NewsController extends Controller
         $id = $tag->id;
         $articles = Article::whereHas('tags',function($q) use($id){
             $q->where('tag_id',$id);
-        })->paginate(20);
+        })->where('publish_status',1)->paginate(20);
         $categories = Category::where('parent_id',null)->whereHas('articles')->get();
-        return view('frontend.news.search',compact('articles','categories','tag'));
+        $type='noSearch';
+        return view('frontend.news.search',compact('articles','categories','tag','type'));
+    }
+    public function archiveNews()
+    {
+        $articles = Article::where('publish_status',2)->paginate(20);
+        $categories = Category::where('parent_id',null)->whereHas('articles')->get();
+        $type='noSearch';
+        return view('frontend.news.search',compact('articles','categories','type'));
     }
     public function categoryNews($slug)
     {

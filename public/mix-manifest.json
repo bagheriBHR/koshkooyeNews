@@ -1,6 +1,12 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/css/all-admin.css": "/css/all-admin.css",
-    "/js/all-admin.js": "/js/all-admin.js"
+    "/backend/css/dropzone.min.css": "/backend/css/dropzone.min.css",
+    "/backend/js/dropzone.js": "/backend/js/dropzone.js",
+    "/backend/css/persianDatepicker-default.css": "/backend/css/persianDatepicker-default.css",
+    "/backend/js/persianDatepicker.min.js": "/backend/js/persianDatepicker.min.js",
+    "/backend/css/bootstrap-tagsinput.css": "/backend/css/bootstrap-tagsinput.css",
+    "/backend/js/bootstrap-tagsinput.min.js": "/backend/js/bootstrap-tagsinput.min.js",
+    "/backend/css/admin.css": "/backend/css/admin.css",
+    "/css/all-frontend.min.css": "/css/all-frontend.min.css"
 }

@@ -8,9 +8,7 @@
     <meta name="description" content="{{$setting->meta_description}}">
     <meta name="keywords" content="{{$setting->meta_keyword}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('css/slick/slick.css')}}">
-    <link rel="stylesheet" href="{{asset('css/slick/slick-theme.css')}}">
+    <link rel="stylesheet" href="{{asset('css/all-frontend.min.css')}}">
 
     @yield('style')
 
@@ -48,32 +46,48 @@
             @endif
         </div>
         <div class="search mx-2 ml-md-5">
-            <form class=" position-relative my-2 my-md-0 " >
+            <form class=" position-relative my-2 my-md-0 " action="{{route('home')}}" method="post">
+                @method('get')
                 <input type="text"  onfocus="this.placeholder=''" onblur="this.placeholder='جستجو کنید...'" name="search" placeholder="جستجو کنید..." class="w-100">
                 <a><i class="fa fa-search position-absolute search-icon"></i></a>
             </form>
         </div>
-        <span class="time ml-0 ml-md-5 my-1 my-md-0 d-flex justify-content-center justify-content-md-end">{{convertToPersianNumber(\Hekmatinasser\Verta\Verta::now()->format(' %d %B %Y') ) }}</span>
+        <span class="time d-none d-md-block ml-0 ml-md-5 my-1 my-md-0 d-flex justify-content-center justify-content-md-end">{{'امروز :  '.convertToPersianNumber(\Hekmatinasser\Verta\Verta::now()->format('l %d %B %Y').' - '.\Hekmatinasser\Verta\Verta::now()->format(' H:i') ) }}</span>
     </div>
     <nav class="px-0 navbar navbar-expand-lg navbar-light py-0">
-        <a class="navbar-brand py-0 position-relative pr-1 pr-md-4 mr-0" href="{{route('home')}}">
+        <a class="navbar-brand py-0 position-relative pr-1 mr-0" href="{{route('home')}}">
             <div class="logo-container d-flex justify-content-md-center justify-content-start"><img src={{'/storage/photos/avatar/'.$setting->logo_url}}  class="h-100"></div>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="middle w-100">
-           <div class="w-100 bg-search d-flex align-items-center">
-               <div class="center2 slider py-0 w-100 my-0 " dir="ltr">
-                   @foreach($latest as $article)
-                       <a class="d-flex align-items-center justify-content-end" href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
-                           <h6 class="mb-0 text-right">{{ $article->title }}</h6>
-                       </a>
-                   @endforeach
-               </div>
+        <div class="middle" id="middleSize">
+           <div class="bg-search">
+              <div class="h-100 carousel-container pl-1 d-flex align-items-center">
+                  <div class="carousel-info ml-2 text-white d-flex align-items-center justify-content-end"><i class="far fa-newspaper ml-2"></i>گزیده خبرها : </div>
+                  <div id="carouselExampleControls" class="carousel vert slide w-100" data-ride="carousel">
+                      <div class="carousel-inner">
+                          @foreach($lastTitr as $key => $article)
+                              <div class="carousel-item {{$key== 0 ? 'active' : '' }}">
+                                  <a class="h-100 d-flex align-items-center justify-content-start" href="{{route('news.show',['id'=>$article->id,'slug'=>$article->slug])}}">
+                                      <h6 class="mb-0 text-right">{{ $article->title }}</h6>
+                                  </a>
+                              </div>
+                          @endforeach
+                      </div>
+                      <a class="carousel-control-prev" style="width: 10px!important;" href="#carouselExampleControls" role="button" data-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next carousel-control-next-costomize " style="width: 10px!important;" href="#carouselExampleControls" role="button" data-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Next</span>
+                      </a>
+                  </div>
+              </div>
            </div>
             <div class="collapse navbar-collapse m-0" id="navbarNav">
-                <ul class="navbar-nav w-100 pr-4 pr-md-5 ml-md-4 h-100">
+                <ul class="navbar-nav pr-4 pr-md-5 ml-md-4 h-100">
                     <li class="nav-item position-relative">
                         <a class="nav-link" href="{{route('home')}}">صفحه اصلی </a>
                         <div class="triangle-up position-absolute"></div>
@@ -92,6 +106,11 @@
                             @endif
                         </li>
                     @endforeach
+                    @if($archiveCount>0)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('news.archive')}}">آرشیو</a>
+                        </li>
+                    @endif
                     @if($photoArticleCount>0 || $videoArticleCount>0 || $soundArticleCount>0)
                         <li class="nav-item dropdown">
                             <a class="nav-link" >چند رسانه ای</a>
@@ -240,7 +259,7 @@
         <p class="mb-0 text-right">{{$setting->footer}}</p>
     </div>
     <div class="col-12 col-md-3 mt-1 mt-md-0 d-flex justify-content-center justify-content-md-end align-items-end">
-        <p class="mb-0 design">Design by :<a href="mailto:bagheri_bhr@yahoo.com" class="ml-2">B.Bagheri</a></p>
+        <p class="mb-0 design">Design by :<a href="mailto:bagheri.bhr@gmail.com" class="ml-2">B.Bagheri</a></p>
     </div>
 </div>
 <!-- end of footer -->
@@ -249,39 +268,20 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="{{asset('css/slick/slick.min.js')}}" charset="utf-8"></script>
 <script>
-    $(document).on('ready', function() {
-        $(".center2").slick({
-            slidesToShow: 1,
-            infinite: true,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 5000,
-            fade: true,
-            cssEase: 'linear',
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        arrows: false,
-                        centerMode: false,
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        arrows: false,
-                        centerMode: false,
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
-                }
-            ]
-        });
-    });
+
+    resizeFunction();
+    window.onresize = function(){resizeFunction();};
+
+    function resizeFunction(){
+        var screenW = screen.width;
+        if (screenW >= 1024){
+            var w = (screenW -280);
+            document.getElementById('middleSize').setAttribute("style","width:"+w+"px");
+        }else{
+            document.getElementById("middleSize").style.width ='100%';
+        }
+    }
 
     $('.dropdown').hover(function() {
         $(this).find('.dropdown-menu').stop(true, true).delay(200).slideDown(200);

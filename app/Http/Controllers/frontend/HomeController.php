@@ -56,7 +56,8 @@ class HomeController extends Controller
                 }
                 $articles = $query->paginate(20);
                 $categories = Category::where('parent_id',null)->whereHas('articles')->get();
-                return view('frontend.news.search',compact(['articles','categories']));
+                $type = 'search';
+                return view('frontend.news.search',compact(['articles','categories','type']));
             }
             $sliders = Article::with(['categories'=>function($q){
                 $q->where('parent_id',null);
