@@ -269,18 +269,6 @@
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script>
 
-    // resizeFunction();
-    // window.onresize = function(){resizeFunction();};
-    //
-    // function resizeFunction(){
-    //     var screenW = screen.width;
-    //     if (screenW >= 1024){
-    //         var w = (screenW -280);
-    //         document.getElementById('middleSize').setAttribute("style","width:"+w+"px");
-    //     }else{
-    //         document.getElementById("middleSize").style.width ='100%';
-    //     }
-    // }
 
     $('.dropdown').hover(function() {
         $(this).find('.dropdown-menu').stop(true, true).delay(200).slideDown(200);
