@@ -143,7 +143,7 @@
 
 <!-- footer -->
 <div class="footer d-flex flex-column p-2 p-md-3 no-print">
-    <div class="d-flex justify-content-center follow py-2 pr-2 pr-md-5">
+    <div class="d-flex justify-content-center follow py-2 pr-2">
         @if($setting->instagram)
             <a href="{{$setting->instagram}}"><i class="fab fa-instagram"></i></a>
         @endif
